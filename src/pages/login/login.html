@@ -12,7 +12,7 @@
 
 
 <ion-content padding >
-  <img src="/assets/Images/logob.png">
+  <img src="/assets/Images/logo.png">
   <ion-list>
 
   <ion-item class="username-top">
@@ -40,7 +40,13 @@
    <div class="line" ></div>
 </div>
 <div class="flex">
-  <button ion-button color="danger" class="buttons"  outline round (click)="goToHomePage()">Facebook</button>
-<button ion-button color="danger"  class="buttons" outline round (click)="goToRegisterPage()">Gmail</button>
+  <button ion-button  icon-start color="facebook" class="buttons"   round (click)="goToHomePage()">
+     <ion-icon name="favicon.ico"></ion-icon>
+    Facebook
+    </button>
+<button ion-button  icon-start color="google"  class="buttons"  round (click)="goToRegisterPage()">
+   <ion-icon name="star"></ion-icon>
+  Gmail
+  </button>
 </div>
 </ion-content>
