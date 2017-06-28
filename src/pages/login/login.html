@@ -6,47 +6,47 @@
 -->
 <ion-header>
 
- 
+
 
 </ion-header>
 
 
-<ion-content padding >
+<ion-content padding>
   <img src="/assets/Images/logo.png">
   <ion-list>
 
-  <ion-item class="username-top">
-    <ion-label floating>Username</ion-label>
-    <ion-input type="text"></ion-input>
-  </ion-item>
+    <ion-item class="username-top">
+      <ion-label floating>Username</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    
-    <ion-label floating>Password</ion-label>
-    <ion-input type="password"></ion-input>
-  </ion-item>
+    <ion-item>
 
-</ion-list>
-<div class="flex">
-<button ion-button color="primary" class="buttons" outline round (click)="goToHomePage()">Login</button>
-<button ion-button color="primary" class="buttons" outline round (click)="goToRegisterPage()">Register</button>
-</div>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password"></ion-input>
+    </ion-item>
 
-<button ion-button color="primary" clear (click)="goToForgottenPasswordPage()" class="col">Forgot your password?</button>
+  </ion-list>
+  <div class="flex">
+    <button ion-button color="primary" class="buttons" outline round (click)="goToHomePage()">Login</button>
+    <button ion-button color="primary" class="buttons" outline round (click)="goToRegisterPage()">Register</button>
+  </div>
 
-<div class="or_field flex">
-   <div class="line" ></div>
-   <div class="or"> or </div>
-   <div class="line" ></div>
-</div>
-<div class="flex">
-  <button ion-button  icon-start color="facebook" class="buttons"   round (click)="goToHomePage()">
+  <button ion-button color="primary" clear (click)="goToForgottenPasswordPage()" class="col">Forgot your password?</button>
+
+  <div class="or_field flex">
+    <div class="line"></div>
+    <div class="or"> or </div>
+    <div class="line"></div>
+  </div>
+  <div class="flex">
+    <button ion-button icon-start color="facebook" class="buttons" round (click)="goToHomePage()">
      <ion-icon name="favicon.ico"></ion-icon>
     Facebook
     </button>
-<button ion-button  icon-start color="google"  class="buttons"  round (click)="goToRegisterPage()">
+    <button ion-button icon-start color="google" class="buttons" round (click)="goToRegisterPage()">
    <ion-icon name="star"></ion-icon>
   Gmail
   </button>
-</div>
+  </div>
 </ion-content>
