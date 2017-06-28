@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { HomePage } from '../home/home';
-import { TabsPage } from '../tabs/tabs';
 import { RegisterPage } from "../register/register";
 import { FrgPasswordPage } from "../frg-password/frg-password";
+import { TabsPage } from "../tabs/tabs";
 /**
  * Generated class for the LoginPage page.
  *
@@ -21,7 +20,7 @@ export class LoginPage {
 
    goToHomePage()
   {
-  this.navCtrl.push(HomePage);
+  this.navCtrl.push(TabsPage);
   }
   goToRegisterPage()
   {

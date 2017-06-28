@@ -11,11 +11,11 @@
 </ion-header>
 
 
-<ion-content padding>
-  <img height=300px; width=300px; src="logob.png">
+<ion-content padding >
+  <img src="/assets/Images/logob.png">
   <ion-list>
 
-  <ion-item>
+  <ion-item class="username-top">
     <ion-label floating>Username</ion-label>
     <ion-input type="text"></ion-input>
   </ion-item>
@@ -27,9 +27,20 @@
   </ion-item>
 
 </ion-list>
-<div>
-<button ion-button color="danger" outline round (click)="goToHomePage()">Login</button>
-<button ion-button color="danger" outline round (click)="goToRegisterPage()">Register</button>
-<button ion-button color="danger" clear (click)="goToForgottenPasswordPage()">Lost your password?</button>
+<div class="flex">
+<button ion-button color="danger" class="buttons" outline round (click)="goToHomePage()">Login</button>
+<button ion-button color="danger" class="buttons" outline round (click)="goToRegisterPage()">Register</button>
+</div>
+
+<button ion-button color="danger" clear (click)="goToForgottenPasswordPage()" class="col">Forgot your password?</button>
+
+<div class="or_field flex">
+   <div class="line" ></div>
+   <div class="or"> or </div>
+   <div class="line" ></div>
+</div>
+<div class="flex">
+  <button ion-button color="danger" class="buttons"  outline round (click)="goToHomePage()">Facebook</button>
+<button ion-button color="danger"  class="buttons" outline round (click)="goToRegisterPage()">Gmail</button>
 </div>
 </ion-content>
