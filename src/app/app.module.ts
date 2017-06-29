@@ -14,6 +14,8 @@ import { BillsPage } from "../pages/bills/bills";
 import { OffersPage } from "../pages/offers/offers";
 import { StatsPage } from "../pages/stats/stats";
 import { MorePage } from "../pages/more/more";
+import { BillPage } from "../pages/bill/bill";
+
 import { AuthService } from '../providers/auth-service/auth-service';
 
 // Import the AF2 Module
@@ -40,7 +42,8 @@ export const firebaseConfig = {
     TabsPage,
     LoginPage,
     RegisterPage,
-    FrgPasswordPage
+    FrgPasswordPage,
+    BillPage
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ export const firebaseConfig = {
     TabsPage,
     LoginPage,
     RegisterPage,
-    FrgPasswordPage
+    FrgPasswordPage,
+    BillPage
   ],
   providers: [
     StatusBar,
