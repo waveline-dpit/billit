@@ -14,6 +14,7 @@ import { BillsPage } from "../pages/bills/bills";
 import { OffersPage } from "../pages/offers/offers";
 import { StatsPage } from "../pages/stats/stats";
 import { MorePage } from "../pages/more/more";
+import { BillPage } from "../pages/bill/bill";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MorePage } from "../pages/more/more";
     TabsPage,
     LoginPage,
     RegisterPage,
-    FrgPasswordPage
+    FrgPasswordPage,
+    BillPage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,8 @@ import { MorePage } from "../pages/more/more";
     TabsPage, 
     LoginPage,
     RegisterPage,
-    FrgPasswordPage
+    FrgPasswordPage,
+    BillPage
   ],
   providers: [
     StatusBar,
