@@ -14,6 +14,23 @@ import { BillsPage } from "../pages/bills/bills";
 import { OffersPage } from "../pages/offers/offers";
 import { StatsPage } from "../pages/stats/stats";
 import { MorePage } from "../pages/more/more";
+import { BillPage } from "../pages/bill/bill";
+
+import { AuthService } from '../providers/auth-service/auth-service';
+
+// Import the AF2 Module
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+// AF2 Settings
+export const firebaseConfig = {
+  apiKey: "AIzaSyC0X6Ve3xgobJrXdyF43Zxs1G44-Slrl7Y",
+  authDomain: "fir-login-e74e3.firebaseapp.com",
+  databaseURL: "https://fir-login-e74e3.firebaseio.com",
+  storageBucket: "fir-login-e74e3.appspot.com",
+  messagingSenderId: "276005011940"
+};
 
 @NgModule({
   declarations: [
@@ -25,11 +42,15 @@ import { MorePage } from "../pages/more/more";
     TabsPage,
     LoginPage,
     RegisterPage,
-    FrgPasswordPage
+    FrgPasswordPage,
+    BillPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -38,15 +59,17 @@ import { MorePage } from "../pages/more/more";
     OffersPage,
     StatsPage,
     MorePage,
-    TabsPage, 
+    TabsPage,
     LoginPage,
     RegisterPage,
-    FrgPasswordPage
+    FrgPasswordPage,
+    BillPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthService
   ]
 })
 export class AppModule {}

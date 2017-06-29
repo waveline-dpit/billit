@@ -9,13 +9,13 @@
 
     <ion-item>
       <ion-label floating>Email</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" [(ngModel)]="email"></ion-input>
     </ion-item>
 
     <ion-item>
 
       <ion-label floating>Password</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-input type="password" [(ngModel)]="pass"></ion-input>
     </ion-item>
 
 
@@ -34,12 +34,12 @@
   <div class="sup">sign up with</div>
   <div class="flex">
     <button ion-button icon-start color="facebook" class="buttons" round (click)="goToHomePage()">
-      <ion-icon name="favicon.ico"></ion-icon>
-      Facebook
+     <ion-icon name="logo-facebook" ></ion-icon>
+    Facebook
     </button>
     <button ion-button icon-start color="google" class="buttons" round (click)="goToRegisterPage()">
-      <ion-icon name="star"></ion-icon>
-      Gmail
-    </button>
+   <ion-icon name="logo-googleplus"></ion-icon>
+  Gmail
+  </button>
   </div>
 </ion-content>
