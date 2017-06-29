@@ -1,5 +1,23 @@
-page-login {
 
+.backgroundIMG
+{
+  background-image: url("/assets/Images/background-polygons.png");
+  background-size: cover;
+}
+.size
+{
+    margin: 15% 20% 5% 20%;
+    max-width: 60%;
+    max-height: 60%;
+    align-content: center;
+}
+.LR_buttons
+{
+  margin: 3vh 0 0.3vh 00;
+}
+.item
+{
+  background-color: transparent;
 }
 .flex
 {
@@ -7,7 +25,6 @@ page-login {
 }
 .or_field
 {
-    
     height: 40px;
 }
 .line
@@ -25,25 +42,15 @@ page-login {
     text-align: center;
     width: 50px;
 }
-.buttons 
+.buttons
 {
     width:150px;
     flex:1;
 }
-
-.size 
-{
-    margin-left: 30%;
-    margin-top: 15%;
-    max-width: 40%;
-    max-height: 40%;
-    align-content: center;
-    
-}
 .sup
 {
+    margin-top: -1.5vh;
     color: #c8c7cc;
     line-height:40px;
     text-align: center;
-    
 }
