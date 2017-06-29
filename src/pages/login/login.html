@@ -4,19 +4,12 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-
-<<<<<<< HEAD
-
-
-</ion-header>
-
-
 <ion-content padding>
-  <img src="/assets/Images/logo.png">
-  <ion-list>
+  <img src="/assets/Images/logo-short.png" class="size">
 
-    <ion-item class="username-top">
-      <ion-label floating>Username</ion-label>
+
+    <ion-item>
+      <ion-label floating>Email</ion-label>
       <ion-input type="text"></ion-input>
     </ion-item>
 
@@ -26,7 +19,7 @@
       <ion-input type="password"></ion-input>
     </ion-item>
 
-  </ion-list>
+  
   <div class="flex">
     <button ion-button color="primary" class="buttons" outline round (click)="goToHomePage()">Login</button>
     <button ion-button color="primary" class="buttons" outline round (click)="goToRegisterPage()">Register</button>
@@ -39,42 +32,9 @@
     <div class="or"> or </div>
     <div class="line"></div>
   </div>
+  <div class="sup">sign up with</div>
   <div class="flex">
     <button ion-button icon-start color="facebook" class="buttons" round (click)="goToHomePage()">
-=======
-<ion-content padding>
-  <div class="size col">
-  <img  src="/assets/Images/logo-short.png">
-  </div>
- 
-
-  <ion-item>
-    <ion-label floating>Email</ion-label>
-    <ion-input type="text"></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label floating>Password</ion-label>
-    <ion-input type="password"></ion-input>
-  </ion-item>
-
-
-<div class="flex">
-<button ion-button color="primary" class="buttons" outline round (click)="goToHomePage()">Login</button>
-<button ion-button color="primary" class="buttons" outline round (click)="goToRegisterPage()">Register</button>
-</div>
-
-<button ion-button color="primary" clear (click)="goToForgottenPasswordPage()" class="col">Forgot your password?</button>
-
-<div class="or_field flex">
-   <div class="line" ></div>
-   <div class="or"> or </div>
-   <div class="line" ></div>
-</div>
-<div class="sup">Sign up with</div>
-<div class="flex">
-  <button ion-button  icon-start color="facebook" class="buttons"   round (click)="goToHomePage()">
->>>>>>> .
      <ion-icon name="favicon.ico"></ion-icon>
     Facebook
     </button>
