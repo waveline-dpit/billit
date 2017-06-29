@@ -33,9 +33,9 @@ export class LoginPage {
 
   goToHomePage()
   {
-    console.log(this.email, this.pass);
-    this.authService.login(this.email, this.pass);
-    //this.navCtrl.push(TabsPage);
+    //console.log(this.email, this.pass);
+    //this.authService.login(this.email, this.pass);
+    this.navCtrl.push(TabsPage);
   }
 
   goToRegisterPage()
