@@ -22,7 +22,8 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
-
+$label-md-text-color: #8e8e8e;
+$label-ios-text-color: #8e8e8e;
 
 
 // Named Color Variables
@@ -40,8 +41,8 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222,
   google:     #db4437,
-  facebook:    #3b5998,
-  gri:          #c8c7cc
+  facebook:   #3b5998,
+  gri:        #c8c7cc
 );
 
 

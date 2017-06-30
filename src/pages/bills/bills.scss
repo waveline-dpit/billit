@@ -1,20 +1,33 @@
 page-bills {
 
 }
+ion-navbar
+{
+  height: 8vh;
+}
+.billit_image
+{
+  height: 7vh;
+  width: auto;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.padd
+{
+  padding: 0 3vw;
+}
 .inline
 {
     display: inline;
-  
 }
-.left 
+.left
 {
     float: left;
-   
 }
 .right
 {
     float: right;
-    
 }
 .clear
 {

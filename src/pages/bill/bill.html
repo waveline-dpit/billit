@@ -6,25 +6,25 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title class="row">bill</ion-title>
-    <ion-buttons end>
-    <button ion-button icon-only (click)="openModal()">
-        <ion-icon name="share"></ion-icon>
+  <ion-navbar >
+    <img src="/assets/Images/logo.png" class="billit_image">
+    <ion-buttons right class="padd">
+      <button ion-button icon-only (click)="openModal()" class="share_button" >
+        <ion-icon  name="share"></ion-icon>
       </button>
-      </ion-buttons>
+    </ion-buttons>
   </ion-navbar>
 
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="backgroundIMG">
 <ion-card>
   <ion-card-header>
      <div class="row">
       <div class="col col-center text-center">
-       <ion-icon name="calendar" isActive="false"></ion-icon> 24.06.2017 
+       <ion-icon name="calendar" isActive="false"></ion-icon> 24.06.2017
        <ion-icon name="time" isActive="false"></ion-icon>21:08
       </div>
      </div>
@@ -42,11 +42,11 @@
 
   <ion-item-sliding>
  <ion-item>
-    <div> 
+    <div>
       <div class="inline left"> WATER </div>
       <div class="inline right"> 1 </div>
     </div>
-    <div class="clear"> 
+    <div class="clear">
       <div class="inline left"> 1 X 5,00 </div>
       <div class="inline right"> 5,00 </div>
     </div>
@@ -56,17 +56,17 @@
           <ion-icon name="ios-more"></ion-icon>
           More
         </button>
-       
+
       </ion-item-options>
     </ion-item-sliding>
 
      <ion-item-sliding>
   <ion-item>
-    <div> 
+    <div>
       <div class="inline left"> JUICE </div>
       <div class="inline right"> 1 </div>
     </div>
-    <div class="clear"> 
+    <div class="clear">
       <div class="inline left"> 1 X 9,00 </div>
       <div class="inline right"> 9,00 </div>
     </div>
@@ -76,7 +76,7 @@
           <ion-icon name="ios-more"></ion-icon>
           More
         </button>
-       
+
       </ion-item-options>
     </ion-item-sliding>
 </ion-list>
@@ -87,8 +87,7 @@
      </div>
 </ion-card>
 
-   
 
-    
+
+
 </ion-content>
-

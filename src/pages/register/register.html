@@ -12,18 +12,13 @@
 
 </ion-header>
 
-
-<ion-content padding>
-   <div class="size col">
-  <img  src="/assets/Images/logo-short.png">
-  </div>
-
+<ion-content padding class="backgroundIMG">
 
   <ion-item>
     <ion-label floating>First Name</ion-label>
     <ion-input type="text"></ion-input>
   </ion-item>
-<ion-item>
+  <ion-item>
     <ion-label floating>Last Name</ion-label>
     <ion-input type="text"></ion-input>
   </ion-item>
@@ -40,8 +35,6 @@
     <ion-input type="password"></ion-input>
   </ion-item>
 
- 
-
-<button ion-button color="danger" outline round (click)="goToHomePage()">Register</button>
-<button ion-button color="danger" clear (click)="goToLoginPage()">Do you already have an account?</button>
+  <button class="register_button" ion-button color="primary" outline round (click)="goToHomePage()">Register</button>
+  <button class="col" ion-button color="primary" clear (click)="goToLoginPage()">Do you already have an account?</button>
 </ion-content>
