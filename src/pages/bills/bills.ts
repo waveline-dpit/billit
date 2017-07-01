@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { BillPage } from "../bill/bill";
-
+import { LoginPage } from "../login/login";
 /**
  * Generated class for the BillsPage page.
  *
@@ -24,5 +24,9 @@ export class BillsPage {
 goToBillPage()
   {
   this.navCtrl.push(BillPage);
+}
+goToLoginPage()
+  {
+  this.navCtrl.push(LoginPage);
   }
 }
