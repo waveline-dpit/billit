@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { AlertController } from 'ionic-angular';
 /**
  * Generated class for the BillPage page.
  *
@@ -13,6 +13,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'bill.html',
 })
 export class BillPage {
+  alertCtrl: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -20,5 +21,5 @@ export class BillPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad BillPage');
   }
-
+     
 }
