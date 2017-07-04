@@ -10,7 +10,7 @@
     <img src="/assets/Images/logo.png" class="billit_image">
     <ion-buttons right class="padd">
       <button ion-button icon-only (click)="openModal()" class="share_button" >
-        <ion-icon  name="share"></ion-icon>
+        <ion-icon  ios="ios-share-outline" name="share"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -24,12 +24,13 @@
   <ion-card-header>
      <div class="row">
       <div class="col col-center text-center">
-       <ion-icon name="calendar" isActive="false"></ion-icon> 24.06.2017
-       <ion-icon name="time" isActive="false"></ion-icon>21:08
+       <ion-icon name="calendar" isActive="false"> 24.06.2017 </ion-icon>
+       <ion-icon name="time" isActive="false"> 21:08 </ion-icon>
       </div>
      </div>
      <div class="row">
-      <div class="col col-center text-center">Carefour
+      <div class="col col-center text-center">
+         <ion-icon name="cart" isActive="false"> Carrefour</ion-icon>
       </div>
      </div>
      <div class="row">
@@ -52,9 +53,9 @@
     </div>
   </ion-item>
    <ion-item-options>
-        <button ion-button color="light" icon-start>
-          <ion-icon name="ios-more"></ion-icon>
-          More
+          <button ion-button color="light" icon-start (click)="showCheckbox()">
+          <ion-icon name="attach"></ion-icon>
+          Add category
         </button>
 
       </ion-item-options>
@@ -73,18 +74,19 @@
   </ion-item>
    <ion-item-options>
         <button ion-button color="light" icon-start>
-          <ion-icon name="ios-more"></ion-icon>
-          More
+          <ion-icon name="attach"></ion-icon>
+          Add category
         </button>
 
       </ion-item-options>
     </ion-item-sliding>
 </ion-list>
-</ion-card-content>
+
     <div class="inline left">TOTAL
     </div>
     <div class="inline right"> 14 Lei
      </div>
+     </ion-card-content>
 </ion-card>
 
 
