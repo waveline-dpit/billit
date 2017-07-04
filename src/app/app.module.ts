@@ -15,6 +15,7 @@ import { OffersPage } from "../pages/offers/offers";
 import { StatsPage } from "../pages/stats/stats";
 import { MorePage } from "../pages/more/more";
 import { BillPage } from "../pages/bill/bill";
+import { MyAccountPage } from "../pages/my-account/my-account";
 
 import { AuthService } from '../providers/auth-service/auth-service';
 
@@ -43,7 +44,8 @@ export const firebaseConfig = {
     LoginPage,
     RegisterPage,
     FrgPasswordPage,
-    BillPage
+    BillPage,
+    MyAccountPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ export const firebaseConfig = {
     LoginPage,
     RegisterPage,
     FrgPasswordPage,
-    BillPage
+    BillPage,
+    MyAccountPage
   ],
   providers: [
     StatusBar,

@@ -42,7 +42,9 @@ export class LoginPage {
       let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       return mail.match(mailformat);
     }
+    this.navCtrl.push(TabsPage);
 
+    /*
     if (this.email != null && this.pass != null) {
       let ok = true;
       if (!validEmail(this.email)) {
@@ -53,14 +55,14 @@ export class LoginPage {
       {
         ok = false;
         this.invalidPassAlert();
-      }*/
+      }*
       if (ok) {
         this.navCtrl.push(TabsPage);
       }
     }
     else {
       this.noEmailNoPassAlert();
-    }
+    }*/
   }
   goToRegisterPage() {
     this.navCtrl.push(RegisterPage);
