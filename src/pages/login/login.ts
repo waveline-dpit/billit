@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { RegisterPage } from "../register/register";
 import { FrgPasswordPage } from "../frg-password/frg-password";
-import {AuthService} from '../../providers/auth-service/auth-service';
+import { AuthService } from '../../providers/auth-service/auth-service';
 import { TabsPage } from "../tabs/tabs";
-import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import { AlertController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /**
  * Generated class for the LoginPage page.
  *
@@ -34,7 +35,6 @@ export class LoginPage {
       this.data = data;
     });
   }
-
   goToHomePage() {
     //console.log(this.email, this.pass);
     //this.authService.login(this.email, this.pass);
