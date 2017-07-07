@@ -13,6 +13,8 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'bill.html',
 })
 export class BillPage {
+  testCheckboxResult: any;
+  testCheckboxOpen: boolean;
   alertCtrl: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -22,4 +24,5 @@ export class BillPage {
     console.log('ionViewDidLoad BillPage');
   }
      
+
 }
