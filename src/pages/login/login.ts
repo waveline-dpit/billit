@@ -41,7 +41,7 @@ export class LoginPage {
 
     if (this.email != null && this.pass != null) {
       let ok = true;
-      /*if (!validEmail(this.email)) {
+      if (!validEmail(this.email)) {
         ok = false;
         this.invalidEmailAlert();
       }
