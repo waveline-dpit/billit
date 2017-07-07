@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { RegisterPage } from "../register/register";
 import { FrgPasswordPage } from "../frg-password/frg-password";
-import {AuthService} from '../../providers/auth-service/auth-service';
+import { AuthService } from '../../providers/auth-service/auth-service';
 import { TabsPage } from "../tabs/tabs";
-import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import { AlertController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /**
  * Generated class for the LoginPage page.
  *
@@ -21,6 +22,7 @@ import { AlertController } from 'ionic-angular';
 export class LoginPage {
   email;
   pass;
+  timer;
   data = {};
 
   constructor(
@@ -28,23 +30,15 @@ export class LoginPage {
     db: AngularFireDatabase,
     public alerCtrl: AlertController,
     public authService: AuthService
-  ) {
+  )  { }
 
-    db.object('/user').subscribe((data) => {
-      this.data = data;
-    });
-  }
-
-  goToHomePage() {
-    //console.log(this.email, this.pass);
     //this.authService.login(this.email, this.pass);
+    goToHomePage(){
     function validEmail(mail) {
       let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       return mail.match(mailformat);
     }
-    this.navCtrl.push(TabsPage);
 
-    /*
     if (this.email != null && this.pass != null) {
       let ok = true;
       if (!validEmail(this.email)) {
@@ -55,15 +49,17 @@ export class LoginPage {
       {
         ok = false;
         this.invalidPassAlert();
-      }*
+      }*/
       if (ok) {
+        this.authService.login(this.email, this.pass);
         this.navCtrl.push(TabsPage);
       }
     }
     else {
       this.noEmailNoPassAlert();
-    }*/
+    }
   }
+
   goToRegisterPage() {
     this.navCtrl.push(RegisterPage);
   }

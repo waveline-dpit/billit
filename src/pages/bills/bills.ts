@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BillPage } from "../bill/bill";
 import { LoginPage } from "../login/login";
+import {AuthService} from '../../providers/auth-service/auth-service'
+
 /**
  * Generated class for the BillsPage page.
  *
@@ -14,19 +16,26 @@ import { LoginPage } from "../login/login";
   templateUrl: 'bills.html',
 })
 export class BillsPage {
-
-  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams) {
-  }
+  logoutButton = {};
+  constructor(
+    public platform: Platform,
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public authService: AuthService
+    ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BillsPage');
   }
-goToBillPage()
+
+  goToBillPage()
   {
-  this.navCtrl.push(BillPage);
-}
-goToLoginPage()
+    this.navCtrl.push(BillPage);
+  }
+
+  goToLoginPage()
   {
-  this.navCtrl.push(LoginPage);
+    console.log(this.authService.logOut());
+    this.navCtrl.push(LoginPage);
   }
 }
