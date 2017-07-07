@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { LoginPage } from "../login/login";
 import { TabsPage } from "../tabs/tabs";
+import {AuthService} from "../../providers/auth-service/auth-service"
 import { AlertController } from 'ionic-angular';
+
 /**
  * Generated class for the RegisterPage page.
  *
@@ -15,24 +17,25 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+
+  regEmail;
+  regPass;
   fname;
   lname;
   email;
   pass;
   pass2;
-  constructor(
-    public navCtrl: NavController,
-    public alerCtrl: AlertController
-  ) { }
+
+  constructor(public navCtrl: NavController, public authService: AuthService, public alerCtrl: AlertController) {}
 
   goToHomePage() {
     function validEmail(mail) {
-      let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      return mail.match(mailformat);
-    }
-    function verifyPass(password, password2) {
-      let re = /^\w+$/;
-      let msg = "Passwords must contain at least six characters, including uppercase, lowercase letters and numbers.";
+    let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return mail.match(mailformat);
+  }
+  function verifyPass(password, password2) {
+    let re = /^\w+$/;
+    let msg = "Passwords must contain at least six characters, including uppercase, lowercase letters and numbers.";
       if (password == password2) {
         if (password.length < 6) {
           return msg;
@@ -56,18 +59,19 @@ export class RegisterPage {
       return "secure";
     }
 
-    if (this.email != null && this.pass != null && this.pass2 != null && this.fname != null && this.lname != null) {
+    if (this.regEmail != null && this.regPass != null && this.pass2 != null && this.fname != null && this.lname != null) {
       let ok = true;
-      if (!validEmail(this.email)) {
+      if (!validEmail(this.regEmail)) {
         ok = false;
         this.invalidEmailAlert();
       }
-      let msg = verifyPass(this.pass, this.pass2);
+      let msg = verifyPass(this.regPass, this.pass2);
       if (msg != "secure" && ok) {
         ok = false;
         this.notSecurePass(msg);
       }
       if (ok) {
+        this.authService.signupUser(this.regEmail, this.regPass);
         this.navCtrl.push(TabsPage);
       }
     }
@@ -79,6 +83,7 @@ export class RegisterPage {
   goToLoginPage() {
     this.navCtrl.push(LoginPage);
   }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
   }

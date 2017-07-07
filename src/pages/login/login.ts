@@ -22,6 +22,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginPage {
   email;
   pass;
+  timer;
   data = {};
 
   constructor(
@@ -29,25 +30,18 @@ export class LoginPage {
     db: AngularFireDatabase,
     public alerCtrl: AlertController,
     public authService: AuthService
-  ) {
+  )  { }
 
-    db.object('/user').subscribe((data) => {
-      this.data = data;
-    });
-  }
-  goToHomePage() {
-    //console.log(this.email, this.pass);
     //this.authService.login(this.email, this.pass);
+    goToHomePage(){
     function validEmail(mail) {
       let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       return mail.match(mailformat);
     }
-    this.navCtrl.push(TabsPage);
 
-    /*
     if (this.email != null && this.pass != null) {
       let ok = true;
-      if (!validEmail(this.email)) {
+      /*if (!validEmail(this.email)) {
         ok = false;
         this.invalidEmailAlert();
       }
@@ -55,15 +49,17 @@ export class LoginPage {
       {
         ok = false;
         this.invalidPassAlert();
-      }*
+      }*/
       if (ok) {
+        this.authService.login(this.email, this.pass);
         this.navCtrl.push(TabsPage);
       }
     }
     else {
       this.noEmailNoPassAlert();
-    }*/
+    }
   }
+
   goToRegisterPage() {
     this.navCtrl.push(RegisterPage);
   }
