@@ -6,13 +6,38 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>MyAccount</ion-title>
+  <ion-navbar >
+    <ion-title> My account </ion-title>
+    <ion-buttons right class="padd">
+       <button ion-button icon-only (click)="goToEditPage()" class="share_button" >
+          <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+
 
 </ion-header>
 
 
-<ion-content padding>
 
+<ion-content padding class="backIMG">
+  <img src="/assets/Images/defaultAccount.png" class="sizenew">
+
+  <ion-list>
+    <ion-item>
+      <!-- datele se vor lua din DB @Raul @Chira-->
+      <h2>Vlada</h2>
+    </ion-item>
+     <ion-item>
+      <h2>Popescu</h2>
+    </ion-item>
+    <ion-item >
+      <h2>vlada@yahoo.com</h2>
+    </ion-item>
+    <ion-item class="no_bottom">
+      <h2> </h2>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button color="primary" round (click)="goToLoginPage()" class="logout_button">logout</button>
 </ion-content>

@@ -1,3 +1,26 @@
 page-my-account {
 
 }
+.sizenew
+{
+    margin: 10% auto;
+    display: block;
+    width: 42%;
+    height: auto;
+    align-content: center;
+}
+.backIMG
+{
+  background-image: url("/assets/Images/background-polygons.png");
+  background-size: cover;
+}
+.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block > .item-block
+{
+  border-bottom: none;
+}
+.logout_button
+{
+  margin: auto;
+  display: block;  
+  width: 40%;
+}
