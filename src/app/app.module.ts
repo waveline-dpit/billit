@@ -24,6 +24,7 @@ import { AuthService } from '../providers/auth-service/auth-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AddBillPage } from "../pages/add-bill/add-bill";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -47,7 +48,8 @@ export const firebaseConfig = {
     FrgPasswordPage,
     BillPage,
     MyAccountPage,
-    EditPage
+    EditPage, 
+    AddBillPage,
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,8 @@ export const firebaseConfig = {
     FrgPasswordPage,
     BillPage,
     MyAccountPage,
-    EditPage
+    EditPage,
+    AddBillPage
   ],
   providers: [
     StatusBar,
