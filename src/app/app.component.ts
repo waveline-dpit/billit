@@ -26,6 +26,10 @@ export class MyApp {
       });
       statusBar.styleDefault();
       splashScreen.hide();
+
+      if (platform.is('ios')) {
+        console.log('ios');
+      } else console.log('not ios');
     });
   }
 }
