@@ -60,10 +60,10 @@
 
 
   <ion-fab  right bottom *ngIf="!platform.is('ios')">
-    <button ion-fab mini class="fab" ><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini class="fab" color='primary'><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="top">
       <button ion-fab ><ion-icon  name="cloud-download"></ion-icon></button>
-      <button ion-fab ><ion-icon name="create"></ion-icon></button>
+      <button ion-fab ><ion-icon name="create" (click)="goToAddBillPage()"></ion-icon></button>
       <button ion-fab ><ion-icon  name="camera"></ion-icon></button>
 
     </ion-fab-list>

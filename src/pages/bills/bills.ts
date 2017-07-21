@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BillPage } from "../bill/bill";
 import { LoginPage } from "../login/login";
 import {AuthService} from '../../providers/auth-service/auth-service'
+import { AddBillPage } from "../add-bill/add-bill";
 
 /**
  * Generated class for the BillsPage page.
@@ -38,4 +39,9 @@ export class BillsPage {
     console.log(this.authService.logOut());
     this.navCtrl.push(LoginPage);
   }
+  goToAddBillPage()
+    {
+      this.navCtrl.push(AddBillPage);
+    }
+  
 }
