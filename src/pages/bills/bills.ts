@@ -32,6 +32,5 @@ export class BillsPage {
   goToLoginPage()
   {
     console.log(this.authService.logOut());
-    this.navCtrl.push(LoginPage);
   }
 }
