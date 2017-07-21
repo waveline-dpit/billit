@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { EditPage } from "../edit/edit";
+import { LoginPage } from "../login/login";
+import {AuthService} from '../../providers/auth-service/auth-service'
 
 /**
  * Generated class for the MyAccountPage page.
@@ -13,12 +16,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'my-account.html',
 })
 export class MyAccountPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  logoutButton = {};
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyAccountPage');
   }
 
+ goToEditPage() {
+    this.navCtrl.push(EditPage);
+  }
+  goToLoginPage()
+  {
+    console.log(this.authService.logOut());
+    this.navCtrl.push(LoginPage);
+  }
 }
