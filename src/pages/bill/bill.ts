@@ -13,16 +13,8 @@ import { AlertController, Platform } from 'ionic-angular';
   templateUrl: 'bill.html',
 })
 export class BillPage {
-<<<<<<< HEAD
-  testCheckboxResult: any;
-  testCheckboxOpen: boolean;
-  alertCtrl: any;
-
-  constructor( public navCtrl: NavController, public navParams: NavParams) {
-=======
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
->>>>>>> oana_branch
   }
 
   ionViewDidLoad() {
@@ -118,12 +110,7 @@ export class BillPage {
     alert.addButton({
       text: 'OK',
      
-<<<<<<< HEAD
-  
-}
-=======
     });
     alert.present();
   }
 }
->>>>>>> oana_branch
