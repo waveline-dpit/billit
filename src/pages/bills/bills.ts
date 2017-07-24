@@ -4,7 +4,8 @@ import { BillPage } from "../bill/bill";
 import { LoginPage } from "../login/login";
 import {AuthService} from '../../providers/auth-service/auth-service'
 import { AddBillPage } from "../add-bill/add-bill";
-
+import { PopoverController } from 'ionic-angular';
+import { PopoverPage } from "../popover/popover";
 /**
  * Generated class for the BillsPage page.
  *
@@ -22,7 +23,9 @@ export class BillsPage {
     public platform: Platform,
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public authService: AuthService
+    public authService: AuthService,
+    public popoverCtrl: PopoverController
+
     ) {}
 
   ionViewDidLoad() {
@@ -42,5 +45,10 @@ export class BillsPage {
     {
       this.navCtrl.push(AddBillPage);
     }
-  
+  presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverPage);
+    popover.present({
+      ev: myEvent
+    });
+  }
 }
