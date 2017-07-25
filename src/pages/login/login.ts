@@ -4,9 +4,8 @@ import { RegisterPage } from "../register/register";
 import { FrgPasswordPage } from "../frg-password/frg-password";
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { TabsPage } from "../tabs/tabs";
-import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import { AlertController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 /**
  * Generated class for the LoginPage page.
  *
@@ -29,26 +28,18 @@ export class LoginPage {
     public navCtrl: NavController,
     db: AngularFireDatabase,
     public alerCtrl: AlertController,
-    public authService: AuthService
-  )  { }
+    public authService: AuthService,
+  ){  }
 
-    //this.authService.login(this.email, this.pass);
-    goToHomePage(){
-    function validEmail(mail) {
-      let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      return mail.match(mailformat);
-    }
-
+  //this.authService.login(this.email, this.pass);
+  goToHomePage(){
     if (this.email != null && this.pass != null) {
       let ok = true;
-      if (!validEmail(this.email)) {
-        ok = false;
-        this.invalidEmailAlert();
-      }
-      /*if(nu e buna parola)
+      //TODO:
+      /*if(nu e buna parola sau something went wrong)
       {
         ok = false;
-        this.invalidPassAlert();
+        this.invalidEmailPassAlert();
       }*/
       if (ok) {
         this.authService.login(this.email, this.pass);
@@ -58,7 +49,7 @@ export class LoginPage {
     else {
       this.noEmailNoPassAlert();
     }
-  }
+}
 
   goToRegisterPage() {
     this.navCtrl.push(RegisterPage);
@@ -76,18 +67,10 @@ export class LoginPage {
     });
     alert.present()
   }
-  invalidEmailAlert() {
+  invalidEmailPassAlert() {
     let alert = this.alerCtrl.create({
       title: 'Error',
-      message: 'You entered an invalid email adress. Please enter a valid address.',
-      buttons: ['Ok']
-    });
-    alert.present()
-  }
-  invalidPassAlert() {
-    let alert = this.alerCtrl.create({
-      title: 'Wrong Password',
-      message: 'You entered an incorrect password. Try entering your information again.',
+      message: 'You entered an incorrect username or password. Try entering your information again.',
       buttons: ['Ok']
     });
     alert.present()
