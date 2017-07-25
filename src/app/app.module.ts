@@ -54,6 +54,7 @@ export const firebaseConfig = {
     EditPage, 
     AddBillPage,
     PopoverPage,
+    LidlPage
     LidlPage, 
     AboutPage
   ],

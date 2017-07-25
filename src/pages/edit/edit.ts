@@ -16,8 +16,16 @@ import { MyAccountPage } from "../my-account/my-account";
   templateUrl: 'edit.html',
 })
 export class EditPage {
-
+user;
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+    this.user = {
+      firstName: "oana",
+      lastName: "durcau",
+      email: "oana"
+
+    }
+
+    
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditPage');
@@ -58,5 +66,9 @@ export class EditPage {
   }
   goToMyAccountPage() {
     this.navCtrl.push(MyAccountPage);
+  }
+  saveData()
+  {
+    console.log(this.user);
   }
 }
