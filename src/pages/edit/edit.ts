@@ -71,8 +71,15 @@ export class EditPage {
     if(this.firstName && this.lastName)
     {
       this.userInfo.changeUserData(this.firstName, this.lastName);
-      this.navCtrl.push(MyAccountPage);
     }
-
+    else if(this.firstName)
+    {
+      this.userInfo.changeUserData(this.firstName, this.oldLastName);
+    }
+    else if(this.lastName)
+    {
+      this.userInfo.changeUserData(this.oldFirstName, this.lastName);
+    }
+    this.navCtrl.pop();
   }
 }
