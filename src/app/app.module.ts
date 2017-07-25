@@ -27,6 +27,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AddBillPage } from "../pages/add-bill/add-bill";
 import { PopoverPage } from "../pages/popover/popover";
+import { AboutPage } from "../pages/about/about";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -53,7 +54,8 @@ export const firebaseConfig = {
     EditPage, 
     AddBillPage,
     PopoverPage,
-    LidlPage
+    LidlPage, 
+    AboutPage
   ],
   imports: [
     BrowserModule,
@@ -78,7 +80,8 @@ export const firebaseConfig = {
     EditPage,
     AddBillPage,
     PopoverPage,
-    LidlPage
+    LidlPage,
+    AboutPage
   ],
   providers: [
     StatusBar,
