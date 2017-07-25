@@ -20,18 +20,18 @@
       <ion-list>
         <ion-item>
           <ion-label class="stacked_title" stacked>First Name </ion-label>
-          <ion-input type="text" placeholder="Vlada"></ion-input>
+          <ion-input type="text" [(ngModel)]="firstName" placeholder= {{oldFirstName}}></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Last Name </ion-label>
-          <ion-input type="text" placeholder="Popescu"></ion-input>
+          <ion-input type="text"[(ngModel)]="lastName" placeholder= {{oldLastName}}></ion-input>
         </ion-item>
         <ion-item >
-          <h2 class="email_size">vlada@yahoo.com</h2>
+          <h2 class="email_size"> {{email}}</h2>
         </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
   <button ion-button color="light" class="col change_bttn" (click)="showPrompt()">Change Password</button>
-  <button ion-button color="primary" round (click)="goToMyAccountPage()" class="save_bttn">Save</button>
+  <button ion-button color="primary" round (click)="saveData()" class="save_bttn">Save</button>
 </ion-content>

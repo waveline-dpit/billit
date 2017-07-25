@@ -25,14 +25,16 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AddBillPage } from "../pages/add-bill/add-bill";
+import { UserInfo } from '../providers/user-info/user-info';
+import { UserRegister } from '../providers/user-register/user-register';
 
 // AF2 Settings
 export const firebaseConfig = {
-  apiKey: "AIzaSyC0X6Ve3xgobJrXdyF43Zxs1G44-Slrl7Y",
-  authDomain: "fir-login-e74e3.firebaseapp.com",
-  databaseURL: "https://fir-login-e74e3.firebaseio.com",
-  storageBucket: "fir-login-e74e3.appspot.com",
-  messagingSenderId: "276005011940"
+  apiKey: "AIzaSyChS1MAx054ivrlEw-0xyqzfPZp09EUKtE",
+  authDomain: "waveline-4de4d.firebaseapp.com",
+  databaseURL: "https://waveline-4de4d.firebaseio.com",
+  storageBucket: "waveline-4de4d.appspot.com",
+  messagingSenderId: "983236088103"
 };
 
 @NgModule({
@@ -48,7 +50,7 @@ export const firebaseConfig = {
     FrgPasswordPage,
     BillPage,
     MyAccountPage,
-    EditPage, 
+    EditPage,
     AddBillPage,
   ],
   imports: [
@@ -78,7 +80,9 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthService
+    AuthService,
+    UserInfo,
+    UserRegister
   ]
 })
 export class AppModule {}

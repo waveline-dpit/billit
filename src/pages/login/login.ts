@@ -4,9 +4,11 @@ import { RegisterPage } from "../register/register";
 import { FrgPasswordPage } from "../frg-password/frg-password";
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { TabsPage } from "../tabs/tabs";
-import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import { AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import firebase from 'firebase/app';
+import {UserRegister} from '../../providers/user-register/user-register';
 
 /**
  * Generated class for the LoginPage page.
@@ -21,6 +23,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 
 export class LoginPage {
+  item : FirebaseListObservable <any[]>
   email;
   pass;
   timer;
@@ -30,8 +33,10 @@ export class LoginPage {
     public navCtrl: NavController,
     public db: AngularFireDatabase,
     public alerCtrl: AlertController,
-    public authService: AuthService
-  )  { }
+    public authService: AuthService,
+    public userRegister: UserRegister
+  )
+  {}
 
     //this.authService.login(this.email, this.pass);
     goToHomePage(){
@@ -52,11 +57,6 @@ export class LoginPage {
         this.invalidPassAlert();
         console.log("no", error);
       });
-      /*if(!this.authService.isValid)
-      {
-        ok = false;
-        this.invalidPassAlert();
-      }*/
     }
     else {
       this.noEmailNoPassAlert();

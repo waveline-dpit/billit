@@ -4,7 +4,7 @@ import { LoginPage } from "../login/login";
 import { TabsPage } from "../tabs/tabs";
 import {AuthService} from "../../providers/auth-service/auth-service"
 import { AlertController } from 'ionic-angular';
-
+import {UserRegister} from '../../providers/user-register/user-register'
 /**
  * Generated class for the RegisterPage page.
  *
@@ -26,7 +26,12 @@ export class RegisterPage {
   pass;
   pass2;
 
-  constructor(public navCtrl: NavController, public authService: AuthService, public alerCtrl: AlertController) {}
+  constructor(
+    public navCtrl: NavController,
+    public authService: AuthService,
+    public alerCtrl: AlertController,
+    public userRegister: UserRegister
+  ) {}
 
   goToHomePage() {
     function validEmail(mail) {
@@ -71,8 +76,12 @@ export class RegisterPage {
         this.notSecurePass(msg);
       }
       if (ok) {
-        this.authService.signupUser(this.regEmail, this.regPass);
+        this.authService.signupUser(this.regEmail, this.regPass).then(()=>
+      {
+        this.userRegister.addUserData(this.fname, this.lname);
         this.navCtrl.push(TabsPage);
+      })
+
       }
     }
     else {
