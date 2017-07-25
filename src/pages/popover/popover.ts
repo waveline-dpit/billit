@@ -12,9 +12,9 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 @Component({
   template: `
       <ion-list>
-       <button ion-item  color="primary"><ion-icon  name="cloud-download"></ion-icon></button>
-       <button  color="primary"><ion-icon name="create" ></ion-icon></button>
-       <button  color="primary"><ion-icon  name="camera"></ion-icon></button>
+       <button ion-item><ion-icon  name="cloud-download"></ion-icon> Recive</button>
+       <button ion-item><ion-icon name="create" ></ion-icon> Write</button>
+       <button ion-item><ion-icon  name="camera"></ion-icon> Scan</button>
       </ion-list>
   `
 })

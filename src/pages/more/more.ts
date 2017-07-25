@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { MyAccountPage } from "../my-account/my-account";
 import { StatsPage } from "../stats/stats";
+import { AboutPage } from "../about/about";
 
 /**
  * Generated class for the MorePage page.
@@ -29,5 +30,7 @@ export class MorePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MorePage');
   }
-
+goToAbout() {
+    this.navCtrl.push(AboutPage);
+  }
 }
