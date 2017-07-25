@@ -29,7 +29,6 @@ export class MyAccountPage {
   }
   goToLoginPage()
   {
-    console.log(this.authService.logOut());
-    this.navCtrl.push(LoginPage);
+    this.authService.logOut();
   }
 }

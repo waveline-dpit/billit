@@ -7,6 +7,7 @@ import { TabsPage } from "../tabs/tabs";
 import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import { AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -27,7 +28,7 @@ export class LoginPage {
 
   constructor(
     public navCtrl: NavController,
-    db: AngularFireDatabase,
+    public db: AngularFireDatabase,
     public alerCtrl: AlertController,
     public authService: AuthService
   )  { }
@@ -39,25 +40,28 @@ export class LoginPage {
       return mail.match(mailformat);
     }
 
-    if (this.email != null && this.pass != null) {
+    if (this.email && this.pass ) {
       let ok = true;
       if (!validEmail(this.email)) {
         ok = false;
         this.invalidEmailAlert();
       }
-      /*if(nu e buna parola)
+      this.authService.login(this.email, this.pass).then((response) => {
+        console.log(response);
+      }, (error) =>{
+        this.invalidPassAlert();
+        console.log("no", error);
+      });
+      /*if(!this.authService.isValid)
       {
         ok = false;
         this.invalidPassAlert();
       }*/
-      if (ok) {
-        this.authService.login(this.email, this.pass);
-        this.navCtrl.push(TabsPage);
-      }
     }
     else {
       this.noEmailNoPassAlert();
     }
+
   }
 
   goToRegisterPage() {

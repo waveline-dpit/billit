@@ -25,6 +25,8 @@ import { AuthService } from '../providers/auth-service/auth-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AddBillPage } from "../pages/add-bill/add-bill";
+import { PopoverPage } from "../pages/popover/popover";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -48,7 +50,9 @@ export const firebaseConfig = {
     FrgPasswordPage,
     BillPage,
     MyAccountPage,
-    EditPage,
+    EditPage, 
+    AddBillPage,
+    PopoverPage,
     LidlPage
   ],
   imports: [
@@ -72,6 +76,8 @@ export const firebaseConfig = {
     BillPage,
     MyAccountPage,
     EditPage,
+    AddBillPage,
+    PopoverPage,
     LidlPage
   ],
   providers: [

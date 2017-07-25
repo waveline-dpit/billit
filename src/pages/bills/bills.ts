@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BillPage } from "../bill/bill";
 import { LoginPage } from "../login/login";
 import {AuthService} from '../../providers/auth-service/auth-service'
-
+import { AddBillPage } from "../add-bill/add-bill";
+import { PopoverController } from 'ionic-angular';
+import { PopoverPage } from "../popover/popover";
 /**
  * Generated class for the BillsPage page.
  *
@@ -17,8 +19,14 @@ import {AuthService} from '../../providers/auth-service/auth-service'
 })
 export class BillsPage {
   logoutButton = {};
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService) {
-  }
+  constructor(
+    public platform: Platform,
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public authService: AuthService,
+    public popoverCtrl: PopoverController
+
+    ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BillsPage');
@@ -32,6 +40,15 @@ export class BillsPage {
   goToLoginPage()
   {
     console.log(this.authService.logOut());
-    this.navCtrl.push(LoginPage);
+  }
+  goToAddBillPage()
+    {
+      this.navCtrl.push(AddBillPage);
+    }
+  presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverPage);
+    popover.present({
+      ev: myEvent
+    });
   }
 }
