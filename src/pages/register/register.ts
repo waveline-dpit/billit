@@ -2,8 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { LoginPage } from "../login/login";
 import { TabsPage } from "../tabs/tabs";
-import {AuthService} from "../../providers/auth-service/auth-service"
+import { AuthService } from "../../providers/auth-service/auth-service"
 import { AlertController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EmailValidator } from  '../../validators/email';
+import { PasswordValidator } from  '../../validators/password';
 
 /**
  * Generated class for the RegisterPage page.
@@ -22,96 +25,60 @@ export class RegisterPage {
   regPass;
   fname;
   lname;
-  email;
-  pass;
   pass2;
 
-  constructor(public navCtrl: NavController, public authService: AuthService, public alerCtrl: AlertController) {}
+  fcfname; fclname; fcemail; fcpass; fcpass2;
+  registerForm: FormGroup;
+  submitAttempt: boolean = false;
+
+  constructor(
+    public navCtrl: NavController,
+    public authService: AuthService,
+    public alerCtrl: AlertController,
+    public formBuilder: FormBuilder
+  ) {
+    this.registerForm = formBuilder.group({
+        fcfname:['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+        fclname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+        fcemail: ['', Validators.compose([EmailValidator.isValid, Validators.required])],
+        fcpass: ['', Validators.compose([PasswordValidator.isValid, Validators.required])],
+        fcpass2: ['', Validators.compose([PasswordValidator.confirmPass, Validators.required])]
+
+    });
+  }
 
   goToHomePage() {
-    function validEmail(mail) {
-    let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return mail.match(mailformat);
-  }
-  function verifyPass(password, password2) {
-    let re = /^\w+$/;
-    let msg = "Passwords must contain at least six characters, including uppercase, lowercase letters and numbers.";
-      if (password == password2) {
-        if (password.length < 6) {
-          return msg;
-        }
-        re = /[0-9]/;
-        if (!re.test(password)) {
-          return msg;
-        }
-        re = /[a-z]/;
-        if (!re.test(password)) {
-          return msg;
-        }
-        re = /[A-Z]/;
-        if (!re.test(password)) {
-          return msg;
-        }
-      }
-      else {
-        return "Please check that you've entered and confirmed your password!";
-      }
-      return "secure";
-    }
-
-    if (this.regEmail != null && this.regPass != null && this.pass2 != null && this.fname != null && this.lname != null) {
-      let ok = true;
-      if (!validEmail(this.regEmail)) {
-        ok = false;
-        this.invalidEmailAlert();
-      }
-      let msg = verifyPass(this.regPass, this.pass2);
-      if (msg != "secure" && ok) {
-        ok = false;
-        this.notSecurePass(msg);
-      }
+      this.submitAttempt = true;
+      let ok = (
+        this.registerForm.controls.fcfname.valid &&
+        this.registerForm.controls.fclname.valid &&
+        this.registerForm.controls.fcemail.valid &&
+        this.registerForm.controls.fcpass.valid &&
+        this.registerForm.controls.fcpass2.valid
+      );
       if (ok) {
         this.authService.signupUser(this.regEmail, this.regPass);
         this.navCtrl.push(TabsPage);
       }
-    }
-    else {
-      this.notAllFieldsAlert();
-    }
+      else{
+        this.notAllFieldsAlert();
+      }
   }
 
   goToLoginPage() {
     this.navCtrl.push(LoginPage);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
-  }
-
-  notSecurePass(msg)
-  {
-    let alert = this.alerCtrl.create({
-      title: 'Error',
-      message: msg,
-      buttons: ['Ok']
-    });
-    alert.present()
-  }
-  invalidEmailAlert() {
-    let alert = this.alerCtrl.create({
-      title: 'Error',
-      message: 'You entered an invalid email adress. Please enter a valid address.',
-      buttons: ['Ok']
-    });
-    alert.present()
-  }
   notAllFieldsAlert() {
     let alert = this.alerCtrl.create({
       title: 'Register failed',
-      message: 'You must complete all the fields in order to register.',
+      message: 'You must complete all the fields properly in order to register.',
       buttons: ['Ok']
     });
     alert.present()
   }
 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad RegisterPage');
+  }
 }

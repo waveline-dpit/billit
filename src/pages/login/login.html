@@ -8,14 +8,16 @@
 <ion-content padding class="backgroundIMG">
   <img src="/assets/Images/logo.png" class="size">
 
-  <ion-item>
-    <ion-label floating>Email</ion-label>
-    <ion-input type="text" [(ngModel)]="email"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Password</ion-label>
-    <ion-input type="password" [(ngModel)]="pass"></ion-input>
-  </ion-item>
+  <div class="onlyLogin">
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="text" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" [(ngModel)]="pass"></ion-input>
+    </ion-item>
+  </div>
 
   <div class="flex LR_buttons">
     <button ion-button color="primary" class="buttons" outline round (click)="goToHomePage() ">Login</button>

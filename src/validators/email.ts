@@ -6,15 +6,18 @@ export class EmailValidator {
 
     function validEmail(mail) {
       let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      return mail.match(mailformat);
+      if(mail){
+        return mail.match(mailformat);
+      }
+      else {
+        return false;
+      }
     }
-
     if (!validEmail(control.value)) {
       return {
-        "Invalid email address": true
+        "Invalid emailll address": true
       };
     }
-
     return null;
   }
 

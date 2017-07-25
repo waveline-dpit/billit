@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from "../login/login";
-import { AlertController } from 'ionic-angular';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EmailValidator } from  '../../validators/email';
 
 /**
  * Generated class for the FrgPasswordPage page.
@@ -16,33 +16,27 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'frg-password.html',
 })
 export class FrgPasswordPage {
+
   email;
+  fcfrgpass;
+  frgPassForm: FormGroup;
+
   constructor(
     public navCtrl: NavController,
-    public alerCtrl: AlertController,
+    public formBuilder: FormBuilder,
     public navParams: NavParams
-  ) { }
+  ) {
+    this.frgPassForm = formBuilder.group({
+        fcfrgpass: ['', Validators.compose([EmailValidator.isValid, Validators.required])],
 
-  goToLoginPage() {
-    function validEmail(mail) {
-      let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      return mail.match(mailformat);
-    }
-    if(this.email == null || !validEmail(this.email)){
-      this.invalidEmailAlert();
-    }
-    else{
-      this.navCtrl.push(LoginPage);
-    }
+    });
   }
 
-  invalidEmailAlert() {
-    let alert = this.alerCtrl.create({
-      title: 'Error',
-      message: 'You entered an invalid email address. Please enter a valid one.',
-      buttons: ['Ok']
-    });
-    alert.present()
+  goToLoginPage() {
+
+    if(this.frgPassForm.controls.fcfrgpass.valid) {
+      this.navCtrl.push(LoginPage);
+    }
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad FrgPasswordPage');

@@ -1,5 +1,14 @@
 page-register {
-
+  p {
+    color: red;
+    font-size: 2vh;
+    margin: 10px 0 -5px 16px;
+    transition: opacity 2s ease-in;
+  }
+  p.ios
+  {
+      margin: 0 0 0 16px;
+  }
 }
 .register_button
 {

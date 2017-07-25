@@ -14,26 +14,34 @@
 
 <ion-content padding class="backgroundIMG">
 
-  <ion-item>
-    <ion-label floating>First Name</ion-label>
-    <ion-input type="text" [(ngModel)]="fname"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Last Name</ion-label>
-    <ion-input type="text" [(ngModel)]="lname"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Email</ion-label>
-    <ion-input type="text" [(ngModel)]="regEmail"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Password</ion-label>
-    <ion-input type="password" [(ngModel)]="regPass"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Confirm Password</ion-label>
-    <ion-input type="password" [(ngModel)]="pass2"></ion-input>
-  </ion-item>
+  <form [formGroup]="registerForm">
+    <ion-item>
+      <ion-label floating>First Name</ion-label>
+      <ion-input type="text" formControlName="fcfname" [(ngModel)]="fname" [class.invalid]="!registerForm.controls.fcfname.valid && (registerForm.controls.fcfname.dirty || submitAttempt)"></ion-input>
+    </ion-item>
+    <p *ngIf="!registerForm.controls.fcfname.valid && (registerForm.controls.fcfname.dirty || submitAttempt)">Please enter a valid name.</p>
+    <ion-item>
+      <ion-label floating>Last Name</ion-label>
+      <ion-input type="text" formControlName="fclname" [(ngModel)]="lname" [class.invalid]="!registerForm.controls.fclname.valid && (registerForm.controls.fclname.dirty || submitAttempt)"></ion-input>
+    </ion-item>
+    <p *ngIf="!registerForm.controls.fclname.valid && (registerForm.controls.fclname.dirty || submitAttempt)">Please enter a valid name.</p>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="text" formControlName="fcemail" [(ngModel)]="regEmail" [class.invalid]="!registerForm.controls.fcemail.valid && (registerForm.controls.fcemail.dirty || submitAttempt)"></ion-input>
+    </ion-item>
+    <p *ngIf="!registerForm.controls.fcemail.valid && (registerForm.controls.fcemail.dirty || submitAttempt)">Please enter a valid email.</p>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" formControlName="fcpass" [(ngModel)]="regPass" [class.invalid]="!registerForm.controls.fcpass.valid && (registerForm.controls.fcpass.dirty || submitAttempt)"></ion-input>
+    </ion-item>
+    <p *ngIf="!registerForm.controls.fcpass.valid && (registerForm.controls.fcpass.dirty || submitAttempt)">Passwords must contain at least six characters, including letters and numbers.</p>
+    <ion-item>
+      <ion-label floating>Confirm Password</ion-label>
+      <ion-input type="password" formControlName="fcpass2" [(ngModel)]="pass2" [class.invalid]="!registerForm.controls.fcpass2.valid && (registerForm.controls.fcpass2.dirty || submitAttempt)"></ion-input>
+    </ion-item>
+    <p *ngIf="!registerForm.controls.fcpass2.valid && (registerForm.controls.fcpass2.dirty || submitAttempt)">Passwords do not match</p>
+
+  </form>
 
   <button class="register_button" ion-button color="primary" outline round (click)="goToHomePage()">Register</button>
   <button class="col" ion-button color="primary" clear (click)="goToLoginPage()">Do you already have an account?</button>
