@@ -24,12 +24,11 @@ export class EditPage {
   )
   {
     userInfo.getUserInfo().subscribe((user)=>
-  {
-    this.oldFirstName = user.firstName;
-    this.oldLastName = user.lastName;
-    this.email = userInfo.getUserEmail();
-
-  })
+    {
+      this.oldFirstName = user.firstName;
+      this.oldLastName = user.lastName;
+      this.email = userInfo.getUserEmail();
+    });
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditPage');

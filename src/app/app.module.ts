@@ -17,6 +17,7 @@ import { MorePage } from "../pages/more/more";
 import { BillPage } from "../pages/bill/bill";
 import { MyAccountPage } from "../pages/my-account/my-account";
 import { EditPage } from "../pages/edit/edit";
+import { LidlPage } from "../pages/lidl/lidl";
 
 import { AuthService } from '../providers/auth-service/auth-service';
 
@@ -25,6 +26,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AddBillPage } from "../pages/add-bill/add-bill";
+import { PopoverPage } from "../pages/popover/popover";
+import { AboutPage } from "../pages/about/about";
 import { UserInfo } from '../providers/user-info/user-info';
 import { UserRegister } from '../providers/user-register/user-register';
 
@@ -52,6 +55,9 @@ export const firebaseConfig = {
     MyAccountPage,
     EditPage,
     AddBillPage,
+    PopoverPage,
+    LidlPage,
+    AboutPage
   ],
   imports: [
     BrowserModule,
@@ -74,7 +80,10 @@ export const firebaseConfig = {
     BillPage,
     MyAccountPage,
     EditPage,
-    AddBillPage
+    AddBillPage,
+    PopoverPage,
+    LidlPage,
+    AboutPage
   ],
   providers: [
     StatusBar,

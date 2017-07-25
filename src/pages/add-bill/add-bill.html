@@ -15,77 +15,96 @@
 </ion-header>
 
 
-<ion-content padding class="backgroundIMG">
-<ion-card>
-  <ion-card-header>
+<ion-content padding>
   
     
      <div class="row">
-      <div>
-       <ion-icon name="calendar" isActive="false"></ion-icon> 
-    <ion-input type="text" placeholder="ZZ.LL.YYYY"></ion-input>
-  
-       <ion-icon name="time" isActive="false"></ion-icon>
-       <ion-input type="text" placeholder="HH:MM"></ion-input>
-      </div>
+     <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-icon name="calendar" isActive="false"></ion-icon> 
+          <ion-item>
+            <ion-label class="stacked_title" stacked></ion-label>
+            <ion-input type="text" placeholder="ZZ.LL.YYYY" [(ngModel)]="bill.date"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-icon name="time" isActive="false"></ion-icon>
+            <ion-item>
+              <ion-label class="stacked_title" stacked></ion-label>
+              <ion-input type="text" placeholder="HH:MM"></ion-input>
+            </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
      </div>
      <div class="row">
       <div class="col col-center text-center">
          <ion-icon name="cart" isActive="false"></ion-icon>
-         <ion-input type="text" placeholder="Market name"></ion-input>
-      </div>
+        <ion-item>
+          <ion-label class="stacked_title" stacked></ion-label>
+          <ion-input type="text" placeholder="Store name"></ion-input>
+        </ion-item>
+      </div> 
      </div>
      <div class="row">
       <div class="col col-center text-center">
-        <ion-input type="text" placeholder="Total"></ion-input>
+        <ion-item>
+          <ion-label class="stacked_title" stacked></ion-label>
+          <ion-input type="text" placeholder="Total"></ion-input>
+        </ion-item>
       </div>
      </div>
-  </ion-card-header>
-  <ion-card-content>
-<ion-list>
-
- 
- <ion-item>
-    <div>
-      <div class="inline left">
-        <ion-input type="text" placeholder="Product name"></ion-input>
-      </div>
-      <div class="inline right"><ion-input type="text" placeholder="Quantity"></ion-input></div>
+     <div>
+       <h3>
+       </h3>
+     </div>
+     <div *ngFor="let product of bill.products">
+     <ion-grid>
+      <ion-row>
+        <ion-col>
+        <ion-item>
+          <ion-label class="stacked_title" stacked></ion-label>
+          <ion-input type="text" placeholder="Product name" [(ngModel)]="product.name"></ion-input>
+        </ion-item>
+        </ion-col>
+        <ion-col>
+        <ion-item>
+          <ion-label class="stacked_title" stacked></ion-label>
+          <ion-input type="text" placeholder="Quantity"></ion-input>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+     </ion-grid>
+     <ion-grid>
+      <ion-row>
+        <ion-col>
+         <ion-item>
+          <ion-label class="stacked_title" stacked>Price</ion-label>
+          <ion-input type="text"></ion-input>
+         </ion-item>
+        </ion-col>
+        <ion-col>
+         <ion-item>
+          <ion-label class="stacked_title" stacked></ion-label>
+          <ion-input type="text" placeholder="Total"></ion-input>
+         </ion-item>
+        </ion-col>
+      </ion-row>
+     </ion-grid>
+     </div>
+    <div class="inline right">
+    <button ion-button color="primary" clear (click)="addProduct()">
+      <ion-icon name="add-circle" isActive="false" class="icon"></ion-icon>
+    </button>
     </div>
-    <div class="clear">
-      <div class="inline left"> 1 X 5,00 </div>
-      <div class="inline right"><ion-input type="text" placeholder="Price"></ion-input></div>
-    </div>
-  </ion-item>
-
-     
- <ion-item>
-    <div>
-      <div class="inline left">
-        <ion-input type="text" placeholder="Product name"></ion-input>
-      </div>
-      <div class="inline right"><ion-input type="text" placeholder="Quantity" [(ngModel)]="fname"></ion-input></div>
-    </div>
-    <div class="clear">
-      <div class="inline left"> 1 X 5,00 </div>
-      <div class="inline right"><ion-input type="text" placeholder="Price"></ion-input></div>
-    </div>
-  </ion-item>
-
-  <ion-item>
-    <ion-label floating>First Name</ion-label>
-    <ion-input type="text" [(ngModel)]="fname"></ion-input>
-  </ion-item>
-</ion-list>
 
     <div class="inline left">TOTAL
     </div>
     <div class="inline right"> 14 Lei
      </div>
-     </ion-card-content>
-</ion-card>
 
 
-
+<button (click)="submit()">submit</button>
 
 </ion-content>
