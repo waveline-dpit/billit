@@ -43,6 +43,9 @@ export class AddBillPage {
         total: ""
     });
   }
+  deleteProduct() {
+  this.bill.products.splice(1,1);
+  }
 
   submit() {
     console.log(this.bill);

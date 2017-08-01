@@ -1,6 +1,25 @@
 page-add-bill {
+    .icon{
+        margin: auto;
+    }
+    .item
+    {
+        padding-left: 0px;
+    }
+    .row
+    {
+        padding: 0px;
+    }
+    .padding
+    {
+        padding: 10px;
+    }
 }
-.icon
+.inline
 {
-    
+    display: inline;
+}
+.row
+{
+    text-align: center;
 }
