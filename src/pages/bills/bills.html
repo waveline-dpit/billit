@@ -11,11 +11,16 @@
       <button ion-button icon-only (click)="openModal()" class="share_button" >
         <ion-icon  name="search"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons>  
     <img src="/assets/Images/logo.png" class="billit_image">
 
+<ion-buttons right class="padd" right *ngIf="platform.is('ios')">
+    <button ion-button icon-only (click)="presentPopover($event)">
+  <ion-icon name="add"></ion-icon>
+</button>
+   </ion-buttons>       
+    
   </ion-navbar>
-
 </ion-header>
 
 
@@ -51,18 +56,20 @@
     </ion-card-content>
   </ion-card>
 
-  <button ion-button color="danger" outline round (click)="goToBillPage()">The bill</button>
-
-<button ion-button color="danger" outline round (click)="goToLoginPage()">logout</button>
+  <button ion-button color="primary" outline round (click)="goToBillPage()">The bill</button>
 
 
-  <ion-fab  right bottom >
-    <button ion-fab mini class="fab" ><ion-icon name="add"></ion-icon></button>
+
+
+  <ion-fab  right bottom *ngIf="!platform.is('ios')">
+    <button ion-fab mini class="fab" color='primary'><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="top">
-      <button ion-fab ><ion-icon  name="cloud-download"></ion-icon></button>
-      <button ion-fab ><ion-icon name="create"></ion-icon></button>
-      <button ion-fab ><ion-icon  name="camera"></ion-icon></button>
+      <button ion-fab color="primary"><ion-icon name="cloud-download"></ion-icon></button>
+      <button ion-fab color="primary"(click)="goToAddBillPage()"><ion-icon name="create" ></ion-icon></button>
+      <button ion-fab  color="primary"><ion-icon  name="camera"></ion-icon></button>
 
     </ion-fab-list>
   </ion-fab>
+
+ 
 </ion-content>

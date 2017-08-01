@@ -14,24 +14,23 @@ export class AuthService {
   public state={};
   public isValid={};
 
-  constructor(public afAuth: AngularFireAuth) {
+  constructor(
+    public afAuth: AngularFireAuth) {
     this.isValid = 0;
-    console.log('Hello AuthServiceProvider Provider');
   }
 
   login(email, pass)
   {
-      this.afAuth.auth.signInWithEmailAndPassword(email, pass).then((response) =>{
+      return this.afAuth.auth.signInWithEmailAndPassword(email, pass);/*.then((response) =>{
         this.isValid = 1;
           }, (error)=>{
-      console.log("no", error);
       this.isValid = 0;
-    });
+    });*/
   }
 
   signupUser(newEmail, newPass)
   {
-      this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPass);
+      return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPass);
   }
 
   isLogged()

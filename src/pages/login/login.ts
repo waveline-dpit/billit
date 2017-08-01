@@ -4,8 +4,12 @@ import { RegisterPage } from "../register/register";
 import { FrgPasswordPage } from "../frg-password/frg-password";
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { TabsPage } from "../tabs/tabs";
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import { AlertController } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import firebase from 'firebase/app';
+import {UserRegister} from '../../providers/user-register/user-register';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -19,6 +23,7 @@ import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/databas
 })
 
 export class LoginPage {
+  item : FirebaseListObservable <any[]>
   email;
   pass;
   timer;
@@ -26,30 +31,38 @@ export class LoginPage {
 
   constructor(
     public navCtrl: NavController,
-    db: AngularFireDatabase,
+    public db: AngularFireDatabase,
     public alerCtrl: AlertController,
     public authService: AuthService,
-  ){  }
+    public userRegister: UserRegister
+  )
+  {}
 
-  //this.authService.login(this.email, this.pass);
-  goToHomePage(){
-    if (this.email != null && this.pass != null) {
+    //this.authService.login(this.email, this.pass);
+    goToHomePage(){
+    function validEmail(mail) {
+      let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      return mail.match(mailformat);
+    }
+
+    if (this.email && this.pass ) {
       let ok = true;
-      //TODO:
-      /*if(nu e buna parola sau something went wrong)
-      {
+      if (!validEmail(this.email)) {
         ok = false;
         this.invalidEmailPassAlert();
-      }*/
-      if (ok) {
-        this.authService.login(this.email, this.pass);
-        this.navCtrl.push(TabsPage);
       }
+      this.authService.login(this.email, this.pass).then((response) => {
+        console.log(response);
+      }, (error) =>{
+        this.invalidEmailPassAlert();
+        console.log("no", error);
+      });
     }
     else {
       this.noEmailNoPassAlert();
     }
-}
+
+  }
 
   goToRegisterPage() {
     this.navCtrl.push(RegisterPage);
