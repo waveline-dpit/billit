@@ -18,10 +18,7 @@ export class UserInfo {
   constructor(
     private db : AngularFireDatabase,
     private afAuth: AngularFireAuth
-  )
-  {
-    this.path = '/user/' + this.afAuth.auth.currentUser.uid+ '/info';
-  }
+  ){}
   getUserToken()
   {
     return this.afAuth.auth.currentUser.uid;
@@ -44,6 +41,7 @@ export class UserInfo {
   changeUserData(firstName, lastName)
   {
     let usInfo : FirebaseObjectObservable <any>;
+    this.path = '/user/' + this.afAuth.auth.currentUser.uid+ '/info';
     usInfo = this.db.object(this.path);
     usInfo.update(
       {
