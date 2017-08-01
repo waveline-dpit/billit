@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EditPage } from "../edit/edit";
 import { LoginPage } from "../login/login";
 import {AuthService} from '../../providers/auth-service/auth-service'
+import {UserInfo} from '../../providers/user-info/user-info'
+import {AngularFireAuth} from 'angularfire2/auth'
 
 /**
  * Generated class for the MyAccountPage page.
@@ -17,8 +19,23 @@ import {AuthService} from '../../providers/auth-service/auth-service'
 })
 export class MyAccountPage {
   logoutButton = {};
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService) {
-  }
+  public firstName : string;
+  public lastName : string;
+  public accEmail : string;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public authService: AuthService,
+    public userInfo: UserInfo,
+    public afAuth: AngularFireAuth
+   )
+   {
+     userInfo.getUserInfo().subscribe((user) =>{
+       this.firstName = user.firstName;
+       this.lastName = user.lastName;
+       this.accEmail = this.afAuth.auth.currentUser.email;
+   });
+   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyAccountPage');

@@ -17,7 +17,6 @@ export class AuthService {
   constructor(
     public afAuth: AngularFireAuth) {
     this.isValid = 0;
-    console.log('Hello AuthServiceProvider Provider');
   }
 
   login(email, pass)
@@ -31,7 +30,7 @@ export class AuthService {
 
   signupUser(newEmail, newPass)
   {
-      this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPass);
+      return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPass);
   }
 
   isLogged()

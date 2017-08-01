@@ -2,22 +2,33 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { MyAccountPage } from "../my-account/my-account";
+import { UserInfo} from "../../providers/user-info/user-info";
 
-
-/**
- * Generated class for the EditPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-edit',
   templateUrl: 'edit.html',
 })
 export class EditPage {
+  public firstName;
+  public lastName;
+  public email;
+  public oldFirstName;
+  public oldLastName;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public alertCtrl: AlertController,
+    public userInfo: UserInfo
+  )
+  {
+    userInfo.getUserInfo().subscribe((user)=>
+    {
+      this.oldFirstName = user.firstName;
+      this.oldLastName = user.lastName;
+      this.email = userInfo.getUserEmail();
+    });
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditPage');
@@ -56,7 +67,19 @@ export class EditPage {
     });
     prompt.present();
   }
-  goToMyAccountPage() {
-    this.navCtrl.push(MyAccountPage);
+  saveData() {
+    if(this.firstName && this.lastName)
+    {
+      this.userInfo.changeUserData(this.firstName, this.lastName);
+    }
+    else if(this.firstName)
+    {
+      this.userInfo.changeUserData(this.firstName, this.oldLastName);
+    }
+    else if(this.lastName)
+    {
+      this.userInfo.changeUserData(this.oldFirstName, this.lastName);
+    }
+    this.navCtrl.pop();
   }
 }
