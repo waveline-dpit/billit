@@ -24,7 +24,7 @@ export class AddBillPage {
     this.bill = {
       date: "",
       time: "",
-      totalAmmount: "",
+      totalAmount: 0,
       storeName: ""
     }
     this.products = [
@@ -32,7 +32,7 @@ export class AddBillPage {
         name: "",
         quantity: "",
         pricePerUnit: "",
-        totalPrice: ""
+        totalPrice: 0
       }
     ]
   }
@@ -50,11 +50,36 @@ export class AddBillPage {
     });
   }
   deleteProduct() {
-  this.bill.products.splice(1,1);
+    this.products.splice(1,1);
   }
 
   submit() {
+    this.navCtrl.pop();
     this.billDatabase.addBill(this.bill, this.products);
   }
+  isNumber(val)
+  {
+    if(val>-99999999999 && val<99999999999)
+      return true;
+    return false;
+  }
+  addPrice(product)
+  {
+    if(product.pricePerUnit && product.quantity )
+    {
+      if(this.isNumber(product.pricePerUnit), this.isNumber(product.quantity))
+      {
+        this.bill.totalAmount -= product.totalPrice;
+        product.totalPrice = product.pricePerUnit * product.quantity;
+        this.bill.totalAmount += product.totalPrice;
+      }
+    }
+    else
+    {
+      this.bill.totalAmount -= product.totalPrice;
+      product.totalPrice = 0;
+    }
+  }
+
 
 }

@@ -50,7 +50,7 @@
     </ion-col>
     <ion-col col-11>
       <ion-item>
-        <ion-input type="text" placeholder="Store name" [(ngModel)]="bill.storeName"></ion-input>
+        <ion-input type="text" placeholder="Store name" [(ngModel)]="bill.storeName "></ion-input>
       </ion-item>
     </ion-col>
     </ion-row>
@@ -71,7 +71,7 @@
         <ion-col>
         <ion-item>
           <ion-label class="stacked_title" stacked></ion-label>
-          <ion-input type="text" placeholder="Quantity" [(ngModel)]="product.quantity"></ion-input>
+          <ion-input type="text" placeholder="Quantity" clear (keyup)="addPrice(product)" [(ngModel)]="product.quantity"></ion-input>
         </ion-item>
         </ion-col>
       </ion-row>
@@ -81,7 +81,7 @@
         <ion-col>
         <ion-item>
           <ion-label class="stacked_title" stacked></ion-label>
-          <ion-input type="text" placeholder="Price"[(ngModel)]="product.pricePerUnit"></ion-input>
+          <ion-input type="text" placeholder="Price" clear (keyup)="addPrice(product)" [(ngModel)]="product.pricePerUnit" ></ion-input>
         </ion-item>
         </ion-col>
         <ion-col>
@@ -105,7 +105,7 @@
       <ion-row>
       <ion-col col-2>TOTAL</ion-col>
       <ion-col col-8> </ion-col>
-      <ion-col col-2> 14 Lei </ion-col>
+      <ion-col col-2> {{bill.totalAmount}} </ion-col> 
     </ion-row>
     <ion-row>
       <ion-col align-self-center>
