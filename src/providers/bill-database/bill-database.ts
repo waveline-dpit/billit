@@ -1,0 +1,41 @@
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
+import firebase from 'firebase/app'
+import { AngularFireAuth } from 'angularfire2/auth';
+import {Observable} from 'rxjs/Observable';
+import {UserInfo} from '../user-info/user-info'
+
+@Injectable()
+export class BillDatabase {
+
+  constructor(
+    public db: AngularFireDatabase,
+    public userInfo: UserInfo
+  ) {}
+  addBill(bill, products)
+  {
+    let path = '/user/' + this.userInfo.getUserToken() + '/bills';
+    let user : FirebaseListObservable <any>;
+    user = this.db.list(path);
+    user.push(bill).then((response) => {
+      console.log(products.size, response);
+      path = path + '/' + response.path.o[3] + '/products';
+      console.log(path);
+      user = this.db.list(path);
+      for (let eachProduct of products) {
+        console.log(eachProduct);
+        user.push(eachProduct);
+      }
+      //for(let i = 1; i <= products.size(); i++)
+    });
+  }
+  addProducts(products)
+  {
+    let path = '/user/' + this.userInfo.getUserToken() + '/bills';
+    let user : FirebaseListObservable <any>;
+    user = this.db.list(path);
+    user.push(products);
+  }
+}

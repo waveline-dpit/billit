@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {BillDatabase} from '../../providers/bill-database/bill-database'
 
 /**
  * Generated class for the AddBillPage page.
@@ -14,21 +15,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AddBillPage {
   bill;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  products;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public billDatabase: BillDatabase
+  ) {
     this.bill = {
       date: "",
       time: "",
-      total: "",
-      storeName: "",
-      products: [
-        {
-          name: "",
-          quantity: "",
-          price: "",
-          total: ""
-        }
-      ]
+      totalAmmount: "",
+      storeName: ""
     }
+    this.products = [
+      {
+        name: "",
+        quantity: "",
+        pricePerUnit: "",
+        totalPrice: ""
+      }
+    ]
   }
 
   ionViewDidLoad() {
@@ -36,16 +42,16 @@ export class AddBillPage {
   }
 
   addProduct() {
-    this.bill.products.push({
+    this.products.push({
         name: "",
         quantity: "",
-        price: "",
-        total: ""
+        pricePerUnit: "",
+        totalPrice: ""
     });
   }
 
   submit() {
-    console.log(this.bill);
+    this.billDatabase.addBill(this.bill, this.products);
   }
 
 }
