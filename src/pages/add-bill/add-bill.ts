@@ -49,6 +49,9 @@ export class AddBillPage {
         totalPrice: ""
     });
   }
+  deleteProduct() {
+  this.bill.products.splice(1,1);
+  }
 
   submit() {
     this.billDatabase.addBill(this.bill, this.products);
