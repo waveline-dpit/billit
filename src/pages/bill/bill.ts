@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController, Platform } from 'ionic-angular';
+import {BillDatabase} from "../../providers/bill-database/bill-database"
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
+import {UserInfo} from '../../providers/user-info/user-info'
 /**
  * Generated class for the BillPage page.
  *
@@ -13,8 +16,19 @@ import { AlertController, Platform } from 'ionic-angular';
   templateUrl: 'bill.html',
 })
 export class BillPage {
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  public bill;
+  keys;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public alertCtrl: AlertController,
+    public billDatabase: BillDatabase,
+    public userInfo: UserInfo,
+    public db: AngularFireDatabase
+  )
+  {
+    this.bill = billDatabase.bill;
+    this.keys = Object.keys(this.bill.products);
   }
 
   ionViewDidLoad() {
@@ -24,7 +38,7 @@ export class BillPage {
     let alert = this.alertCtrl.create();
     alert.setTitle('Select categories');
 
-    
+
     alert.addInput({
       type: 'checkbox',
       label: 'Alderaan',
@@ -43,7 +57,7 @@ export class BillPage {
       text: 'Okay',
       handler: data => {
         console.log('Checkbox data:', data);
-        
+
       }
     });
     alert.present();
@@ -76,7 +90,7 @@ export class BillPage {
     prompt.present();
   }
 
-  
+
  billCheckbox() {
     let alert = this.alertCtrl.create();
    alert.setTitle('Select the bill category');
@@ -109,7 +123,7 @@ export class BillPage {
     alert.addButton('Cancel');
     alert.addButton({
       text: 'OK',
-     
+
     });
     alert.present();
   }

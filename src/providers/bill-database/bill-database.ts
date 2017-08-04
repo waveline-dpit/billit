@@ -9,7 +9,7 @@ import {UserInfo} from '../user-info/user-info'
 
 @Injectable()
 export class BillDatabase {
-
+  public bill;
   constructor(
     public db: AngularFireDatabase,
     public userInfo: UserInfo
@@ -33,5 +33,10 @@ export class BillDatabase {
     let user : FirebaseListObservable <any>;
     user = this.db.list(path);
     user.push(products);
+  }
+  retreiveAllBills()
+  {
+    let path = '/user/' + this.userInfo.getUserToken() + '/bills';
+    return this.db.list(path);
   }
 }

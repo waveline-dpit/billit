@@ -22,74 +22,54 @@
 <ion-content padding class="backgroundIMG">
 <ion-card>
   <ion-card-header>
-      
+
          <button ion-button icon-start color="primary" clear (click)="billCheckbox()">
       <ion-icon name="attach"></ion-icon>
-    
+
     </button>
      <div class="row">
       <div class="col col-center text-center">
-       <ion-icon name="calendar" isActive="false"> 24.06.2017 </ion-icon>
-       <ion-icon name="time" isActive="false"> 21:08 </ion-icon>
+       <ion-icon name="calendar" isActive="false"> {{bill.date}} </ion-icon>
+       <ion-icon name="time" isActive="false"> {{bill.time}}</ion-icon>
       </div>
      </div>
      <div class="row">
       <div class="col col-center text-center">
-         <ion-icon name="cart" isActive="false"> Carrefour</ion-icon>
+         <ion-icon name="cart" isActive="false"> {{bill.storeName}}</ion-icon>
       </div>
      </div>
      <div class="row">
-      <div class="col col-center text-center">14 Lei
+      <div class="col col-center text-center"> {{bill.totalAmount}} Lei
       </div>
      </div>
   </ion-card-header>
   <ion-card-content>
 <ion-list>
-
-  <ion-item-sliding>
- <ion-item>
-    <div>
-      <div class="inline left"> WATER </div>
-      <div class="inline right"> 1 </div>
-    </div>
-    <div class="clear">
-      <div class="inline left"> 1 X 5,00 </div>
-      <div class="inline right"> 5,00 </div>
-    </div>
-  </ion-item>
-   <ion-item-options>
-          <button ion-button color="light" icon-start (click)="showCheckbox()">
-          <ion-icon name="attach"></ion-icon>
-          Add category
+  <div *ngFor="let id of keys">
+    <ion-item-sliding>
+     <ion-item>
+        <div>
+          <div class="inline left"> {{bill.products[id].name}} </div>
+          <div class="inline right"> {{bill.products[id].quantity}} </div>
+        </div>
+        <div class="clear">
+          <div class="inline left"> {{bill.products[id].quantity}} X {{bill.products[id].pricePerUnit}} </div>
+          <div class="inline right"> {{bill.products[id].totalPrice}} </div>
+        </div>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="light" icon-start (click)="showCheckbox()">
+            <ion-icon name="attach"></ion-icon>
+              Add category
         </button>
-
       </ion-item-options>
     </ion-item-sliding>
-
-     <ion-item-sliding>
-  <ion-item>
-    <div>
-      <div class="inline left"> JUICE </div>
-      <div class="inline right"> 1 </div>
-    </div>
-    <div class="clear">
-      <div class="inline left"> 1 X 9,00 </div>
-      <div class="inline right"> 9,00 </div>
-    </div>
-  </ion-item>
-   <ion-item-options>
-        <button ion-button color="light" icon-start>
-          <ion-icon name="attach"></ion-icon>
-          Add category
-        </button>
-
-      </ion-item-options>
-    </ion-item-sliding>
+  </div>
 </ion-list>
 
     <div class="inline left">TOTAL
     </div>
-    <div class="inline right"> 14 Lei
+    <div class="inline right"> {{bill.totalAmount}} Lei
      </div>
      </ion-card-content>
 </ion-card>
