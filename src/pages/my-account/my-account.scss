@@ -1,9 +1,21 @@
 page-my-account {
+  .label[stacked]
+  {
+    font-size: 2vh;
+    color: #8e8e8e;
+  }
+  .nomargin{
+    margin: 5px 8px 13px 0;
+  }
+  .item
+  {
+    padding: 0 16px;
+  }
 
 }
 .sizenew
 {
-    margin: 10% auto;
+    margin: 8% auto;
     display: block;
     width: 42%;
     height: auto;
@@ -20,7 +32,7 @@ page-my-account {
 }
 .logout_button
 {
-  margin: auto;
-  display: block;  
+  margin: -25px auto 0 auto;
+  display: block;
   width: 40%;
 }

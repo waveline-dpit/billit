@@ -19,12 +19,12 @@
       <ion-label floating>First Name</ion-label>
       <ion-input type="text" formControlName="fcfname" [(ngModel)]="fname" [class.invalid]="!registerForm.controls.fcfname.valid && (registerForm.controls.fcfname.dirty || submitAttempt)"></ion-input>
     </ion-item>
-    <p *ngIf="!registerForm.controls.fcfname.valid && (registerForm.controls.fcfname.dirty || submitAttempt)">Please enter a valid name.</p>
+    <p *ngIf="!registerForm.controls.fcfname.valid && (registerForm.controls.fcfname.dirty || submitAttempt)">Please enter a real name.</p>
     <ion-item>
       <ion-label floating>Last Name</ion-label>
       <ion-input type="text" formControlName="fclname" [(ngModel)]="lname" [class.invalid]="!registerForm.controls.fclname.valid && (registerForm.controls.fclname.dirty || submitAttempt)"></ion-input>
     </ion-item>
-    <p *ngIf="!registerForm.controls.fclname.valid && (registerForm.controls.fclname.dirty || submitAttempt)">Please enter a valid name.</p>
+    <p *ngIf="!registerForm.controls.fclname.valid && (registerForm.controls.fclname.dirty || submitAttempt)">Please enter a real name.</p>
     <ion-item>
       <ion-label floating>Email</ion-label>
       <ion-input type="text" formControlName="fcemail" [(ngModel)]="regEmail" [class.invalid]="!registerForm.controls.fcemail.valid && (registerForm.controls.fcemail.dirty || submitAttempt)"></ion-input>

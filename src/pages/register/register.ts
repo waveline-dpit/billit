@@ -4,14 +4,11 @@ import { LoginPage } from "../login/login";
 import { TabsPage } from "../tabs/tabs";
 import { AuthService } from "../../providers/auth-service/auth-service"
 import { AlertController } from 'ionic-angular';
-<<<<<<< HEAD
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmailValidator } from  '../../validators/email';
 import { PasswordValidator } from  '../../validators/password';
+import {UserRegister} from '../../providers/user-register/user-register';
 
-=======
-import {UserRegister} from '../../providers/user-register/user-register'
->>>>>>> 6f6840b660b217beedf002d3a000117b5bbae56e
 /**
  * Generated class for the RegisterPage page.
  *
@@ -31,24 +28,16 @@ export class RegisterPage {
   lname;
   pass2;
 
-<<<<<<< HEAD
   fcfname; fclname; fcemail; fcpass; fcpass2;
   registerForm: FormGroup;
   submitAttempt: boolean = false;
-=======
-  constructor(
-    public navCtrl: NavController,
-    public authService: AuthService,
-    public alerCtrl: AlertController,
-    public userRegister: UserRegister
-  ) {}
->>>>>>> 6f6840b660b217beedf002d3a000117b5bbae56e
 
   constructor(
     public navCtrl: NavController,
     public authService: AuthService,
     public alerCtrl: AlertController,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public userRegister: UserRegister
   ) {
     this.registerForm = formBuilder.group({
         fcfname:['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],

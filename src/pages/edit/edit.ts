@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { MyAccountPage } from "../my-account/my-account";
 import { UserInfo} from "../../providers/user-info/user-info";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -16,10 +17,14 @@ export class EditPage {
   public oldFirstName;
   public oldLastName;
 
+  fcfname; fclname;
+  editAccForm: FormGroup;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
+    public formBuilder: FormBuilder,
     public userInfo: UserInfo
   )
   {
@@ -28,6 +33,12 @@ export class EditPage {
       this.oldFirstName = user.firstName;
       this.oldLastName = user.lastName;
       this.email = userInfo.getUserEmail();
+      this.firstName = user.firstName;
+      this.lastName = user.lastName;
+    });
+    this.editAccForm = formBuilder.group({
+      fcfname:['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      fclname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
     });
   }
   ionViewDidLoad() {

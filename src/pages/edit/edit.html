@@ -15,23 +15,26 @@
 
 <ion-content padding class="backIMG">
   <img src="/assets/Images/defaultAccount.png" class="sizenew">
-  <ion-card>
-    <ion-card-content class="edit_bla">
+  <div class="card">
+    <form [formGroup]="editAccForm">
       <ion-list>
         <ion-item>
-          <ion-label class="stacked_title" stacked>First Name </ion-label>
-          <ion-input type="text" [(ngModel)]="firstName" placeholder= {{oldFirstName}}></ion-input>
+          <ion-label class="stacked_title" stacked>First Name</ion-label>
+          <ion-input type="text" formControlName="fcfname" [(ngModel)]="firstName" placeholder= {{oldFirstName}} [class.invalid]="!editAccForm.controls.fcfname.valid && editAccForm.controls.fcfname.dirty"></ion-input>
         </ion-item>
+        <p *ngIf="!editAccForm.controls.fcfname.valid && editAccForm.controls.fcfname.dirty">Please enter a valid email.</p>
         <ion-item>
-          <ion-label stacked>Last Name </ion-label>
-          <ion-input type="text"[(ngModel)]="lastName" placeholder= {{oldLastName}}></ion-input>
+          <ion-label class="stacked_title" stacked>Last Name </ion-label>
+          <ion-input type="text" formControlName="fclname" [(ngModel)]="lastName" placeholder= {{oldLastName}} [class.invalid]="!editAccForm.controls.fclname.valid && editAccForm.controls.fclname.dirty"></ion-input>
         </ion-item>
-        <ion-item >
-          <h2 class="email_size"> {{email}}</h2>
+        <p *ngIf="!editAccForm.controls.fclname.valid && editAccForm.controls.fclname.dirty">Please enter a valid email.</p>
+        <ion-item>
+          <ion-label  stacked>Email</ion-label>
+          <ion-label class="stacked_title nomargin">{{email}}</ion-label>
         </ion-item>
       </ion-list>
-    </ion-card-content>
-  </ion-card>
+    </form>
+  </div>
   <button ion-button color="light" class="col change_bttn" (click)="showPrompt()">Change Password</button>
   <button ion-button color="primary" round (click)="saveData()" class="save_bttn">Save</button>
 </ion-content>

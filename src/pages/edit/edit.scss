@@ -1,28 +1,53 @@
 page-edit {
-
+  p {
+    color: red;
+    font-size: 2vh;
+    margin: 10px 0 -5px 8px;
+    transition: opacity 2s ease-in;
+  }
+  p.ios
+  {
+      margin: 0 0 0 16px;
+  }
+  .label[stacked]
+  {
+    font-size: 2vh;
+    color: #8e8e8e;
+  }
+  .item
+  {
+    padding: 0 8px;
+  }
+  .card
+  {
+    border-radius: 2px;
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    margin: 12px;
+    width: calc(100% - 24px);
+  }
 }
 .edit_bla
 {
     .item-input .label, .item-select .label, .item-datetime .label {
         color: black;
-        font-size: 2.5vh;
+        font-size: 2vh;
     }
     .email_size
     {
         font-size: 2.5vh;
     }
-    padding-bottom: 0px;
 }
 .change_bttn
 {
-    margin: 0 10px;
+    margin: -14px 10px 0 10px;
     width: calc(100% - 20px);
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); 
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 .save_bttn
 {
     margin: 4% auto 0 auto;
-    display: block;  
+    display: block;
     width: 40%;
 }
