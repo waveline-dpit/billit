@@ -20,13 +20,15 @@
 
 
 <ion-content padding class="backgroundIMG">
+        <button ion-button icon-start color="light" class="select" clear (click)="billCheckbox()">
+             Select the bill category 
+            <ion-icon name="attach"></ion-icon>
+        </button>
+  
+
 <ion-card>
   <ion-card-header>
 
-         <button ion-button icon-start color="primary" clear (click)="billCheckbox()">
-      <ion-icon name="attach"></ion-icon>
-
-    </button>
      <div class="row">
       <div class="col col-center text-center">
        <ion-icon name="calendar" isActive="false"> {{bill.date}} </ion-icon>

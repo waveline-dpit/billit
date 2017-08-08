@@ -41,7 +41,7 @@
       </ion-card-content>
     </ion-card>
   </div>
-
+  <button ion-button color="primary" round (click)="addCategory()" class="save_bttn">Save</button>
   <ion-fab  right bottom *ngIf="!platform.is('ios')">
     <button ion-fab mini class="fab" color='primary'><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="top">
