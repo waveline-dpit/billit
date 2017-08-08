@@ -20,15 +20,19 @@
 
 
 <ion-content padding class="backgroundIMG">
-        <button ion-button icon-start color="light" class="select" clear (click)="billCheckbox()">
-             Select the bill category 
-            <ion-icon name="attach"></ion-icon>
+        <button ion-button color="light" class="select" clear (click)="billCheckbox()">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-9>Select the bill category</ion-col>
+              <ion-col col-2></ion-col>
+              <ion-col col-1><ion-icon name="attach"></ion-icon></ion-col>
+            </ion-row>
+          </ion-grid>
         </button>
   
 
 <ion-card>
   <ion-card-header>
-
      <div class="row">
       <div class="col col-center text-center">
        <ion-icon name="calendar" isActive="false"> {{bill.date}} </ion-icon>
@@ -41,7 +45,7 @@
       </div>
      </div>
      <div class="row">
-      <div class="col col-center text-center"> {{bill.totalAmount}} Lei
+      <div class="col col-center text-center"> {{bill.totalAmount}} RON
       </div>
      </div>
   </ion-card-header>
@@ -52,11 +56,11 @@
      <ion-item>
         <div>
           <div class="inline left"> {{bill.products[id].name}} </div>
-          <div class="inline right"> {{bill.products[id].quantity}} </div>
+          <div class="inline right"> {{bill.products[id].quantity}} BUC</div>
         </div>
         <div class="clear">
           <div class="inline left"> {{bill.products[id].quantity}} X {{bill.products[id].pricePerUnit}} </div>
-          <div class="inline right"> {{bill.products[id].totalPrice}} </div>
+          <div class="inline right"> {{bill.products[id].totalPrice}} RON</div>
         </div>
       </ion-item>
       <ion-item-options>
@@ -69,11 +73,16 @@
   </div>
 </ion-list>
 
-    <div class="inline left">TOTAL
-    </div>
-    <div class="inline right"> {{bill.totalAmount}} Lei
-     </div>
-     </ion-card-content>
+
+<ion-grid>
+  <ion-row  class="tot">
+    <ion-col col-4>TOTAL</ion-col>
+    <ion-col col-4></ion-col>
+    <ion-col col-4>{{bill.totalAmount}} RON</ion-col>
+  </ion-row>
+</ion-grid>
+    
+ </ion-card-content>
 </ion-card>
 
 
