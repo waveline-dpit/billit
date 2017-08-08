@@ -31,8 +31,8 @@
         </button>
   
 
-<ion-card>
-  <ion-card-header>
+<ion-card padding class="cc">
+  <ion-card-header class="tot">
      <div class="row">
       <div class="col col-center text-center">
        <ion-icon name="calendar" isActive="false"> {{bill.date}} </ion-icon>
@@ -56,7 +56,7 @@
      <ion-item>
         <div>
           <div class="inline left"> {{bill.products[id].name}} </div>
-          <div class="inline right"> {{bill.products[id].quantity}} BUC</div>
+          <div class="inline right"> {{bill.products[id].quantity}} buc</div>
         </div>
         <div class="clear">
           <div class="inline left"> {{bill.products[id].quantity}} X {{bill.products[id].pricePerUnit}} </div>
@@ -64,7 +64,7 @@
         </div>
       </ion-item>
       <ion-item-options>
-        <button ion-button color="light" icon-start (click)="showCheckbox()">
+        <button ion-buttoncolor="light" icon-start (click)="showCheckbox()">
             <ion-icon name="attach"></ion-icon>
               Add category
         </button>
@@ -76,9 +76,9 @@
 
 <ion-grid>
   <ion-row  class="tot">
-    <ion-col col-4>TOTAL</ion-col>
-    <ion-col col-4></ion-col>
-    <ion-col col-4>{{bill.totalAmount}} RON</ion-col>
+    <ion-col col-5>TOTAL</ion-col>
+    <ion-col col-2></ion-col>
+    <ion-col col-5>{{bill.totalAmount}} RON</ion-col>
   </ion-row>
 </ion-grid>
     
