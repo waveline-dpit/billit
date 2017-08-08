@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {BillDatabase} from '../../providers/bill-database/bill-database'
 
 /**
  * Generated class for the AddBillPage page.
@@ -14,21 +15,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AddBillPage {
   bill;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  products;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public billDatabase: BillDatabase
+  ) {
     this.bill = {
       date: "",
       time: "",
-      total: "",
-      storeName: "",
-      products: [
-        {
-          name: "",
-          quantity: "",
-          price: "",
-          total: ""
-        }
-      ]
+      totalAmount: 0,
+      storeName: ""
     }
+    this.products = [
+      {
+        name: "",
+        quantity: "",
+        pricePerUnit: "",
+        totalPrice: 0
+      }
+    ]
   }
 
   ionViewDidLoad() {
@@ -36,16 +42,44 @@ export class AddBillPage {
   }
 
   addProduct() {
-    this.bill.products.push({
+    this.products.push({
         name: "",
         quantity: "",
-        price: "",
-        total: ""
+        pricePerUnit: "",
+        totalPrice: ""
     });
+  }
+  deleteProduct() {
+    this.products.splice(1,1);
   }
 
   submit() {
-    console.log(this.bill);
+    this.navCtrl.pop();
+    this.billDatabase.addBill(this.bill, this.products);
   }
+  isNumber(val)
+  {
+    if(val>-99999999999 && val<99999999999)
+      return true;
+    return false;
+  }
+  addPrice(product)
+  {
+    if(product.pricePerUnit && product.quantity )
+    {
+      if(this.isNumber(product.pricePerUnit), this.isNumber(product.quantity))
+      {
+        this.bill.totalAmount -= product.totalPrice;
+        product.totalPrice = product.pricePerUnit * product.quantity;
+        this.bill.totalAmount += product.totalPrice;
+      }
+    }
+    else
+    {
+      this.bill.totalAmount -= product.totalPrice;
+      product.totalPrice = 0;
+    }
+  }
+
 
 }

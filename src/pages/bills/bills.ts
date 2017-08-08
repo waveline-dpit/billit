@@ -6,12 +6,10 @@ import {AuthService} from '../../providers/auth-service/auth-service'
 import { AddBillPage } from "../add-bill/add-bill";
 import { PopoverController } from 'ionic-angular';
 import { PopoverPage } from "../popover/popover";
-/**
- * Generated class for the BillsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import {BillDatabase} from "../../providers/bill-database/bill-database"
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
+import {UserInfo} from '../../providers/user-info/user-info'
+
 @IonicPage()
 @Component({
   selector: 'page-bills',
@@ -19,21 +17,30 @@ import { PopoverPage } from "../popover/popover";
 })
 export class BillsPage {
   logoutButton = {};
+  bills;
   constructor(
     public platform: Platform,
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public authService: AuthService,
-    public popoverCtrl: PopoverController
-
-    ) {}
+    public popoverCtrl: PopoverController,
+    public billDatabase: BillDatabase,
+    public userInfo: UserInfo,
+    public db: AngularFireDatabase
+  )
+  {
+    billDatabase.retreiveAllBills().subscribe((data) =>{
+      this.bills = data;
+    });
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BillsPage');
   }
 
-  goToBillPage()
+  goToBillPage(bill)
   {
+    this.billDatabase.bill = bill;
     this.navCtrl.push(BillPage);
   }
 
@@ -51,4 +58,5 @@ export class BillsPage {
       ev: myEvent
     });
   }
+
 }

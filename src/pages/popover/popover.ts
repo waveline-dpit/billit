@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-
+import { AddBillPage } from "../add-bill/add-bill";
 /**
  * Generated class for the PopoverPage page.
  *
@@ -13,15 +13,22 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
   template: `
       <ion-list>
        <button ion-item><ion-icon  name="cloud-download"></ion-icon> Recive</button>
-       <button ion-item><ion-icon name="create" ></ion-icon> Write</button>
+       <button ion-item (click)="goToAddBillPage()"><ion-icon name="create"></ion-icon> Write</button>
        <button ion-item><ion-icon  name="camera"></ion-icon> Scan</button>
       </ion-list>
   `
 })
 export class PopoverPage {
-  constructor(public viewCtrl: ViewController) {}
+  constructor(
+    public navCtrl: NavController,
+    public viewCtrl: ViewController
+  ) {}
 
   close() {
     this.viewCtrl.dismiss();
+  }
+  goToAddBillPage()
+  {
+    this.navCtrl.push(AddBillPage);
   }
 }

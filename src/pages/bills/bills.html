@@ -11,55 +11,36 @@
       <button ion-button icon-only (click)="openModal()" class="share_button" >
         <ion-icon  name="search"></ion-icon>
       </button>
-    </ion-buttons>  
+    </ion-buttons>
     <img src="/assets/Images/logo.png" class="billit_image">
 
 <ion-buttons right class="padd" right *ngIf="platform.is('ios')">
     <button ion-button icon-only (click)="presentPopover($event)">
   <ion-icon name="add"></ion-icon>
 </button>
-   </ion-buttons>       
-    
+   </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding class="backgroundIMG">
-
-  <ion-card>
-    <ion-card-content>
-      <div>
-        <div class="inline left">
-          <div class="inline">
-            <ion-icon name="calendar" isActive="false"></ion-icon> 28.06.2017 </div>
-          <div class="inline">
-            <ion-icon name="time" isActive="false"></ion-icon> 14:21</div>
+  <div *ngFor="let bill of bills">
+    <ion-card (click)="goToBillPage(bill)">
+      <ion-card-content>
+        <div>
+          <div class="inline left">
+            <div class="inline">
+              <ion-icon name="calendar" isActive="false"></ion-icon> {{bill.date}} </div>
+            <div class="inline">
+              <ion-icon name="time" isActive="false"></ion-icon> {{bill.time}}</div>
+          </div>
+          <div class="inline right">{{bill.totalAmount}}</div>
         </div>
-        <div class="inline right">45,44</div>
-      </div>
-      <div class="clear">Carrefour</div>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-content>
-      <div>
-        <div class="inline left">
-          <div class="inline">
-            <ion-icon name="calendar" isActive="false"></ion-icon> 28.06.2017 </div>
-          <div class="inline">
-            <ion-icon name="time" isActive="false"></ion-icon> 14:21</div>
-        </div>
-        <div class="inline right">45,44</div>
-      </div>
-      <div class="clear">Carrefour</div>
-    </ion-card-content>
-  </ion-card>
-
-  <button ion-button color="primary" outline round (click)="goToBillPage()">The bill</button>
-
-
-
+        <div class="clear">{{bill.storeName}}</div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
   <ion-fab  right bottom *ngIf="!platform.is('ios')">
     <button ion-fab mini class="fab" color='primary'><ion-icon name="add"></ion-icon></button>
@@ -71,5 +52,5 @@
     </ion-fab-list>
   </ion-fab>
 
- 
+
 </ion-content>

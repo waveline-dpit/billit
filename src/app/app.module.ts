@@ -30,6 +30,7 @@ import { PopoverPage } from "../pages/popover/popover";
 import { AboutPage } from "../pages/about/about";
 import { UserInfo } from '../providers/user-info/user-info';
 import { UserRegister } from '../providers/user-register/user-register';
+import { BillDatabase } from '../providers/bill-database/bill-database';
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -91,7 +92,8 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
     UserInfo,
-    UserRegister
+    UserRegister,
+    BillDatabase
   ]
 })
 export class AppModule {}
