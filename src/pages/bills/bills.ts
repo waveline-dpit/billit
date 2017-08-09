@@ -8,7 +8,8 @@ import { PopoverController } from 'ionic-angular';
 import { PopoverPage } from "../popover/popover";
 import {BillDatabase} from "../../providers/bill-database/bill-database"
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
-import {UserInfo} from '../../providers/user-info/user-info'
+import {UserInfo} from '../../providers/user-info/user-info';
+import {CategoriesService} from '../../providers/categories-service/categories-service'
 
 @IonicPage()
 @Component({
@@ -18,6 +19,7 @@ import {UserInfo} from '../../providers/user-info/user-info'
 export class BillsPage {
   logoutButton = {};
   bills;
+  cat;
   constructor(
     public platform: Platform,
     public navCtrl: NavController,
@@ -26,7 +28,8 @@ export class BillsPage {
     public popoverCtrl: PopoverController,
     public billDatabase: BillDatabase,
     public userInfo: UserInfo,
-    public db: AngularFireDatabase
+    public db: AngularFireDatabase,
+    public categoriesService: CategoriesService
   )
   {
     billDatabase.retreiveAllBills().subscribe((data) =>{
@@ -49,14 +52,18 @@ export class BillsPage {
     console.log(this.authService.logOut());
   }
   goToAddBillPage()
-    {
-      this.navCtrl.push(AddBillPage);
-    }
+  {
+    this.navCtrl.push(AddBillPage);
+  }
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(PopoverPage);
     popover.present({
       ev: myEvent
     });
   }
-
+  addCategory()
+  {
+    this.cat = "Paine";
+    this.categoriesService.addCategory(this.cat);
+  }
 }

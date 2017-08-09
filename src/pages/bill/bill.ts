@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController, Platform } from 'ionic-angular';
 import {BillDatabase} from "../../providers/bill-database/bill-database"
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
-import {UserInfo} from '../../providers/user-info/user-info'
+import {UserInfo} from '../../providers/user-info/user-info';
+import {CategoriesService} from '../../providers/categories-service/categories-service';
 /**
  * Generated class for the BillPage page.
  *
@@ -18,17 +19,23 @@ import {UserInfo} from '../../providers/user-info/user-info'
 export class BillPage {
   public bill;
   keys;
+  categories;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public billDatabase: BillDatabase,
     public userInfo: UserInfo,
-    public db: AngularFireDatabase
+    public db: AngularFireDatabase,
+    public categoriesService: CategoriesService
   )
   {
     this.bill = billDatabase.bill;
     this.keys = Object.keys(this.bill.products);
+    categoriesService.getCategories().subscribe((data)=>
+    {
+      this.categories = data;
+    });
   }
 
   ionViewDidLoad() {
@@ -93,37 +100,24 @@ export class BillPage {
 
  billCheckbox() {
     let alert = this.alertCtrl.create();
-   alert.setTitle('Select the bill category');
+    alert.setTitle('Select the bill category');
     alert.setMessage('This category will be set for all products on this bill');
+    for(let category of this.categories)
+    {
 
-    alert.addInput({
-      type: 'radio',
-      label: 'Blue',
-      value: 'blue',
-
-    });
-    alert.addInput({
-      type: 'radio',
-      label: 'Blue',
-      value: 'blue',
-
-    });
       alert.addInput({
-      type: 'radio',
-      label: 'Blue',
-      value: 'blue',
-
-    });
-      alert.addInput({
-      type: 'radio',
-      label: 'Blue',
-      value: 'blue',
-
-    });
+        type: 'radio',
+        label: category.name,
+        value: category.$key,
+      });
+    }
     alert.addButton('Cancel');
     alert.addButton({
       text: 'OK',
-
+      handler: data =>
+      {
+        console.log(data);
+      }
     });
     alert.present();
   }

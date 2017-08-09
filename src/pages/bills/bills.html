@@ -19,7 +19,6 @@
   <ion-icon name="add"></ion-icon>
 </button>
    </ion-buttons>
-
   </ion-navbar>
 </ion-header>
 
@@ -32,16 +31,18 @@
           <div class="inline left">
             <div class="inline">
               <ion-icon name="calendar" isActive="false"></ion-icon> {{bill.date}} </div>
-            <div class="inline">
+                <div class="inline">
               <ion-icon name="time" isActive="false"></ion-icon> {{bill.time}}</div>
           </div>
-          <div class="inline right">{{bill.totalAmount}}</div>
+        <div class="inline right">{{bill.totalAmount}}</div>
         </div>
         <div class="clear">{{bill.storeName}}</div>
       </ion-card-content>
     </ion-card>
   </div>
+
   <button ion-button color="primary" round (click)="addCategory()" class="save_bttn">Save</button>
+
   <ion-fab  right bottom *ngIf="!platform.is('ios')">
     <button ion-fab mini class="fab" color='primary'><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="top">

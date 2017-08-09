@@ -31,6 +31,9 @@ import { AboutPage } from "../pages/about/about";
 import { UserInfo } from '../providers/user-info/user-info';
 import { UserRegister } from '../providers/user-register/user-register';
 import { BillDatabase } from '../providers/bill-database/bill-database';
+import { CategoriesService} from '../providers/categories-service/categories-service';
+import { HttpModule } from '@angular/http';
+
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -65,7 +68,8 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -93,7 +97,8 @@ export const firebaseConfig = {
     AuthService,
     UserInfo,
     UserRegister,
-    BillDatabase
+    BillDatabase,
+    CategoriesService
   ]
 })
 export class AppModule {}
