@@ -4,57 +4,52 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
 
+<ion-header>
   <ion-navbar >
     <img src="/assets/Images/logo.png" class="billit_image">
-    <ion-buttons right class="padd">
-      <button ion-button icon-only (click)="openModal()" class="share_button" >
-        <ion-icon  ios="ios-share-outline" name="share"></ion-icon>
-      </button>
+    <ion-buttons right class="margin-right">
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="add"></ion-icon>
+      </button> 
     </ion-buttons>
   </ion-navbar>
-
-
 </ion-header>
 
+<ion-content padding class="backgroundIMG" scroll="false">
 
-<ion-content padding class="backgroundIMG">
-        <button ion-button color="light" class="select" clear (click)="billCheckbox()">
-          <ion-grid>
-            <ion-row>
-              <ion-col col-9>Select the bill category</ion-col>
-              <ion-col col-2></ion-col>
-              <ion-col col-1><ion-icon name="attach"></ion-icon></ion-col>
-            </ion-row>
-          </ion-grid>
-        </button>
-  
-
-<ion-card padding class="cc">
-  <ion-card-header class="tot">
+<ion-card padding class="card"  style="height:100%">
+  <ion-card-header>
+      <div class="row">
+        <div class="col col-center text-center">
+          <ion-icon name="calendar" isActive="false"></ion-icon>
+          <div class="inline-display margin-right">
+            {{bill.date}}
+          </div>
+          <ion-icon name="time" isActive="false"></ion-icon>
+          <div class="inline-display">
+            {{bill.time}}
+          </div>
+        </div>
+      </div>
      <div class="row">
       <div class="col col-center text-center">
-       <ion-icon name="calendar" isActive="false"> {{bill.date}} </ion-icon>
-       <ion-icon name="time" isActive="false"> {{bill.time}}</ion-icon>
+        <ion-icon name="cart" isActive="false"></ion-icon>
+        <div class="inline-display">
+           {{bill.storeName}}
+        </div>
       </div>
      </div>
-     <div class="row">
-      <div class="col col-center text-center">
-         <ion-icon name="cart" isActive="false"> {{bill.storeName}}</ion-icon>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col col-center text-center"> {{bill.totalAmount}} RON
-      </div>
-     </div>
-  </ion-card-header>
-  <ion-card-content>
-<ion-list>
-  <div *ngFor="let id of keys">
+  </ion-card-header> 
+
+  <ion-card-content  style="height:70%" > 
+  <ion-list style="display:inline">
+  <ion-scroll style="width:100%;height:100%;" scrollY="true">
+  <div *ngFor="let id of keys" >
+    
     <ion-item-sliding>
      <ion-item>
-        <div>
+        <div class="clear">
           <div class="inline left"> {{bill.products[id].name}} </div>
           <div class="inline right"> {{bill.products[id].quantity}} buc</div>
         </div>
@@ -70,22 +65,25 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
+    
   </div>
-</ion-list>
+  </ion-scroll>
+</ion-list> 
+   
 
 
+
+</ion-card-content>  
 <ion-grid>
-  <ion-row  class="tot">
+  <ion-row  class="total">
     <ion-col col-5>TOTAL</ion-col>
     <ion-col col-2></ion-col>
     <ion-col col-5>{{bill.totalAmount}} RON</ion-col>
   </ion-row>
 </ion-grid>
-    
- </ion-card-content>
+     
+
 </ion-card>
-
-
 
 
 </ion-content>

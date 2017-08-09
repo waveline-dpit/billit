@@ -27,6 +27,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AddBillPage } from "../pages/add-bill/add-bill";
 import { PopoverPage } from "../pages/popover/popover";
+import { PopoverBillPage } from "../pages/popover-bill/popover-bill";
 import { AboutPage } from "../pages/about/about";
 import { UserInfo } from '../providers/user-info/user-info';
 import { UserRegister } from '../providers/user-register/user-register';
@@ -58,6 +59,7 @@ export const firebaseConfig = {
     AddBillPage,
     PopoverPage,
     LidlPage,
+    PopoverBillPage,
     AboutPage
   ],
   imports: [
@@ -84,6 +86,7 @@ export const firebaseConfig = {
     AddBillPage,
     PopoverPage,
     LidlPage,
+    PopoverBillPage,
     AboutPage
   ],
   providers: [
