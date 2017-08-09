@@ -29,7 +29,7 @@
             </ion-row>
           </ion-grid>
         </button>
-  
+
 
 <ion-card padding class="cc">
   <ion-card-header class="tot">
@@ -64,7 +64,7 @@
         </div>
       </ion-item>
       <ion-item-options>
-        <button ion-buttoncolor="light" icon-start (click)="showCheckbox()">
+        <button ion-buttoncolor="light" icon-start (click)="showCheckbox(bill.products[id], id)">
             <ion-icon name="attach"></ion-icon>
               Add category
         </button>
@@ -81,7 +81,7 @@
     <ion-col col-5>{{bill.totalAmount}} RON</ion-col>
   </ion-row>
 </ion-grid>
-    
+
  </ion-card-content>
 </ion-card>
 

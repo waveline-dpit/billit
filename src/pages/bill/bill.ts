@@ -19,6 +19,8 @@ import {CategoriesService} from '../../providers/categories-service/categories-s
 export class BillPage {
   public bill;
   keys;
+  billAlert;
+  productAlert;
   categories;
   constructor(
     public navCtrl: NavController,
@@ -41,34 +43,35 @@ export class BillPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad BillPage');
   }
-       showCheckbox() {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Select categories');
 
+  showCheckbox(product, id) {
+    this.productAlert = this.alertCtrl.create();
+    this.productAlert.setTitle('Select categories');
 
-    alert.addInput({
-      type: 'checkbox',
-      label: 'Alderaan',
-      value: 'value1',
-      checked: true
-    });
+    for(let category of this.categories)
+    {
 
-    alert.addInput({
-      type: 'checkbox',
-      label: 'Bespin',
-      value: 'value2'
-    });
+      this.productAlert.addInput({
+        type: 'checkbox',
+        label: category.name,
+        value: category.$key,
+      });
+    }
 
-    alert.addButton('Cancel');
-    alert.addButton({
+    this.productAlert.addButton('Cancel');
+    this.productAlert.addButton({
       text: 'Okay',
       handler: data => {
         console.log('Checkbox data:', data);
-
+        for(let cat of data)
+        {
+          this.categoriesService.addProductToCategory(product, cat, id);
+        }
       }
     });
-    alert.present();
+    this.productAlert.present();
   }
+
   addCategory() {
     let prompt = this.alertCtrl.create({
       title: 'New category',
@@ -97,28 +100,27 @@ export class BillPage {
     prompt.present();
   }
 
-
- billCheckbox() {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Select the bill category');
-    alert.setMessage('This category will be set for all products on this bill');
+  billCheckbox() {
+    this.billAlert = this.alertCtrl.create();
+    this.billAlert.setTitle('Select the bill category');
+    this.billAlert.setMessage('This category will be set for all products on this bill');
     for(let category of this.categories)
     {
 
-      alert.addInput({
+      this.billAlert.addInput({
         type: 'radio',
         label: category.name,
         value: category.$key,
       });
     }
-    alert.addButton('Cancel');
-    alert.addButton({
+    this.billAlert.addButton('Cancel');
+    this.billAlert.addButton({
       text: 'OK',
       handler: data =>
       {
         console.log(data);
       }
     });
-    alert.present();
+    this.billAlert.present();
   }
 }

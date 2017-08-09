@@ -12,14 +12,14 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} 
 */
 @Injectable()
 export class CategoriesService {
-  public categories;
+  public categories : FirebaseObjectObservable <any>;
   constructor(
     public db: AngularFireDatabase,
     public userInfo: UserInfo
   )
   {
     let path = "/user/" + this.userInfo.getUserToken() + "/categories";
-    db.list(path).subscribe((data) => {
+    db.object(path).subscribe((data) => {
       this.categories = data;
     });
   }
@@ -36,5 +36,11 @@ export class CategoriesService {
   {
     let path = "/user/" + this.userInfo.getUserToken() + "/categories";
     return this.db.list(path);
+  }
+  addProductToCategory(product, categoryID, productID)
+  {
+    let path = "/user/" + this.userInfo.getUserToken() + "/categories/" + categoryID + "/products/" + productID;
+    this.categories = this.db.object(path);
+    this.categories.update(product);
   }
 }
