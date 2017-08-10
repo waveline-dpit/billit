@@ -17,7 +17,7 @@
 
 <ion-content padding class="backgroundIMG" scroll="false">
 
-<ion-card padding class="card"  style="height:100%">
+<ion-card class="card">
   <ion-card-header>
       <div class="row">
         <div class="col col-center text-center">
@@ -58,9 +58,10 @@
         </div>
       </ion-item>
       <ion-item-options>
-        <button ion-buttoncolor="light" icon-start (click)="showCheckbox()">
-            <ion-icon name="attach"></ion-icon>
-              Add category
+        <button ion-button color="light" (click)="showCheckbox()">
+          <ion-icon name="attach"></ion-icon>
+          Add
+          Category
         </button>
       </ion-item-options>
     </ion-item-sliding>
@@ -75,8 +76,8 @@
 </ion-card-content>
 <ion-grid>
   <ion-row  class="total">
-    <ion-col col-5>TOTAL</ion-col>
-    <ion-col col-2></ion-col>
+    <ion-col col-4>TOTAL</ion-col>
+    <ion-col col-3></ion-col>
     <ion-col col-5>{{bill.totalAmount}} RON</ion-col>
   </ion-row>
 </ion-grid>

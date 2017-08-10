@@ -20,7 +20,6 @@ export class AddBillPage {
   currentDate;
   currentTime;
 
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -28,6 +27,7 @@ export class AddBillPage {
     public billDatabase: BillDatabase
   ) {
     this.getDateTime();
+    console.log(this.currentDate);
     this.bill = {
       date: this.currentDate,
       time: this.currentTime,
@@ -58,8 +58,8 @@ export class AddBillPage {
     });
   }
   deleteProduct(index) {
-    //console.log(index);
-    this.products.splice(1,index);
+    console.log(index);
+    this.products.splice(index,1);
   }
 
   fieldsNotCompleted() {
@@ -91,6 +91,7 @@ export class AddBillPage {
     //console.log(canSubmit);
     if(canSubmit)
     {
+      this.bill.date = this.formatDate(this.bill.date);
       this.navCtrl.pop();
       this.billDatabase.addBill(this.bill, this.products);
     }
@@ -123,6 +124,20 @@ export class AddBillPage {
     }
   }
 
+  formatDate(date)
+  {
+    var monthNames = [
+      "Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul",
+      "Aug", "Sep", "Oct",
+      "Nov", "Dec"
+    ];
+    var day = date.substring(8, 10);
+    var monthIndex = Number(date.substring(5, 7));
+    var year = date.substring(0, 4);
+
+    return  day + ' ' + monthNames[monthIndex - 1] + ' ' + year;
+  }
   getDateTime()
   {
     this.currentDate = (new Date()).toISOString();

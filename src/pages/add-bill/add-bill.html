@@ -15,126 +15,134 @@
 </ion-header>
 
 
-<ion-content padding class="backgroundIMG">
+<ion-content class="backgroundIMG">
 
-  <div class="row">
-    <div class="col text-center">BILL INFO</div>
-  </div>
+  <ion-scroll  scrollY="true" >
+    <div class="padd-content">
 
-  <div class="card info">
+      <div class="row">
+        <div class="col text-center">BILL INFO</div>
+      </div>
 
-    <div class="row pad">
-      <ion-grid class="bottom-margin">
-        <ion-row>
+      <div class="card info">
+
+        <div class="row pad">
+          <ion-grid class="bottom-margin">
+            <ion-row>
+              <ion-col class="icon" col-1>
+                <ion-icon name="calendar" isActive="false"></ion-icon>
+              </ion-col>
+              <ion-col col-6>
+                <ion-item>
+                  <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="bill.date"></ion-datetime>
+                </ion-item>
+              </ion-col>
+              <ion-col class="icon" col-1>
+                  <ion-icon name="time" isActive="false"></ion-icon>
+              </ion-col>
+              <ion-col col-4>
+                <ion-item>
+                  <ion-datetime displayFormat="HH:mm" [(ngModel)]="bill.time"></ion-datetime>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+        <ion-grid class="bottom-margin">
+          <ion-row>
           <ion-col class="icon" col-1>
-            <ion-icon name="calendar" isActive="false"></ion-icon>
+            <ion-icon name="cart" isActive="false"></ion-icon>
           </ion-col>
-          <ion-col col-6>
+          <ion-col col-11>
             <ion-item>
-              <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="bill.date"></ion-datetime>
+              <ion-input type="text" placeholder="Store name" [(ngModel)]="bill.storeName "></ion-input>
             </ion-item>
           </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-grid class="bottom-margin">
+          <ion-row>
           <ion-col class="icon" col-1>
-              <ion-icon name="time" isActive="false"></ion-icon>
+            <ion-icon name="finger-print" isActive="false"></ion-icon>
           </ion-col>
-          <ion-col col-4>
+          <ion-col col-11>
             <ion-item>
-              <ion-datetime displayFormat="HH:mm" [(ngModel)]="bill.time"></ion-datetime>
+              <ion-input type="number" placeholder="Bill id/number" [(ngModel)]="PT69RAUL"></ion-input>
             </ion-item>
           </ion-col>
-        </ion-row>
-      </ion-grid>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <div class="row">
+        <div class="col col-center text-center"> PRODUCTS </div>
+      </div>
+
+
+      <div *ngFor="let product of products; let i = index" [attr.data-index]="i">
+        <div class="card products animate-fade-in animation-fade-out">
+          <ion-list>
+            <ion-item-sliding>
+
+              <ion-item>
+
+                <ion-grid>
+                  <ion-row>
+                    <div class="col-text" >Name:</div>
+                    <ion-col col-5>
+                      <ion-item>
+                        <ion-input type="text" placeholder="ex: Milk" [(ngModel)]="product.name"></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <div class="col-text float-right">Qty:</div>
+                    <ion-col col-2 >
+                      <ion-item>
+                        <ion-input class="qty" type="number" clear (keyup)="addPrice(product)" [(ngModel)]="product.quantity"></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+
+                <ion-grid class="bottom-margin">
+                  <ion-row>
+                    <div class="col-text price">Price:</div>
+                    <ion-col col-3>
+                      <ion-item>
+                        <ion-input type="number" placeholder="ex: 12.5" clear (keyup)="addPrice(product)" [(ngModel)]="product.pricePerUnit" ></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <div class="col-text float-right">Total:</div>
+                    <div col-2 class="col-text total-price">{{product.totalPrice}}</div>
+                  </ion-row>
+                </ion-grid>
+
+              </ion-item>
+
+              <ion-item-options side="right">
+                <button ion-button color="light">
+                  <ion-icon name="attach"></ion-icon>
+                  Add
+                  Category
+                </button>
+                <button ion-button expandable  color="danger" (click)="deleteProduct(i)">
+                  <ion-icon name="trash" ></ion-icon>
+                  Delete
+                </button>
+              </ion-item-options>
+
+            </ion-item-sliding>
+          </ion-list>
+        </div>
+      </div>
+
+      <button ion-button color="primary" clear (click)="addProduct()" class="inline right">
+        <ion-icon class="add-button" name="add-circle" isActive="false" ></ion-icon>
+      </button>
     </div>
+  </ion-scroll>
 
-    <ion-grid class="bottom-margin">
-      <ion-row>
-      <ion-col class="icon" col-1>
-        <ion-icon name="cart" isActive="false"></ion-icon>
-      </ion-col>
-      <ion-col col-11>
-        <ion-item>
-          <ion-input type="text" placeholder="Store name" [(ngModel)]="bill.storeName "></ion-input>
-        </ion-item>
-      </ion-col>
-      </ion-row>
-    </ion-grid>
-
-    <ion-grid class="bottom-margin">
-      <ion-row>
-      <ion-col class="icon" col-1>
-        <ion-icon name="finger-print" isActive="false"></ion-icon>
-      </ion-col>
-      <ion-col col-11>
-        <ion-item>
-          <ion-input type="number" placeholder="Bill id/number" [(ngModel)]="bill.storeName "></ion-input>
-        </ion-item>
-      </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-
-  <div class="row">
-    <div class="col col-center text-center"> PRODUCTS </div>
-  </div>
-
-  <div *ngFor="let product of products; let i = index" [attr.data-index]="i">
-    <div class="card products">
-      <ion-list>
-        <ion-item-sliding>
-
-          <ion-item>
-
-            <ion-grid>
-              <ion-row>
-                <div class="col-text" >Name:</div>
-                <ion-col col-5>
-                  <ion-item>
-                    <ion-input type="text" placeholder="ex: Milk" [(ngModel)]="product.name"></ion-input>
-                  </ion-item>
-                </ion-col>
-                <div class="col-text float-right">Qty:</div>
-                <ion-col col-2 >
-                  <ion-item>
-                    <ion-input class="qty" type="number" clear (keyup)="addPrice(product)" [(ngModel)]="product.quantity"></ion-input>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-
-            <ion-grid class="bottom-margin">
-              <ion-row>
-                <div class="col-text price">Price:</div>
-                <ion-col col-3>
-                  <ion-item>
-                    <ion-input type="number" placeholder="ex: 12.5" clear (keyup)="addPrice(product)" [(ngModel)]="product.pricePerUnit" ></ion-input>
-                  </ion-item>
-                </ion-col>
-                <div class="col-text float-right">Total:</div>
-                <div col-2 class="col-text total-price">{{product.totalPrice}}</div>
-              </ion-row>
-            </ion-grid>
-
-          </ion-item>
-
-          <ion-item-options side="right">
-            <button ion-button color="light">
-              <ion-icon name="attach"></ion-icon>
-              Add
-              Category
-            </button>
-            <button ion-button expandable  color="danger" (click)="deleteProduct(i)">
-              <ion-icon name="trash" ></ion-icon>
-              Delete
-            </button>
-          </ion-item-options>
-
-        </ion-item-sliding>
-      </ion-list>
-    </div>
-  </div>
-  <button ion-button color="primary" clear (click)="addProduct()" class="inline right">
-    <ion-icon class="add-button" name="add-circle" isActive="false" ></ion-icon>
-  </button>
 
   <ion-grid class="footer">
     <ion-row>
@@ -145,4 +153,5 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
 </ion-content>

@@ -6,13 +6,15 @@ page-add-bill {
     {
         padding-left: 0px;
     }
+    .padd-content
+    {
+      padding: 16px;
+      width: 100%;
+      height: 100%;
+    }
     .row
     {
         padding: 0px;
-    }
-    .padding
-    {
-        padding: 10px;
     }
     .inline
     {
@@ -118,20 +120,36 @@ page-add-bill {
     {
       margin-right: 14.2px;
     }
-    .scroll-content,.fixed-content
-    {
-      //background-color: black;
-      //BINE CA MARGIN-LEFT FUNCTIONEAZA PE android...........
-      margin-bottom: 200px;
-    }
     .add-button
     {
       font-size: 5vh;
     }
+    .animate-fade-in
+    {
+      animation: fadein 0.2s;
+      @keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+    }
+    .animation-fade-out
+    {
+      animation: fadein 0.2s;
+      @keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+    }
+    ion-scroll
+    {
+      width: 100%;
+      height: 88%;
+      //margin: 16px;
+    }
     .footer
     {
-      height: 7%;
       bottom: 10%;
       position: fixed;
+      padding: 16px 16px 0 16px;
     }
 }
