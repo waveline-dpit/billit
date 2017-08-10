@@ -1,6 +1,5 @@
 <!--
   Generated template for the BillPage page.
-
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
@@ -53,28 +52,13 @@
           <div class="inline left"> {{bill.products[id].name}} </div>
           <div class="inline right"> {{bill.products[id].quantity}} buc</div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col col-center text-center"> {{bill.totalAmount}} RON
+        <div class="clear">
+          <div class="inline left"> {{bill.products[id].quantity}} X {{bill.products[id].pricePerUnit}} </div>
+          <div class="inline right"> {{bill.products[id].totalPrice}} RON</div>
         </div>
-      </div>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <div *ngFor="let id of keys">
-          <ion-item-sliding>
-            <ion-item>
-              <div>
-                <div class="inline left"> {{bill.products[id].name}} </div>
-                <div class="inline right"> {{bill.products[id].quantity}} buc</div>
-              </div>
-              <div class="clear">
-                <div class="inline left"> {{bill.products[id].quantity}} X {{bill.products[id].pricePerUnit}} </div>
-                <div class="inline right"> {{bill.products[id].totalPrice}} RON</div>
-              </div>
-            </ion-item>
-            <ion-item-options>
-              <button ion-buttoncolor="light" icon-start (click)="showCheckbox(bill.products[id], id)">
+      </ion-item>
+      <ion-item-options>
+        <button ion-buttoncolor="light" icon-start (click)="showCheckbox()">
             <ion-icon name="attach"></ion-icon>
               Add category
         </button>
@@ -86,13 +70,6 @@
 </ion-list>
 
 
-      <ion-grid>
-        <ion-row class="tot">
-          <ion-col col-5>TOTAL</ion-col>
-          <ion-col col-2></ion-col>
-          <ion-col col-5>{{bill.totalAmount}} RON</ion-col>
-        </ion-row>
-      </ion-grid>
 
 
 </ion-card-content>
