@@ -6,10 +6,10 @@
 -->
 <ion-header>
 
-  <ion-navbar >
+  <ion-navbar>
     <img src="/assets/Images/logo.png" class="billit_image">
     <ion-buttons right class="padd">
-      <button ion-button icon-only (click)="openModal()" class="share_button" >
+      <button ion-button icon-only (click)="openModal()" class="share_button">
         <ion-icon  ios="ios-share-outline" name="share"></ion-icon>
       </button>
     </ion-buttons>
@@ -20,7 +20,7 @@
 
 
 <ion-content padding class="backgroundIMG">
-        <button ion-button color="light" class="select" clear (click)="billCheckbox()">
+  <button ion-button color="light" class="select" clear (click)="billCheckbox()">
           <ion-grid>
             <ion-row>
               <ion-col col-9>Select the bill category</ion-col>
@@ -31,59 +31,59 @@
         </button>
 
 
-<ion-card padding class="cc">
-  <ion-card-header class="tot">
-     <div class="row">
-      <div class="col col-center text-center">
-       <ion-icon name="calendar" isActive="false"> {{bill.date}} </ion-icon>
-       <ion-icon name="time" isActive="false"> {{bill.time}}</ion-icon>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col col-center text-center">
-         <ion-icon name="cart" isActive="false"> {{bill.storeName}}</ion-icon>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col col-center text-center"> {{bill.totalAmount}} RON
-      </div>
-     </div>
-  </ion-card-header>
-  <ion-card-content>
-<ion-list>
-  <div *ngFor="let id of keys">
-    <ion-item-sliding>
-     <ion-item>
-        <div>
-          <div class="inline left"> {{bill.products[id].name}} </div>
-          <div class="inline right"> {{bill.products[id].quantity}} buc</div>
+  <ion-card padding class="cc">
+    <ion-card-header class="tot">
+      <div class="row">
+        <div class="col col-center text-center">
+          <ion-icon name="calendar" isActive="false"> {{bill.date}} </ion-icon>
+          <ion-icon name="time" isActive="false"> {{bill.time}}</ion-icon>
         </div>
-        <div class="clear">
-          <div class="inline left"> {{bill.products[id].quantity}} X {{bill.products[id].pricePerUnit}} </div>
-          <div class="inline right"> {{bill.products[id].totalPrice}} RON</div>
+      </div>
+      <div class="row">
+        <div class="col col-center text-center">
+          <ion-icon name="cart" isActive="false"> {{bill.storeName}}</ion-icon>
         </div>
-      </ion-item>
-      <ion-item-options>
-        <button ion-buttoncolor="light" icon-start (click)="showCheckbox(bill.products[id], id)">
+      </div>
+      <div class="row">
+        <div class="col col-center text-center"> {{bill.totalAmount}} RON
+        </div>
+      </div>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <div *ngFor="let id of keys">
+          <ion-item-sliding>
+            <ion-item>
+              <div>
+                <div class="inline left"> {{bill.products[id].name}} </div>
+                <div class="inline right"> {{bill.products[id].quantity}} buc</div>
+              </div>
+              <div class="clear">
+                <div class="inline left"> {{bill.products[id].quantity}} X {{bill.products[id].pricePerUnit}} </div>
+                <div class="inline right"> {{bill.products[id].totalPrice}} RON</div>
+              </div>
+            </ion-item>
+            <ion-item-options>
+              <button ion-buttoncolor="light" icon-start (click)="showCheckbox(bill.products[id], id)">
             <ion-icon name="attach"></ion-icon>
               Add category
         </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </div>
-</ion-list>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
+      </ion-list>
 
 
-<ion-grid>
-  <ion-row  class="tot">
-    <ion-col col-5>TOTAL</ion-col>
-    <ion-col col-2></ion-col>
-    <ion-col col-5>{{bill.totalAmount}} RON</ion-col>
-  </ion-row>
-</ion-grid>
+      <ion-grid>
+        <ion-row class="tot">
+          <ion-col col-5>TOTAL</ion-col>
+          <ion-col col-2></ion-col>
+          <ion-col col-5>{{bill.totalAmount}} RON</ion-col>
+        </ion-row>
+      </ion-grid>
 
- </ion-card-content>
-</ion-card>
+    </ion-card-content>
+  </ion-card>
 
 
 

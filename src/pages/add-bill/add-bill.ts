@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {BillDatabase} from '../../providers/bill-database/bill-database'
+import { AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the AddBillPage page.
@@ -16,14 +17,20 @@ import {BillDatabase} from '../../providers/bill-database/bill-database'
 export class AddBillPage {
   bill;
   products;
+  currentDate;
+  currentTime;
+
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public alerCtrl: AlertController,
     public billDatabase: BillDatabase
   ) {
+    this.getDateTime();
     this.bill = {
-      date: "",
-      time: "",
+      date: this.currentDate,
+      time: this.currentTime,
       totalAmount: 0,
       storeName: ""
     }
@@ -35,6 +42,7 @@ export class AddBillPage {
         totalPrice: 0
       }
     ]
+    //this.currentDate = new Date();
   }
 
   ionViewDidLoad() {
@@ -49,13 +57,47 @@ export class AddBillPage {
         totalPrice: ""
     });
   }
-  deleteProduct() {
-    this.products.splice(1,1);
+  deleteProduct(index) {
+    //console.log(index);
+    this.products.splice(1,index);
+  }
+
+  fieldsNotCompleted() {
+    let alert = this.alerCtrl.create({
+      title: 'Error',
+      message: 'You must complete all the fields in order to submit',
+      buttons: ['Ok']
+    });
+    alert.present()
   }
 
   submit() {
-    this.navCtrl.pop();
-    this.billDatabase.addBill(this.bill, this.products);
+    var canSubmit = true;
+    for (var key in this.bill) {
+      if(this.bill[key] == ""){
+        canSubmit = false;
+      }
+      //console.log(key,this.bill[key])
+    }
+    for (var idx in this.products) {
+      //console.log(this.products[idx]);
+      var product = this.products[idx];
+      for(var key in product){
+        if(product[key] == ""){
+          canSubmit = false;
+        }
+      }
+    }
+    //console.log(canSubmit);
+    if(canSubmit)
+    {
+      this.navCtrl.pop();
+      this.billDatabase.addBill(this.bill, this.products);
+    }
+    else
+    {
+      this.fieldsNotCompleted();
+    }
   }
   isNumber(val)
   {
@@ -81,5 +123,18 @@ export class AddBillPage {
     }
   }
 
-
+  getDateTime()
+  {
+    this.currentDate = (new Date()).toISOString();
+    var hour =  ((new Date()).getHours()).toString();
+    var min =  ((new Date()).getMinutes()).toString();
+    if(parseInt(min) < (10)){
+      min = '0' + min;
+    }
+    if(parseInt(hour) < (10)){
+      hour = '0' + hour;
+    }
+    this.currentTime = hour + ":" + min;
+    console.log(this.currentTime);
+  }
 }

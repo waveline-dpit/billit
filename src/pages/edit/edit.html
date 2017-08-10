@@ -22,12 +22,12 @@
           <ion-label class="stacked_title" stacked>First Name</ion-label>
           <ion-input type="text" formControlName="fcfname" [(ngModel)]="firstName" placeholder= {{oldFirstName}} [class.invalid]="!editAccForm.controls.fcfname.valid && editAccForm.controls.fcfname.dirty"></ion-input>
         </ion-item>
-        <p *ngIf="!editAccForm.controls.fcfname.valid && editAccForm.controls.fcfname.dirty">Please enter a valid email.</p>
+        <p *ngIf="!editAccForm.controls.fcfname.valid && editAccForm.controls.fcfname.dirty">Please enter a real name.</p>
         <ion-item>
           <ion-label class="stacked_title" stacked>Last Name </ion-label>
           <ion-input type="text" formControlName="fclname" [(ngModel)]="lastName" placeholder= {{oldLastName}} [class.invalid]="!editAccForm.controls.fclname.valid && editAccForm.controls.fclname.dirty"></ion-input>
         </ion-item>
-        <p *ngIf="!editAccForm.controls.fclname.valid && editAccForm.controls.fclname.dirty">Please enter a valid email.</p>
+        <p *ngIf="!editAccForm.controls.fclname.valid && editAccForm.controls.fclname.dirty">Please enter a real name.</p>
         <ion-item>
           <ion-label  stacked>Email</ion-label>
           <ion-label class="stacked_title nomargin">{{email}}</ion-label>
