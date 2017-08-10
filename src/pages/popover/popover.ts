@@ -12,13 +12,26 @@ import { AddBillPage } from "../add-bill/add-bill";
 @Component({
   template: `
       <ion-list>
-       <button ion-item><ion-icon  name="cloud-download"></ion-icon> Recive</button>
-       <button ion-item (click)="goToAddBillPage()"><ion-icon name="create"></ion-icon> Write</button>
-       <button ion-item><ion-icon  name="camera"></ion-icon> Scan</button>
+        
+        <button ion-item>
+        <div class="rows">
+          <ion-icon style="margin-right:5px;"name="cloud-download"></ion-icon>
+          Recive
+        </div>
+        </button>
+        <button ion-item (click)="goToAddBillPage()">
+          <ion-icon style="margin-right:5px;" name="create"></ion-icon>
+          Write
+        </button>
+        <button ion-item>
+          <ion-icon style="margin-right:5px;" name="camera"></ion-icon>
+          Scan
+        </button>
       </ion-list>
   `
 })
 export class PopoverPage {
+
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController
