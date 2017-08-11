@@ -34,6 +34,7 @@ import { UserRegister } from '../providers/user-register/user-register';
 import { BillDatabase } from '../providers/bill-database/bill-database';
 import { CategoriesService} from '../providers/categories-service/categories-service';
 import { HttpModule } from '@angular/http';
+import { EditBillPage } from "../pages/edit-bill/edit-bill";
 
 
 // AF2 Settings
@@ -63,7 +64,8 @@ export const firebaseConfig = {
     PopoverPage,
     LidlPage,
     PopoverBillPage,
-    AboutPage
+    AboutPage,
+    EditBillPage
   ],
   imports: [
     BrowserModule,
@@ -91,7 +93,8 @@ export const firebaseConfig = {
     PopoverPage,
     LidlPage,
     PopoverBillPage,
-    AboutPage
+    AboutPage,
+    EditBillPage
   ],
   providers: [
     StatusBar,

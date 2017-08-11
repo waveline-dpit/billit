@@ -35,21 +35,23 @@
                 <div class="inline">
               <ion-icon name="time" isActive="false"></ion-icon> {{bill.time}}</div>
           </div>
-        <div class="inline right">{{bill.totalAmount}}</div>
+        <div class="inline right">{{bill.totalAmount}} RON</div>
         </div>
-        <div class="clear">{{bill.storeName}}</div>
+       <div class=" clear">
+              <ion-icon name="cart" isActive="false"></ion-icon> {{bill.storeName}}</div>
+        
       </ion-card-content>
     </ion-card>
   </div>
 
   <button ion-button color="primary" round (click)="addCategory()" class="save_bttn">Save</button>
 
-  <ion-fab  right bottom *ngIf="!platform.is('ios')">
+  <ion-fab  right bottom *ngIf="!platform.is('ios')" #fab>
     <button ion-fab mini class="fab" color='primary'><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="top">
-      <button ion-fab color="primary"><ion-icon name="cloud-download"></ion-icon></button>
-      <button ion-fab color="primary"(click)="goToAddBillPage()"><ion-icon name="create" ></ion-icon></button>
-      <button ion-fab  color="primary"><ion-icon  name="camera"></ion-icon></button>
+      <button ion-fab color="primary"(click)="share(fab)"><ion-icon name="cloud-download"></ion-icon></button>
+      <button ion-fab color="primary"(click)="goToAddBillPage();share(fab)"><ion-icon name="create" ></ion-icon></button>
+      <button ion-fab  color="primary"(click)="share(fab)"><ion-icon  name="camera"></ion-icon></button>
 
     </ion-fab-list>
   </ion-fab>

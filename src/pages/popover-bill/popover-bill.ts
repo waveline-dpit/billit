@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { AlertController, Platform } from 'ionic-angular';
+import { EditBillPage } from "../edit-bill/edit-bill";
 /**
  * Generated class for the PopoverBillPage page.
  *
@@ -12,9 +13,9 @@ import { AlertController, Platform } from 'ionic-angular';
 @Component({
   template: `
       <ion-list>
-       <button ion-item><ion-icon style="margin-right:5px;" name="create"></ion-icon>Edit</button>
-       <button ion-item><ion-icon style="margin-right:6px;" name="share"></ion-icon>Share</button>
-       <button ion-item (click)="billCheckbox()"><ion-icon style="margin-right:9px;" name="attach"></ion-icon>Category</button>
+       <button ion-item (click)="goToEditBillPage();close()"><ion-icon style="margin-right:5px;" name="create"></ion-icon>Edit</button>
+       <button ion-item  (click)="close()"><ion-icon style="margin-right:6px;" name="share"></ion-icon>Share</button>
+       <button ion-item (click)="billCheckbox();close()"><ion-icon style="margin-right:9px;" name="attach"></ion-icon>Category</button>
       </ion-list>
   `
 }) 
@@ -32,6 +33,10 @@ export class PopoverBillPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad PopoverBillPage');
+  }
+  goToEditBillPage()
+  {
+    this.navCtrl.push(EditBillPage);
   }
     showCheckbox() {
     let alert = this.alertCtrl.create();
