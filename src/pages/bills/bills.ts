@@ -10,7 +10,7 @@ import {BillDatabase} from "../../providers/bill-database/bill-database"
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import {UserInfo} from '../../providers/user-info/user-info';
 import {CategoriesService} from '../../providers/categories-service/categories-service'
-
+import {  FabContainer } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-bills',
@@ -20,6 +20,7 @@ export class BillsPage {
   logoutButton = {};
   bills;
   cat;
+
   constructor(
     public platform: Platform,
     public navCtrl: NavController,
@@ -54,7 +55,12 @@ export class BillsPage {
   goToAddBillPage()
   {
     this.navCtrl.push(AddBillPage);
+
   }
+  share (fab: FabContainer) {
+   fab.close ();
+   console.log ( "Sharing in");
+ }
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(PopoverPage);
     popover.present({
