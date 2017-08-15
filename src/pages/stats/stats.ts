@@ -14,11 +14,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class StatsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  dummydate;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
+
+    this.dummydate = (new Date()).toISOString();
   }
+
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StatsPage');
+    console.log(this.dummydate);
   }
 
 }

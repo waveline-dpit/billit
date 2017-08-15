@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-  
+
     <img src="/assets/Images/logo.png" class="billit_image">
 
   </ion-navbar>
@@ -27,22 +27,33 @@
       Months
     </ion-segment-button>
   </ion-segment>
-  
+
 </div>
 
 <div [ngSwitch]="stats">
   <div *ngSwitchCase="'days'">
-    
-     <ion-card>
-  <ion-card-header class="center header">
-    (08.08.2017)
-    <ion-icon name="calendar" class="right"></ion-icon>
-  </ion-card-header>
-  <ion-card-content class="center header">
-    25 RON
-  </ion-card-content>
+
+    <ion-card>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="date" col-2>
+            <ion-icon name="calendar" class="right"></ion-icon>
+          </ion-col>
+          <ion-col col-10>
+            <ion-item>
+              <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="dummydate"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          25 RON
+        </ion-row>
+      </ion-grid>
+
+
+
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header class="header">
     By stores
@@ -52,7 +63,7 @@
     <div class="display"><div class="left">Penny </div><div class="right">10 RON</div></div>
   </ion-card-content>
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header class="header">
     By categories
@@ -62,11 +73,11 @@
     <div class="display"><div class="left">Alimente </div><div class="right">10 RON</div></div>
   </ion-card-content>
 </ion-card>
-    
+
   </div>
 
    <div *ngSwitchCase="'weeks'">
-    
+
          <ion-card>
   <ion-card-header>
     Today
@@ -75,7 +86,7 @@
     25 RON
   </ion-card-content>
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header>
     By stores
@@ -85,7 +96,7 @@
     <div>Penny 10 RON</div>
   </ion-card-content>
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header>
     By categories
@@ -95,11 +106,11 @@
     <div>alimente 15 RON</div>
   </ion-card-content>
 </ion-card>
-    
+
   </div>
 
     <div *ngSwitchCase="'months'">
-    
+
         <ion-card>
   <ion-card-header>
     Today
@@ -108,7 +119,7 @@
     25 RON
   </ion-card-content>
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header>
     By stores
@@ -118,7 +129,7 @@
     <div>Penny 10 RON</div>
   </ion-card-content>
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header>
     By categories
