@@ -26,18 +26,43 @@
 
 <ion-content padding class="backgroundIMG">
   <div *ngFor="let bill of bills">
-    <ion-card (click)="goToBillPage(bill)">
+    <ion-card>
       <ion-card-content>
-        <div>
-          <div class="inline left">
-            <div class="inline">
-              <ion-icon name="calendar" isActive="false"></ion-icon> {{bill.date}} </div>
-                <div class="inline">
-              <ion-icon name="time" isActive="false"></ion-icon> {{bill.time}}</div>
-          </div>
-        <div class="inline right">{{bill.totalAmount}}</div>
-        </div>
-        <div class="clear">{{bill.storeName}}</div>
+        <ion-list>
+          <ion-item-sliding>
+
+            <ion-item (click)="goToBillPage(bill)">
+              <div>
+                <div class="inline ">
+                  <div class="inline">
+                    <ion-icon name="calendar" isActive="false"></ion-icon>
+                    {{bill.date}}
+                  </div>
+                  <div class="inline">
+                    <ion-icon class="margin-left" name="time" isActive="false"></ion-icon>
+                    {{bill.time}}
+                  </div>
+                </div>
+              </div>
+              <div class="clear">
+                <div class=" inline left topp bott">
+                  {{bill.storeName}}
+                </div>
+                <div class="inline right topp bott6">
+                  {{bill.totalAmount}} RON
+                </div>
+              </div>
+            </ion-item>
+
+            <ion-item-options side="right">
+              <button class="fav" ion-button color="light" (onclick)="addToFavourite()">
+                <ion-icon name="star-outline"></ion-icon>
+                Favourite
+              </button>
+            </ion-item-options>
+
+          </ion-item-sliding>
+        </ion-list>
       </ion-card-content>
     </ion-card>
   </div>

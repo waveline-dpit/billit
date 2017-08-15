@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {BillDatabase} from '../../providers/bill-database/bill-database'
 import { AlertController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NumberValidator } from  '../../validators/number';
 
 /**
  * Generated class for the AddBillPage page.
@@ -19,18 +21,38 @@ export class AddBillPage {
   products;
   currentDate;
   currentTime;
+  fcbillid; fcstorename;
+  fcprodname; fcprice; fcqty;
+  submitAttempt: boolean = false;
+  billIdForm: FormGroup;
+  productForm: FormGroup;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alerCtrl: AlertController,
+    public formBuilder: FormBuilder,
     public billDatabase: BillDatabase
   ) {
+
+    this.billIdForm = formBuilder.group({
+        fcstorename: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+        fcbillid: ['', Validators.compose([Validators.maxLength(14), Validators.required])],
+    });
+    this.productForm = formBuilder.group({
+        fcprodname: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+        fcqty: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
+        fcprice: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
+
+    });
+
     this.getDateTime();
     console.log(this.currentDate);
     this.bill = {
       date: this.currentDate,
       time: this.currentTime,
+      favourite: false,
+      number: null,
       totalAmount: 0,
       storeName: ""
     }
@@ -56,6 +78,7 @@ export class AddBillPage {
         pricePerUnit: "",
         totalPrice: ""
     });
+    this.validate();
   }
   deleteProduct(index) {
     console.log(index);
@@ -65,17 +88,32 @@ export class AddBillPage {
   fieldsNotCompleted() {
     let alert = this.alerCtrl.create({
       title: 'Error',
-      message: 'You must complete all the fields in order to submit',
+      message: 'You must complete all the fields properly in order to submit',
       buttons: ['Ok']
     });
     alert.present()
   }
 
+  validate(){
+    this.billIdForm = this.formBuilder.group({
+        fcstorename: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+        fcbillid: ['', Validators.compose([Validators.maxLength(14), Validators.required])],
+    });
+    this.productForm = this.formBuilder.group({
+        fcprodname: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+        fcqty: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
+        fcprice: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
+
+    });
+  }
+
   submit() {
+    this.submitAttempt = true;
     var canSubmit = true;
     for (var key in this.bill) {
-      if(this.bill[key] == ""){
+      if(this.bill[key] === null || this.bill[key] === ""){
         canSubmit = false;
+        console.log("eh",key, this.bill[key])
       }
       //console.log(key,this.bill[key])
     }
@@ -83,13 +121,22 @@ export class AddBillPage {
       //console.log(this.products[idx]);
       var product = this.products[idx];
       for(var key in product){
-        if(product[key] == ""){
+        if(product[key] === null || product[key] === ""){
           canSubmit = false;
+          console.log(product[key])
         }
       }
     }
-    //console.log(canSubmit);
-    if(canSubmit)
+    //console.log(canSubmit, this.bill, this.products);
+    let ok = (
+      this.billIdForm.controls.fcstorename.valid &&
+      this.billIdForm.controls.fcbillid.valid &&
+      this.productForm.controls.fcstorename.valid &&
+      this.productForm.controls.fcqty.valid &&
+      this.productForm.controls.fcprice.valid
+    );
+    //console.log(ok);
+    if(canSubmit && ok)
     {
       this.bill.date = this.formatDate(this.bill.date);
       this.navCtrl.pop();

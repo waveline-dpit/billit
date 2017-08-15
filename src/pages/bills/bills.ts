@@ -66,4 +66,8 @@ export class BillsPage {
     this.cat = "Paine";
     this.categoriesService.addCategory(this.cat);
   }
+  addToFavourite()
+  {
+    console.log("Raul added to favourite");
+  }
 }

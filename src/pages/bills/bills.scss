@@ -1,9 +1,42 @@
 page-bills {
 
-}
-ion-navbar
-{
-  height: 8vh;
+  ion-navbar
+  {
+    height: 8vh;
+  }
+  .topp
+  {
+    margin-top: 4px;
+  }
+  .bott
+  {
+    margin-bottom: 4px;
+  }
+  .fab
+  {
+    background-color:primary;
+  }
+  .margin-left
+  {
+    margin-left:7px;
+  }
+  .label
+  {
+    margin: 0;
+  }
+  .item.item-block .item-inner {
+    padding: 0;
+    border-bottom: none;
+  }
+  .card-content
+  {
+    padding: 0;
+  }
+  .item
+  {
+    padding: 10px 16px 7px 16px;
+    background-color: white;
+  }
 }
 .billit_image
 {
@@ -33,9 +66,4 @@ ion-navbar
 {
    clear: left;
    clear: right;
-}
-.fab
-{
-  background-color:primary;
-  
 }
