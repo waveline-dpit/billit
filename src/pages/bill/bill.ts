@@ -51,7 +51,7 @@ export class BillPage {
   showCheckbox(product, id) {
     this.productAlert = this.alertCtrl.create();
     this.productAlert.setTitle('Select categories');
-
+    
     for(let category of this.categories)
     {
 
@@ -60,6 +60,7 @@ export class BillPage {
         label: category.name,
         value: category.$key,
       });
+      
     }
 
     this.productAlert.addButton('Cancel');
