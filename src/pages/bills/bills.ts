@@ -11,6 +11,8 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} 
 import {UserInfo} from '../../providers/user-info/user-info';
 import {CategoriesService} from '../../providers/categories-service/categories-service'
 import {  FabContainer } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
+
 @IonicPage()
 @Component({
   selector: 'page-bills',
@@ -30,7 +32,8 @@ export class BillsPage {
     public billDatabase: BillDatabase,
     public userInfo: UserInfo,
     public db: AngularFireDatabase,
-    public categoriesService: CategoriesService
+    public categoriesService: CategoriesService,
+    public alerCtrl: AlertController,
   )
   {
     billDatabase.retreiveAllBills().subscribe((data) =>{
@@ -76,4 +79,12 @@ export class BillsPage {
   {
     console.log("Raul added to favourite");
   }
+  showAlert(){
+    let alert = this.alerCtrl.create({
+      message: 'Are you sure you want to delete this bill?',
+      buttons: ['No' , 'Yes']
+    });
+    alert.present()
+  }
+
 }

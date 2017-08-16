@@ -18,6 +18,7 @@ import { BillPage } from "../pages/bill/bill";
 import { MyAccountPage } from "../pages/my-account/my-account";
 import { EditPage } from "../pages/edit/edit";
 import { LidlPage } from "../pages/lidl/lidl";
+import { CategoriesPage } from '../pages/categories/categories';
 
 import { AuthService } from '../providers/auth-service/auth-service';
 
@@ -65,7 +66,8 @@ export const firebaseConfig = {
     LidlPage,
     PopoverBillPage,
     AboutPage,
-    EditBillPage
+    EditBillPage,
+    CategoriesPage
   ],
   imports: [
     BrowserModule,
@@ -94,7 +96,8 @@ export const firebaseConfig = {
     LidlPage,
     PopoverBillPage,
     AboutPage,
-    EditBillPage
+    EditBillPage,
+    CategoriesPage
   ],
   providers: [
     StatusBar,

@@ -16,6 +16,8 @@ import { EditBillPage } from "../edit-bill/edit-bill";
        <button ion-item (click)="goToEditBillPage();close()"><ion-icon style="margin-right:5px;" name="create"></ion-icon>Edit</button>
        <button ion-item  (click)="close()"><ion-icon style="margin-right:6px;" name="share"></ion-icon>Share</button>
        <button ion-item (click)="billCheckbox();close()"><ion-icon style="margin-right:9px;" name="attach"></ion-icon>Category</button>
+       <button ion-item (click)="showAlert()"><ion-icon style="margin-right:9px;" name="trash"></ion-icon>Delete</button>
+       <button ion-item (click)="addToFavourite()"><ion-icon style="margin-right:5px;" name="star-outline"></ion-icon>Add to favourite</button>
       </ion-list>
   `
 }) 
@@ -101,6 +103,13 @@ export class PopoverBillPage {
 
     });
     alert.present();
+  }
+  showAlert(){
+    let alert = this.alertCtrl.create({
+      message: 'Are you sure you want to delete this bill?',
+      buttons: ['No' , 'Yes']
+    });
+    alert.present()
   }
 
 }
