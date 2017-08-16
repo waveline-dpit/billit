@@ -45,6 +45,7 @@ export class BillPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BillPage');
+    //console.log(this.bill);
   }
 
   showCheckbox(product, id) {
@@ -127,7 +128,7 @@ export class BillPage {
     this.billAlert.present();
   }
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverBillPage);
+    let popover = this.popoverCtrl.create(PopoverBillPage, { 'billParam': this.bill });
     popover.present({
       ev: myEvent
   });

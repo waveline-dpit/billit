@@ -49,30 +49,32 @@
           25 RON
         </ion-row>
       </ion-grid>
+    </ion-card>
 
+    <ion-card>
+      <ion-card-header class="header">
+        By stores
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let store of storesArr">
+          <div class="display">
+            <div class="left">{{store.name}} </div>
+          <div class="right">{{store.amount}} RON</div></div>
+        </div>
+        <div class="display"><div class="left">Profi </div><div class="right">15 RON</div></div>
+        <div class="display"><div class="left">Penny </div><div class="right">10 RON</div></div>
+      </ion-card-content>
+    </ion-card>
 
-
-</ion-card>
-
-     <ion-card>
-  <ion-card-header class="header">
-    By stores
-  </ion-card-header>
-  <ion-card-content>
-    <div class="display"><div class="left">Profi </div><div class="right">15 RON</div></div>
-    <div class="display"><div class="left">Penny </div><div class="right">10 RON</div></div>
-  </ion-card-content>
-</ion-card>
-
-     <ion-card>
-  <ion-card-header class="header">
-    By categories
-  </ion-card-header>
-  <ion-card-content>
-      <div class="display"><div class="left">Paine </div><div class="right">15 RON</div></div>
-    <div class="display"><div class="left">Alimente </div><div class="right">10 RON</div></div>
-  </ion-card-content>
-</ion-card>
+         <ion-card>
+      <ion-card-header class="header">
+        By categories
+      </ion-card-header>
+      <ion-card-content>
+          <div class="display"><div class="left">Paine </div><div class="right">15 RON</div></div>
+        <div class="display"><div class="left">Alimente </div><div class="right">10 RON</div></div>
+      </ion-card-content>
+    </ion-card>
 
   </div>
 

@@ -7,12 +7,167 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>editBill</ion-title>
+    <ion-title>Edit Bill</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="backgroundIMG">
+
+  <ion-scroll  scrollY="true" >
+    <div class="padd-content">
+
+      <div class="row">
+        <div class="col text-center">BILL INFO</div>
+      </div>
+
+      <div class="card info">
+
+        <div class="row pad">
+          <ion-grid class="bottom-margin">
+            <ion-row>
+              <ion-col class="icon" col-1>
+                <ion-icon name="calendar" isActive="false"></ion-icon>
+              </ion-col>
+              <ion-col col-6>
+                <ion-item>
+                  <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="bill.date"></ion-datetime>
+                </ion-item>
+              </ion-col>
+              <ion-col class="icon" col-1>
+                  <ion-icon name="time" isActive="false"></ion-icon>
+              </ion-col>
+              <ion-col col-4>
+                <ion-item>
+                  <ion-datetime displayFormat="HH:mm" [(ngModel)]="bill.time"></ion-datetime>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+        <form [formGroup]="billIdForm">
+          <ion-grid class="bottom-margin">
+            <ion-row>
+            <ion-col class="icon" col-1>
+              <ion-icon name="cart" isActive="false"></ion-icon>
+            </ion-col>
+            <ion-col col-11>
+              <ion-item>
+                <ion-input type="text" placeholder="Store name" formControlName="fcstorename" [(ngModel)]="bill.storeName " [class.invalid]="!billIdForm.controls.fcstorename.valid && (billIdForm.controls.fcstorename.dirty || submitAttempt)"></ion-input>
+              </ion-item>
+            </ion-col>
+            </ion-row>
+            <p class="warn" *ngIf="!billIdForm.controls.fcstorename.valid && (billIdForm.controls.fcstorename.dirty)">Product name too long</p>
+            <p class="warn" *ngIf="!billIdForm.controls.fcstorename.valid && (submitAttempt && !billIdForm.controls.fcstorename.dirty)">Store name required</p>
+          </ion-grid>
+
+          <ion-grid class="bottom-margin">
+            <ion-row>
+            <ion-col class="icon" col-1>
+              <ion-icon name="finger-print" isActive="false"></ion-icon>
+            </ion-col>
+            <ion-col col-11>
+              <ion-item>
+                <ion-input type="number" placeholder="Bill id/number" formControlName="fcbillid" [(ngModel)]="bill.number" [class.invalid]="!billIdForm.controls.fcbillid.valid && (billIdForm.controls.fcbillid.dirty || submitAttempt)"></ion-input>
+              </ion-item>
+            </ion-col>
+            </ion-row>
+            <p class="warn" *ngIf="!billIdForm.controls.fcbillid.valid && (billIdForm.controls.fcbillid.dirty)">Value can't contain more than 14 digits.</p>
+            <p class="warn" *ngIf="!billIdForm.controls.fcbillid.valid && (submitAttempt && !billIdForm.controls.fcbillid.dirty)">Bill number required</p>
+
+          </ion-grid>
+        </form>
+
+      </div>
+
+      <div class="row">
+        <div class="col col-center text-center"> PRODUCTS </div>
+      </div>
+
+
+      <div *ngFor="let product of products; let i = index" [attr.data-index]="i">
+        <div class="card products animate-fade-in animation-fade-out">
+          <ion-list>
+            <ion-item-sliding>
+
+              <ion-item>
+                <form [formGroup]="productForm">
+
+                  <ion-grid>
+                    <ion-row>
+                      <div class="col-text" >Name:</div>
+                      <ion-col col-5>
+                        <ion-item>
+                          <ion-input type="text" placeholder="ex: Milk" formControlName="fcprodname" [(ngModel)]="product.name" [class.invalid]="!productForm.controls.fcprodname.valid && (productForm.controls.fcprodname.dirty || submitAttempt)"></ion-input>
+                        </ion-item>
+                      </ion-col>
+                      <div class="col-text float-right">Qty:</div>
+                      <ion-col col-2 >
+                        <ion-item>
+                          <ion-input class="qty" type="number" clear (keyup)="addPrice(product)" formControlName="fcqty" [(ngModel)]="product.quantity"  [class.invalid]="!productForm.controls.fcqty.valid && (productForm.controls.fcqty.dirty || submitAttempt)"></ion-input>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                    <p class="warn" *ngIf="!productForm.controls.fcqty.valid && (productForm.controls.fcqty.dirty)">Value can't contain more than <br /> 6 digits and 3 decimals.</p>
+                    <p class="warn" *ngIf="!productForm.controls.fcqty.valid && (submitAttempt && !productForm.controls.fcqty.dirty)">Quantity required</p>
+                    <p class="warn" *ngIf="!productForm.controls.fcprodname.valid && (productForm.controls.fcprodname.dirty)">Product name too long</p>
+                    <p class="warn" *ngIf="!productForm.controls.fcprodname.valid && (submitAttempt && !productForm.controls.fcprodname.dirty)">Product name required</p>
+
+                  </ion-grid>
+
+                  <ion-grid class="bottom-margin">
+                    <ion-row>
+                      <div class="col-text price">Price:</div>
+                      <ion-col col-3>
+                        <ion-item>
+                          <ion-input type="number" placeholder="ex: 12.5" clear (keyup)="addPrice(product)" formControlName="fcprice" [(ngModel)]="product.pricePerUnit"  [class.invalid]="!productForm.controls.fcprice.valid && (productForm.controls.fcprice.dirty || submitAttempt)" ></ion-input>
+                        </ion-item>
+                      </ion-col>
+                      <div class="col-text float-right">Total:</div>
+                      <div col-2 class="col-text total-price">{{product.totalPrice}}</div>
+                    </ion-row>
+                    <p class="warn" *ngIf="!productForm.controls.fcprice.valid && (productForm.controls.fcprice.dirty)">Value can't contain more than <br /> 6 digits and 3 decimals.</p>
+                    <p class="warn" *ngIf="!productForm.controls.fcprice.valid && (submitAttempt && !productForm.controls.fcprice.dirty)">Price required</p>
+
+                  </ion-grid>
+
+                </form>
+              </ion-item>
+
+              <ion-item-options side="right">
+                <button ion-button color="light">
+                  <ion-icon name="attach"></ion-icon>
+                  Add
+                  Category
+                </button>
+                <button ion-button expandable  color="danger" (click)="deleteProduct(i)">
+                  <ion-icon name="trash" ></ion-icon>
+                  Delete
+                </button>
+              </ion-item-options>
+
+            </ion-item-sliding>
+          </ion-list>
+        </div>
+      </div>
+
+      <button ion-button color="primary" clear (click)="addProduct()" class="inline right">
+        <ion-icon class="add-button" name="add-circle" isActive="false" ></ion-icon>
+      </button>
+    </div>
+  </ion-scroll>
+
+
+  <ion-grid class="footer">
+    <ion-row>
+      <ion-col col-3 class="col-text2">TOTAL: </ion-col>
+      <ion-col col-4 class="col-text2"> {{bill.totalAmount}} RON</ion-col>
+      <ion-col col-5 >
+        <button ion-button color="primary" round (click)="submit()">submit</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

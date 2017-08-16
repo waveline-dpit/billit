@@ -18,7 +18,7 @@ import { EditBillPage } from "../edit-bill/edit-bill";
        <button ion-item (click)="billCheckbox();close()"><ion-icon style="margin-right:9px;" name="attach"></ion-icon>Category</button>
       </ion-list>
   `
-}) 
+})
 export class PopoverBillPage {
 
   constructor(
@@ -26,7 +26,8 @@ export class PopoverBillPage {
     public navParams: NavParams,
     public viewCtrl: ViewController,
      public alertCtrl: AlertController,
-  ) {}
+  ) {
+  }
 
   close() {
     this.viewCtrl.dismiss();
@@ -36,12 +37,11 @@ export class PopoverBillPage {
   }
   goToEditBillPage()
   {
-    this.navCtrl.push(EditBillPage);
+    this.navCtrl.push(EditBillPage, { 'billParam': this.navParams.get('billParam')});
   }
     showCheckbox() {
     let alert = this.alertCtrl.create();
     alert.setTitle('Select categories');
-
 
     alert.addInput({
       type: 'checkbox',
