@@ -22,7 +22,7 @@ export class AddBillPage {
   currentDate;
   currentTime;
   fcbillid; fcstorename;
-  fcprodname = []; fcprice; fcqty;
+  fcprodname; fcprice; fcqty;
   submitAttempt: boolean = false;
   billIdForm: FormGroup;
   productForm: FormGroup;
@@ -52,7 +52,7 @@ export class AddBillPage {
       time: this.currentTime,
       favourite: false,
       number: "",
-      totalAmount: "",
+      totalAmount: 0,
       storeName: ""
     }
     this.products = [
@@ -63,7 +63,6 @@ export class AddBillPage {
         totalPrice: 0
       }
     ]
-    //this.currentDate = new Date();
   }
 
   ionViewDidLoad() {
@@ -85,7 +84,7 @@ export class AddBillPage {
         name: "",
         quantity: "",
         pricePerUnit: "",
-        totalPrice: ""
+        totalPrice: 0
     });
     console.log(this.products)
     const control = <FormArray>this.productForm.controls['productList'];
@@ -94,22 +93,11 @@ export class AddBillPage {
 
   deleteProduct(index){
     const control = <FormArray>this.productForm.controls['productList'];
-    control.removeAt(index);
+    if(index > 0)
+    {
+      control.removeAt(index);
+    }
   }
-
-
-  /*addProduct() {
-    this.products.push({
-        name: "",
-        quantity: "",
-        pricePerUnit: "",
-        totalPrice: ""
-    });
-  }
-  deleteProduct(index) {
-    console.log(index);
-    this.products.splice(index,1);
-  }*/
 
   fieldsNotCompleted() {
     let alert = this.alerCtrl.create({
@@ -144,9 +132,7 @@ export class AddBillPage {
     let ok = (
       this.billIdForm.controls.fcstorename.valid &&
       this.billIdForm.controls.fcbillid.valid &&
-      this.productForm.controls.fcstorename.valid &&
-      this.productForm.controls.fcqty.valid &&
-      this.productForm.controls.fcprice.valid
+      this.productForm.controls.productList.valid
     );
     //console.log(ok);
     if(canSubmit && ok)
@@ -168,18 +154,30 @@ export class AddBillPage {
   }
   addPrice(product)
   {
-    if(product.pricePerUnit && product.quantity )
+    this.bill.totalAmount = parseInt(this.bill.totalAmount);
+    product.totalPrice = parseInt(product.totalPrice);
+    product.pricePerUnit = parseInt(product.pricePerUnit);
+    product.quantity = parseInt(product.quantity);
+    console.log(
+      typeof this.bill.totalAmount ,
+      typeof product.totalPrice,
+      typeof product.pricePerUnit,
+      typeof product.quantity
+    );
+
+    if(product.pricePerUnit && product.quantity)
     {
-      if(this.isNumber(product.pricePerUnit), this.isNumber(product.quantity))
-      {
-        this.bill.totalAmount -= product.totalPrice;
-        product.totalPrice = product.pricePerUnit * product.quantity;
-        this.bill.totalAmount += product.totalPrice;
-      }
+      this.bill.totalAmount -= product.totalPrice;
+      product.totalPrice = product.pricePerUnit * product.quantity;
+      product.totalPrice = Math.round(parseInt(product.totalPrice) * 1000) / 1000;
+      console.log("bill",typeof product.totalPrice);
+      this.bill.totalAmount += product.totalPrice;
+      console.log(typeof this.bill.totalAmount)
     }
     else
     {
-      this.bill.totalAmount -= product.totalPrice;
+      this.bill.totalAmount -= parseInt(product.totalPrice);
+      console.log("DDDDDD")
       product.totalPrice = 0;
     }
   }
