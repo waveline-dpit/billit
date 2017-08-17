@@ -18,6 +18,7 @@ import { BillPage } from "../pages/bill/bill";
 import { MyAccountPage } from "../pages/my-account/my-account";
 import { EditPage } from "../pages/edit/edit";
 import { LidlPage } from "../pages/lidl/lidl";
+import { CategoriesPage } from '../pages/categories/categories';
 
 import { AuthService } from '../providers/auth-service/auth-service';
 
@@ -34,6 +35,7 @@ import { UserRegister } from '../providers/user-register/user-register';
 import { BillDatabase } from '../providers/bill-database/bill-database';
 import { CategoriesService} from '../providers/categories-service/categories-service';
 import { HttpModule } from '@angular/http';
+import { EditBillPage } from "../pages/edit-bill/edit-bill";
 
 
 // AF2 Settings
@@ -63,7 +65,9 @@ export const firebaseConfig = {
     PopoverPage,
     LidlPage,
     PopoverBillPage,
-    AboutPage
+    AboutPage,
+    EditBillPage,
+    CategoriesPage
   ],
   imports: [
     BrowserModule,
@@ -91,7 +95,9 @@ export const firebaseConfig = {
     PopoverPage,
     LidlPage,
     PopoverBillPage,
-    AboutPage
+    AboutPage,
+    EditBillPage,
+    CategoriesPage
   ],
   providers: [
     StatusBar,

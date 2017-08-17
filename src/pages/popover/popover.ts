@@ -13,17 +13,17 @@ import { AddBillPage } from "../add-bill/add-bill";
   template: `
       <ion-list>
 
-        <button ion-item>
+        <button ion-item  (click)="close()">
         <div class="rows">
           <ion-icon style="margin-right:5px;"name="cloud-download"></ion-icon>
           Recive
         </div>
         </button>
-        <button ion-item (click)="goToAddBillPage()">
+        <button ion-item (click)="goToAddBillPage();close()">
           <ion-icon style="margin-right:5px;" name="create"></ion-icon>
           Write
         </button>
-        <button ion-item>
+        <button ion-item (click)="close()">
           <ion-icon style="margin-right:5px;" name="camera"></ion-icon>
           Scan
         </button>
@@ -31,6 +31,7 @@ import { AddBillPage } from "../add-bill/add-bill";
   `
 })
 export class PopoverPage {
+  popover: any;
 
   constructor(
     public navCtrl: NavController,
@@ -42,7 +43,6 @@ export class PopoverPage {
   }
   goToAddBillPage()
   {
-    this.close();
     this.navCtrl.push(AddBillPage);
   }
 }

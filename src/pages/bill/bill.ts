@@ -45,12 +45,13 @@ export class BillPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BillPage');
+    //console.log(this.bill);
   }
 
   showCheckbox(product, id) {
     this.productAlert = this.alertCtrl.create();
     this.productAlert.setTitle('Select categories');
-
+    
     for(let category of this.categories)
     {
 
@@ -59,6 +60,7 @@ export class BillPage {
         label: category.name,
         value: category.$key,
       });
+      
     }
 
     this.productAlert.addButton('Cancel');
@@ -127,7 +129,7 @@ export class BillPage {
     this.billAlert.present();
   }
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverBillPage);
+    let popover = this.popoverCtrl.create(PopoverBillPage, { 'billParam': this.bill });
     popover.present({
       ev: myEvent
   });

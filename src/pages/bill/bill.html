@@ -17,8 +17,9 @@
 
 <ion-content padding class="backgroundIMG" scroll="false">
 
-<ion-card class="card">
-  <ion-card-header>
+  <ion-card class="card">
+
+    <ion-card-header>
       <div class="row">
         <div class="col col-center text-center">
           <ion-icon name="calendar" isActive="false"></ion-icon>
@@ -31,59 +32,62 @@
           </div>
         </div>
       </div>
-     <div class="row">
-      <div class="col col-center text-center">
-        <ion-icon name="cart" isActive="false"></ion-icon>
-        <div class="inline-display">
-           {{bill.storeName}}
+      <div class="row">
+        <div class="col col-center text-center">
+          <ion-icon name="cart" isActive="false"></ion-icon>
+          <div class="inline-display">
+             {{bill.storeName}}
+          </div>
         </div>
       </div>
-     </div>
-  </ion-card-header>
-
-  <ion-card-content  style="height:70%" >
-  <ion-list style="display:inline">
-  <ion-scroll style="width:100%;height:100%;" scrollY="true">
-  <div *ngFor="let id of keys" >
-
-    <ion-item-sliding>
-     <ion-item>
-        <div class="clear">
-          <div class="inline left"> {{bill.products[id].name}} </div>
-          <div class="inline right"> {{bill.products[id].quantity}} buc</div>
+      <div class="row">
+        <div class="col col-center text-center">
+          <ion-icon name="finger-print" isActive="false"></ion-icon>
+          <div class="inline-display">
+            {{bill.number}}
+          </div>
         </div>
-        <div class="clear">
-          <div class="inline left"> {{bill.products[id].quantity}} X {{bill.products[id].pricePerUnit}} </div>
-          <div class="inline right"> {{bill.products[id].totalPrice}} RON</div>
-        </div>
-      </ion-item>
-      <ion-item-options>
-        <button ion-button color="light" (click)="showCheckbox(bill.products[id], id)">
-          <ion-icon name="attach"></ion-icon>
-          Add
-          Category
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
+      </div>
+    </ion-card-header>
 
-  </div>
-  </ion-scroll>
-</ion-list>
+    <ion-card-content class="scroll-container">
+      <ion-list style="display:inline">
+        <ion-scroll class="scroll-zone" scrollY="true">
+          <div *ngFor="let id of keys" >
 
+            <ion-item-sliding>
+             <ion-item>
+                <div class="clear">
+                  <div class="inline left"> {{bill.products[id].name}} </div>
+                  <div class="inline right"> {{bill.products[id].quantity}} buc</div>
+                </div>
+                <div class="clear">
+                  <div class="inline left"> {{bill.products[id].quantity}} X {{bill.products[id].pricePerUnit}} </div>
+                  <div class="inline right"> {{bill.products[id].totalPrice}} RON</div>
+                </div>
+              </ion-item>
+              <ion-item-options>
+                <button ion-button color="light" (click)="showCheckbox(showCheckbox(bill.products[id], id))">
+                  <ion-icon name="attach"></ion-icon>
+                  Add
+                  Category
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
 
+          </div>
+        </ion-scroll>
+      </ion-list>
+    </ion-card-content>
 
+    <ion-grid>
+      <ion-row  class="total">
+        <ion-col col-4>TOTAL</ion-col>
+        <ion-col col-3></ion-col>
+        <ion-col col-5>{{bill.totalAmount}} RON</ion-col>
+      </ion-row>
+    </ion-grid>
 
-</ion-card-content>
-<ion-grid>
-  <ion-row  class="total">
-    <ion-col col-4>TOTAL</ion-col>
-    <ion-col col-3></ion-col>
-    <ion-col col-5>{{bill.totalAmount}} RON</ion-col>
-  </ion-row>
-</ion-grid>
-
-
-</ion-card>
-
+  </ion-card>
 
 </ion-content>

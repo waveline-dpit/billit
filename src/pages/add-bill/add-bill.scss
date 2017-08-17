@@ -1,4 +1,16 @@
 page-add-bill {
+    p.warn
+    {
+      text-align: center;
+      color: red;
+      font-size: 2vh;
+      margin: 5px 0 0px 0px;
+      transition: opacity 2s ease-in;
+    }
+    p.ios.warn
+    {
+        margin: 0 0 0 16px;
+    }
     .icon{
         margin: auto;
     }

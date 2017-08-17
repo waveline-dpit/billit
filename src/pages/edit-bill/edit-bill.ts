@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {BillDatabase} from '../../providers/bill-database/bill-database';
+import { BillDatabase} from '../../providers/bill-database/bill-database';
 import { AlertController } from 'ionic-angular';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NumberValidator } from  '../../validators/number';
 
 /**
- * Generated class for the AddBillPage page.
+ * Generated class for the EditBillpage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 @IonicPage()
 @Component({
-  selector: 'page-add-bill',
-  templateUrl: 'add-bill.html',
+  selector: 'page-edit-bill',
+  templateUrl: 'edit-bill.html',
 })
-export class AddBillPage {
+export class EditBillPage {
   bill;
   products;
   currentDate;
   currentTime;
   fcbillid; fcstorename;
-  fcprodname = []; fcprice; fcqty;
+  fcprodname; fcprice; fcqty;
   submitAttempt: boolean = false;
   billIdForm: FormGroup;
   productForm: FormGroup;
@@ -34,82 +34,42 @@ export class AddBillPage {
     public formBuilder: FormBuilder,
     public billDatabase: BillDatabase
   ) {
+    this.bill = this.navParams.get('billParam');
+    console.log(this.bill)
+
+    // ======== Mai este de modificat. that about this.products ========
 
     this.billIdForm = formBuilder.group({
         fcstorename: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
         fcbillid: ['', Validators.compose([Validators.maxLength(14), Validators.required])],
     });
     this.productForm = formBuilder.group({
-        productList: this.formBuilder.array([
-          this.initProduct(),
-        ])
-    });
+        fcprodname: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+        fcqty: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
+        fcprice: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
 
+    });
     this.getDateTime();
-    console.log(this.currentDate);
-    this.bill = {
-      date: this.currentDate,
-      time: this.currentTime,
-      favourite: false,
-      number: "",
-      totalAmount: "",
-      storeName: ""
-    }
-    this.products = [
-      {
-        name: "",
-        quantity: "",
-        pricePerUnit: "",
-        totalPrice: 0
-      }
-    ]
-    //this.currentDate = new Date();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddBillPage');
-    console.log(this.products);
+    console.log('ionViewDidLoad EditBillPage');
+    console.log(this.bill);
   }
 
-
-  initProduct(){
-    return this.formBuilder.group({
-      fcprodname: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-      fcqty: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
-      fcprice: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
-    });
-  }
-
-  addProduct(){
+  addProduct() {
     this.products.push({
         name: "",
         quantity: "",
         pricePerUnit: "",
         totalPrice: ""
     });
-    console.log(this.products)
-    const control = <FormArray>this.productForm.controls['productList'];
-    control.push(this.initProduct());
-  }
-
-  deleteProduct(index){
-    const control = <FormArray>this.productForm.controls['productList'];
-    control.removeAt(index);
-  }
-
-
-  /*addProduct() {
-    this.products.push({
-        name: "",
-        quantity: "",
-        pricePerUnit: "",
-        totalPrice: ""
-    });
+    this.validate();
   }
   deleteProduct(index) {
     console.log(index);
     this.products.splice(index,1);
-  }*/
+  }
 
   fieldsNotCompleted() {
     let alert = this.alerCtrl.create({
@@ -120,7 +80,20 @@ export class AddBillPage {
     alert.present()
   }
 
-  submit() {
+  validate(){
+    this.billIdForm = this.formBuilder.group({
+        fcstorename: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+        fcbillid: ['', Validators.compose([Validators.maxLength(14), Validators.required])],
+    });
+    this.productForm = this.formBuilder.group({
+        fcprodname: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+        fcqty: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
+        fcprice: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
+
+    });
+  }
+
+  /*submit() {
     this.submitAttempt = true;
     var canSubmit = true;
     for (var key in this.bill) {
@@ -159,7 +132,7 @@ export class AddBillPage {
     {
       this.fieldsNotCompleted();
     }
-  }
+  }*/
   isNumber(val)
   {
     if(val>-99999999999 && val<99999999999)
@@ -212,4 +185,5 @@ export class AddBillPage {
     this.currentTime = hour + ":" + min;
     console.log(this.currentTime);
   }
+
 }

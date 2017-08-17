@@ -17,7 +17,7 @@
 <ion-content padding class="backIMG">
   <div padding>
   <ion-segment [(ngModel)]="stats">
-    <ion-segment-button value="days" (click) = "changeData()">
+    <ion-segment-button value="days">
       Days
     </ion-segment-button>
     <ion-segment-button value="weeks">
@@ -33,35 +33,48 @@
 <div [ngSwitch]="stats">
   <div *ngSwitchCase="'days'">
 
-     <ion-card>
-  <ion-card-header class="center header">
-    (08.08.2017)
-    <ion-icon name="calendar" class="right"></ion-icon>
-  </ion-card-header>
-  <ion-card-content class="center header">
-    25 RON
-  </ion-card-content>
-</ion-card>
+    <ion-card>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="date" col-2>
+            <ion-icon name="calendar" class="right"></ion-icon>
+          </ion-col>
+          <ion-col col-10>
+            <ion-item>
+              <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="dummydate"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          25 RON
+        </ion-row>
+      </ion-grid>
+    </ion-card>
 
-     <ion-card>
-  <ion-card-header class="header">
-    By stores
-  </ion-card-header>
-  <ion-card-content>
-    <div class="display"><div class="left">Profi </div><div class="right">15 RON</div></div>
-    <div class="display"><div class="left">Penny </div><div class="right">10 RON</div></div>
-  </ion-card-content>
-</ion-card>
+    <ion-card>
+      <ion-card-header class="header">
+        By stores
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let store of storesArr">
+          <div class="display">
+            <div class="left">{{store.name}} </div>
+          <div class="right">{{store.amount}} RON</div></div>
+        </div>
+        <div class="display"><div class="left">Profi </div><div class="right">15 RON</div></div>
+        <div class="display"><div class="left">Penny </div><div class="right">10 RON</div></div>
+      </ion-card-content>
+    </ion-card>
 
-     <ion-card>
-  <ion-card-header class="header">
-    By categories
-  </ion-card-header>
-  <ion-card-content>
-      <div class="display"><div class="left">Paine </div><div class="right">15 RON</div></div>
-    <div class="display"><div class="left">Alimente </div><div class="right">10 RON</div></div>
-  </ion-card-content>
-</ion-card>
+         <ion-card>
+      <ion-card-header class="header">
+        By categories
+      </ion-card-header>
+      <ion-card-content>
+          <div class="display"><div class="left">Paine </div><div class="right">15 RON</div></div>
+        <div class="display"><div class="left">Alimente </div><div class="right">10 RON</div></div>
+      </ion-card-content>
+    </ion-card>
 
   </div>
 

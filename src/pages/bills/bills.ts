@@ -10,6 +10,8 @@ import {BillDatabase} from "../../providers/bill-database/bill-database"
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import {UserInfo} from '../../providers/user-info/user-info';
 import {CategoriesService} from '../../providers/categories-service/categories-service'
+import {  FabContainer } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -20,6 +22,7 @@ export class BillsPage {
   logoutButton = {};
   bills;
   cat;
+
   constructor(
     public platform: Platform,
     public navCtrl: NavController,
@@ -29,7 +32,8 @@ export class BillsPage {
     public billDatabase: BillDatabase,
     public userInfo: UserInfo,
     public db: AngularFireDatabase,
-    public categoriesService: CategoriesService
+    public categoriesService: CategoriesService,
+    public alerCtrl: AlertController,
   )
   {
     billDatabase.retreiveAllBills().subscribe((data) =>{
@@ -54,8 +58,13 @@ export class BillsPage {
   goToAddBillPage()
   {
     this.navCtrl.push(AddBillPage);
+
   }
-  presentPopover(myEvent) { 
+  share (fab: FabContainer) {
+   fab.close ();
+   console.log ( "Sharing in");
+ }
+  presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(PopoverPage);
     popover.present({
       ev: myEvent
@@ -66,4 +75,16 @@ export class BillsPage {
     this.cat = "Paine";
     this.categoriesService.addCategory(this.cat);
   }
+  addToFavourite()
+  {
+    console.log("Raul added to favourite");
+  }
+  showAlert(){
+    let alert = this.alerCtrl.create({
+      message: 'Are you sure you want to delete this bill?',
+      buttons: ['No' , 'Yes']
+    });
+    alert.present()
+  }
+
 }

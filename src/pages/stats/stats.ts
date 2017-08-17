@@ -18,26 +18,9 @@ export class StatsPage {
     public db: AngularFireDatabase,
     public userInfo:UserInfo
   )
-  {
-    this.billsSubject = new Subject();
-    let path = '/user/' + userInfo.getUserToken() + '/bills';
-    this.bills = db.list(path,{
-      query: {
-        orderByChild: 'date',
-        equalTo: this.billsSubject
-      }
-    });
-
-    this.bills.subscribe(queriedItems => {
-      console.log(queriedItems);
-    });
-  }
+  {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StatsPage');
-  }
-  changeData()
-  {
-    this.billsSubject.next("11");
   }
 }
