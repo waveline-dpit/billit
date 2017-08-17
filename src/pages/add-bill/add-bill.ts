@@ -88,7 +88,7 @@ export class AddBillPage {
         }
       }
     }
-    //console.log(canSubmit);
+    console.log(canSubmit);
     if(canSubmit)
     {
       this.bill.date = this.formatDate(this.bill.date);

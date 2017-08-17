@@ -55,7 +55,7 @@ export class BillsPage {
   {
     this.navCtrl.push(AddBillPage);
   }
-  presentPopover(myEvent) {
+  presentPopover(myEvent) { 
     let popover = this.popoverCtrl.create(PopoverPage);
     popover.present({
       ev: myEvent

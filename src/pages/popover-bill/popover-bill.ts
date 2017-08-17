@@ -17,7 +17,7 @@ import { AlertController, Platform } from 'ionic-angular';
        <button ion-item (click)="billCheckbox()"><ion-icon style="margin-right:9px;" name="attach"></ion-icon>Category</button>
       </ion-list>
   `
-}) 
+})
 export class PopoverBillPage {
 
   constructor(
@@ -33,37 +33,10 @@ export class PopoverBillPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad PopoverBillPage');
   }
-    showCheckbox() {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Select categories');
 
-
-    alert.addInput({
-      type: 'checkbox',
-      label: 'Alderaan',
-      value: 'value1',
-      checked: true
-    });
-
-    alert.addInput({
-      type: 'checkbox',
-      label: 'Bespin',
-      value: 'value2'
-    });
-
-    alert.addButton('Cancel');
-    alert.addButton({
-      text: 'Okay',
-      handler: data => {
-        console.log('Checkbox data:', data);
-
-      }
-    });
-    alert.present();
-  }
   billCheckbox() {
     let alert = this.alertCtrl.create();
-   alert.setTitle('Select the bill category');
+    alert.setTitle('Select the bill category');
     alert.setMessage('This category will be set for all products on this bill');
 
     alert.addInput({
@@ -88,13 +61,15 @@ export class PopoverBillPage {
       type: 'radio',
       label: 'Blue',
       value: 'blue',
-
     });
+
     alert.addButton('Cancel');
+
     alert.addButton({
       text: 'OK',
-
     });
+    
+    this.close();
     alert.present();
   }
 

@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-  
+
     <img src="/assets/Images/logo.png" class="billit_image">
 
   </ion-navbar>
@@ -17,7 +17,7 @@
 <ion-content padding class="backIMG">
   <div padding>
   <ion-segment [(ngModel)]="stats">
-    <ion-segment-button value="days">
+    <ion-segment-button value="days" (click) = "changeData()">
       Days
     </ion-segment-button>
     <ion-segment-button value="weeks">
@@ -27,12 +27,12 @@
       Months
     </ion-segment-button>
   </ion-segment>
-  
+
 </div>
 
 <div [ngSwitch]="stats">
   <div *ngSwitchCase="'days'">
-    
+
      <ion-card>
   <ion-card-header class="center header">
     (08.08.2017)
@@ -42,7 +42,7 @@
     25 RON
   </ion-card-content>
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header class="header">
     By stores
@@ -52,7 +52,7 @@
     <div class="display"><div class="left">Penny </div><div class="right">10 RON</div></div>
   </ion-card-content>
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header class="header">
     By categories
@@ -62,11 +62,11 @@
     <div class="display"><div class="left">Alimente </div><div class="right">10 RON</div></div>
   </ion-card-content>
 </ion-card>
-    
+
   </div>
 
    <div *ngSwitchCase="'weeks'">
-    
+
          <ion-card>
   <ion-card-header>
     Today
@@ -75,7 +75,7 @@
     25 RON
   </ion-card-content>
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header>
     By stores
@@ -85,7 +85,7 @@
     <div>Penny 10 RON</div>
   </ion-card-content>
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header>
     By categories
@@ -95,11 +95,11 @@
     <div>alimente 15 RON</div>
   </ion-card-content>
 </ion-card>
-    
+
   </div>
 
     <div *ngSwitchCase="'months'">
-    
+
         <ion-card>
   <ion-card-header>
     Today
@@ -108,7 +108,7 @@
     25 RON
   </ion-card-content>
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header>
     By stores
@@ -118,7 +118,7 @@
     <div>Penny 10 RON</div>
   </ion-card-content>
 </ion-card>
-    
+
      <ion-card>
   <ion-card-header>
     By categories

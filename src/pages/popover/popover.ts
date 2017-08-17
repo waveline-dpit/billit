@@ -12,7 +12,7 @@ import { AddBillPage } from "../add-bill/add-bill";
 @Component({
   template: `
       <ion-list>
-        
+
         <button ion-item>
         <div class="rows">
           <ion-icon style="margin-right:5px;"name="cloud-download"></ion-icon>
@@ -38,10 +38,11 @@ export class PopoverPage {
   ) {}
 
   close() {
-    this.viewCtrl.dismiss();
+    this.navCtrl.remove(this.viewCtrl.index);
   }
   goToAddBillPage()
   {
+    this.close();
     this.navCtrl.push(AddBillPage);
   }
 }
