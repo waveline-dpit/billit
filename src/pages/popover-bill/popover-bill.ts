@@ -20,7 +20,7 @@ import { EditBillPage } from "../edit-bill/edit-bill";
        <button ion-item (click)="addToFavourite()"><ion-icon style="margin-right:5px;" name="star-outline"></ion-icon>Add to favourite</button>
       </ion-list>
   `
-}) 
+})
 export class PopoverBillPage {
 
   constructor(
@@ -28,7 +28,8 @@ export class PopoverBillPage {
     public navParams: NavParams,
     public viewCtrl: ViewController,
      public alertCtrl: AlertController,
-  ) {}
+  ) {
+  }
 
   close() {
     this.viewCtrl.dismiss();
@@ -36,41 +37,15 @@ export class PopoverBillPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad PopoverBillPage');
   }
+  
   goToEditBillPage()
   {
-    this.navCtrl.push(EditBillPage);
+    this.navCtrl.push(EditBillPage, { 'billParam': this.navParams.get('billParam')});
   }
-    showCheckbox() {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Select categories');
 
-
-    alert.addInput({
-      type: 'checkbox',
-      label: 'Alderaan',
-      value: 'value1',
-      checked: true
-    });
-
-    alert.addInput({
-      type: 'checkbox',
-      label: 'Bespin',
-      value: 'value2'
-    });
-
-    alert.addButton('Cancel');
-    alert.addButton({
-      text: 'Okay',
-      handler: data => {
-        console.log('Checkbox data:', data);
-
-      }
-    });
-    alert.present();
-  }
   billCheckbox() {
     let alert = this.alertCtrl.create();
-   alert.setTitle('Select the bill category');
+    alert.setTitle('Select the bill category');
     alert.setMessage('This category will be set for all products on this bill');
 
     alert.addInput({
@@ -95,13 +70,15 @@ export class PopoverBillPage {
       type: 'radio',
       label: 'Blue',
       value: 'blue',
-
     });
+
     alert.addButton('Cancel');
+
     alert.addButton({
       text: 'OK',
-
     });
+
+    this.close();
     alert.present();
   }
   showAlert(){

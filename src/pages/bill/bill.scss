@@ -1,5 +1,6 @@
 page-bill {
 
+<<<<<<< HEAD
     .margin-right
     {
         margin-right:10px;
@@ -77,4 +78,91 @@ page-bill {
     {
       background-color: white;
     }
+=======
+  .margin-right
+  {
+      margin-right:10px;
+  }
+  .row
+  {
+      text-align: center;
+  }
+  ion-navbar
+  {
+  height: 8vh;
+  }
+  .inline
+  {
+      display: inline;
+  }
+  .left
+  {
+      float: left;
+  }
+  .right
+  {
+      float: right;
+  }
+  .clear
+  {
+      display: clear;
+  }
+  .text
+  {
+      margin: auto;
+  }
+  .select
+  {
+      margin: 0 10px;
+      width: calc(100% - 20px);
+      -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      color: #000;
+  }
+  .total
+  {
+    margin-top: -17px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .label-md,.label-ios
+  {
+      margin: 5px 8px 5px 0;
+  }
+  .inline-display
+  {
+      display: inline-block;
+  }
+  .scroll-container
+  {
+      height: 68%;
+  }
+
+  .scroll-zone
+  {
+    display: block;
+    width:100%;
+    height:100%;
+  }
+  .card
+  {
+    height: 97%;
+  }
+  .card-content
+  {
+    padding: 13px 0;
+  }
+  .card-header
+  {
+    padding: 16px 16px 8pxx 16px;
+  }
+  .item
+  {
+    background-color: white;
+  }
+  .scroll-content
+  {
+    overflow-y: hidden;
+  }
+>>>>>>> 0d6ee5591c297f8ed6102cc458dc59d30ba5fbaf
 }

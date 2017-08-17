@@ -1,34 +1,26 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Subject } from 'rxjs/Subject';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { UserInfo} from '../../providers/user-info/user-info'
 
-/**
- * Generated class for the StatsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-stats',
   templateUrl: 'stats.html',
 })
 export class StatsPage {
-
-  dummydate;
-
+  bills: FirebaseListObservable <any[]>;
+  billsSubject: Subject <any>;
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams
-  ) {
-
-    this.dummydate = (new Date()).toISOString();
-  }
-
-
+    public navParams: NavParams,
+    public db: AngularFireDatabase,
+    public userInfo:UserInfo
+  )
+  {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StatsPage');
-    console.log(this.dummydate);
   }
-
 }
