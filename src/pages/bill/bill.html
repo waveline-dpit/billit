@@ -67,10 +67,13 @@
                 </div>
               </ion-item>
               <ion-item-options>
-                <button ion-button color="light" (click)="showCheckbox(showCheckbox(bill.products[id], id))">
+                <button ion-button color='light' (click)="showCheckbox(bill.products[id], id)">
                   <ion-icon name="attach"></ion-icon>
-                  Add
-                  Category
+                  Categories
+                </button>
+                <button ion-button style="background-color: #a9a9a9" (click)="addNewCategory()">
+                  <ion-icon name="add"></ion-icon>
+                  New
                 </button>
               </ion-item-options>
             </ion-item-sliding>
