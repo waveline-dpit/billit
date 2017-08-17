@@ -24,6 +24,7 @@ export class BillPage {
   billAlert;
   productAlert;
   categories;
+  produsAlert;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -48,9 +49,9 @@ export class BillPage {
   }
 
   showCheckbox(product, id) {
-    this.productAlert = this.alertCtrl.create();
-    this.productAlert.setTitle('Select categories');
-    
+    this.productAlert = this.alertCtrl.create({
+      title: 'Select Categories'
+    });
     for(let category of this.categories)
     {
 
@@ -76,14 +77,14 @@ export class BillPage {
     this.productAlert.present();
   }
 
-  addCategory() {
+  addNewCategory() {
     let prompt = this.alertCtrl.create({
       title: 'New category',
       message: "Add a new category for your products",
       inputs: [
         {
           name: 'title',
-          placeholder: 'Title'
+          placeholder: 'ex: coffe'
         },
       ],
       buttons: [
@@ -96,7 +97,8 @@ export class BillPage {
         {
           text: 'Save',
           handler: data => {
-            console.log('Saved clicked');
+            console.log('Saved clicked',data.title);
+            this.categoriesService.addCategory(data.title);            
           }
         }
       ]
