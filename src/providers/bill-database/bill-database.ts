@@ -43,5 +43,18 @@ export class BillDatabase {
     return this.db.list(path);
   }
 
+  addBillToFav(pathBill){
+      let path = '/user/' + this.userInfo.getUserToken() + '/bills' + '/' + pathBill;
+      let bill: FirebaseObjectObservable <any>;
+      bill = this.db.object(path);
+      bill.update({favourite: true});
+  }
+
+  removeBillFromFav(pathBill){
+      let path = '/user/' + this.userInfo.getUserToken() + '/bills' + '/' + pathBill;
+      let bill: FirebaseObjectObservable <any>;
+      bill = this.db.object(path);
+      bill.update({favourite: false});
+  }
 
 }

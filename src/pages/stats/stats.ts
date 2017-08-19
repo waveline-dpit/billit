@@ -32,9 +32,8 @@ export class StatsPage {
 
     billDatabase.retreiveAllBills().subscribe((data) =>{
       this.bills = data;
+      this.getStores();
     });
-
-    this.getStores();
   }
 
   getStores(){

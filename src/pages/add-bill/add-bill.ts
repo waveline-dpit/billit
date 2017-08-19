@@ -99,75 +99,12 @@ export class AddBillPage {
     const control = <FormArray>this.productForm.controls['productList'];
     control.push(this.initProduct());
   }
-  showDeleteAlert(index){
-    if(this.products.length > 1){
-      let alert = this.alerCtrl.create({
-        title: 'Warning',
-        message: 'Are you sure you want to delete this bill?',
-        buttons: [
-          {
-            text: 'No',
-            role: 'cancel'
-          },
-          {
-            text: 'Yes',
-            handler: () => {
-              this.deleteProduct(index);
-            }
-          }
-        ]
-      });
-      alert.present()
-    }
-  }
   deleteProduct(index){
       (<FormArray>this.productForm.controls['productList']).removeAt(index);
       this.bill.totalAmount -= this.products[index].totalPrice;
       this.products.splice(index,1);
     }
 
-  fieldsNotCompleted() {
-    let alert = this.alerCtrl.create({
-      title: 'Error',
-      message: 'You must complete all the fields properly in order to submit',
-      buttons: ['Ok']
-    });
-    alert.present()
-  }
-
-  submit() {
-    this.submitAttempt = true;
-    var canSubmit = true;
-    for (var key in this.bill) {
-      if(this.bill[key] === null || this.bill[key] === ""){
-        canSubmit = false;
-      }
-    }
-    for (var idx in this.products) {
-      var product = this.products[idx];
-      for(var key in product){
-        if(product[key] === null || product[key] === ""){
-          canSubmit = false;
-        }
-      }
-    }
-    let ok = (
-      this.billIdForm.controls.fcstorename.valid &&
-      this.billIdForm.controls.fcbillid.valid &&
-      this.productForm.controls.productList.valid
-    );
-    //console.log(ok);
-    if(canSubmit && ok)
-    {
-      this.bill.date = this.formatDate(this.bill.date);
-      this.billDatabase.addBill(this.bill, this.products);
-      this.navCtrl.pop();
-    }
-    else
-    {
-      this.fieldsNotCompleted();
-    }
-  }
   isNumber(val)
   {
     if(val>-99999999999 && val<99999999999)
@@ -229,6 +166,71 @@ export class AddBillPage {
     this.currentTime = hour + ":" + min;
   }
 
+  submit() {
+    this.submitAttempt = true;
+    var canSubmit = true;
+    for (var key in this.bill) {
+      if(this.bill[key] === null || this.bill[key] === ""){
+        canSubmit = false;
+      }
+    }
+    for (var idx in this.products) {
+      var product = this.products[idx];
+      for(var key in product){
+        if(product[key] === null || product[key] === ""){
+          canSubmit = false;
+        }
+      }
+    }
+    let ok = (
+      this.billIdForm.controls.fcstorename.valid &&
+      this.billIdForm.controls.fcbillid.valid &&
+      this.productForm.controls.productList.valid
+    );
+    //console.log(ok);
+    if(canSubmit && ok)
+    {
+      this.bill.date = this.formatDate(this.bill.date);
+      this.billDatabase.addBill(this.bill, this.products);
+      this.navCtrl.pop();
+    }
+    else
+    {
+      this.fieldsNotCompleted();
+    }
+  }
+
+  // =================================================== ALERTS ===================================================
+
+  fieldsNotCompleted() {
+    let alert = this.alerCtrl.create({
+      title: 'Error',
+      message: 'You must complete all the fields properly in order to submit',
+      buttons: ['Ok']
+    });
+    alert.present()
+  }
+  showDeleteAlert(index){
+    if(this.products.length > 1){
+      let alert = this.alerCtrl.create({
+        title: 'Warning',
+        message: 'Are you sure you want to delete this bill?',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel'
+          },
+          {
+            text: 'Yes',
+            handler: () => {
+              this.deleteProduct(index);
+            }
+          }
+        ]
+      });
+      alert.present()
+    }
+  }
   showCategories(product, id) {
     this.productAlert = this.alerCtrl.create();
     this.productAlert.setTitle('Select categories');
@@ -270,14 +272,10 @@ export class AddBillPage {
       buttons: [
         {
           text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
         },
         {
           text: 'Save',
           handler: data => {
-            console.log('Saved clicked');
             this.categoriesService.addCategory(data.title);
           }
         }

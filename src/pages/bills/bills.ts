@@ -75,9 +75,15 @@ export class BillsPage {
       ev: myEvent
     });
   }
-  addToFavourite()
-  {
-    console.log("Raul added to favourite");
+  addToFavourite(bill, slidingItem){
+    bill.favourite = true;
+    setTimeout(() => {slidingItem.close()}, 300);
+    setTimeout(() => {this.billDatabase.addBillToFav(bill.$key);}, 1000);
+  }
+  removeFromFavourite(bill, slidingItem){
+    bill.favourite = false;
+    setTimeout(() => {slidingItem.close()}, 300);
+    setTimeout(() => {this.billDatabase.removeBillFromFav(bill.$key);}, 1000);
   }
   showAlert(){
     let alert = this.alerCtrl.create({
