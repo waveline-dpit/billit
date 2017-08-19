@@ -1,14 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {BillDatabase} from "../../providers/bill-database/bill-database"
+import { Subject } from 'rxjs/Subject';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { UserInfo} from '../../providers/user-info/user-info'
 
-
-/**
- * Generated class for the StatsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-stats',
@@ -60,5 +55,4 @@ export class StatsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad StatsPage');
   }
-
 }
