@@ -48,10 +48,11 @@ export class BillPage {
     //console.log(this.bill);
   }
 
-  showCheckbox(product, id) {
+  showCategories(product, id) {
+    console.log("prod", product)
     this.productAlert = this.alertCtrl.create();
     this.productAlert.setTitle('Select categories');
-    
+
     for(let category of this.categories)
     {
 
@@ -60,9 +61,8 @@ export class BillPage {
         label: category.name,
         value: category.$key,
       });
-      
-    }
 
+    }
     this.productAlert.addButton('Cancel');
     this.productAlert.addButton({
       text: 'Okay',
@@ -84,7 +84,7 @@ export class BillPage {
       inputs: [
         {
           name: 'title',
-          placeholder: 'Title'
+          placeholder: 'ex: vegetables'
         },
       ],
       buttons: [
@@ -98,6 +98,7 @@ export class BillPage {
           text: 'Save',
           handler: data => {
             console.log('Saved clicked');
+            this.categoriesService.addCategory(data.title);
           }
         }
       ]

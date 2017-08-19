@@ -62,7 +62,7 @@
               </ion-item>
             </ion-col>
             </ion-row>
-            <p class="warn" *ngIf="!billIdForm.controls.fcstorename.valid && (billIdForm.controls.fcstorename.dirty)">Store name too long</p>
+            <p class="warn" *ngIf="!billIdForm.controls.fcstorename.valid && (billIdForm.controls.fcstorename.dirty)">Store name missing or too long</p>
             <p class="warn" *ngIf="!billIdForm.controls.fcstorename.valid && (submitAttempt && !billIdForm.controls.fcstorename.dirty)">Store name required</p>
           </ion-grid>
 
@@ -77,7 +77,7 @@
               </ion-item>
             </ion-col>
             </ion-row>
-            <p class="warn" *ngIf="!billIdForm.controls.fcbillid.valid && (billIdForm.controls.fcbillid.dirty)">Value can't contain more than 14 digits.</p>
+            <p class="warn" *ngIf="!billIdForm.controls.fcbillid.valid && (billIdForm.controls.fcbillid.dirty)">Value can't be empty or contain more than 14 digits.</p>
             <p class="warn" *ngIf="!billIdForm.controls.fcbillid.valid && (submitAttempt && !billIdForm.controls.fcbillid.dirty)">Bill number required</p>
 
           </ion-grid>
@@ -111,13 +111,13 @@
                         <div class="col-text float-right">Qty:</div>
                         <ion-col col-2 >
                           <ion-item>
-                            <ion-input class="qty" type="number" clear (keyup)="addPrice(product)" formControlName="fcqty" [(ngModel)]="product.quantity"  [class.invalid]="!productForm.controls.productList.controls[i].controls.fcqty.valid && (productForm.controls.productList.controls[i].controls.fcqty.dirty || submitAttempt)"></ion-input>
+                            <ion-input class="qty" type="number" clear (blur)="addPrice(product)" formControlName="fcqty" [(ngModel)]="product.quantity"  [class.invalid]="!productForm.controls.productList.controls[i].controls.fcqty.valid && (productForm.controls.productList.controls[i].controls.fcqty.dirty || submitAttempt)"></ion-input>
                           </ion-item>
                         </ion-col>
                       </ion-row>
-                      <p class="warn" *ngIf="!productForm.controls.productList.controls[i].controls.fcqty.valid && (productForm.controls.productList.controls[i].controls.fcqty.dirty)">Value can't contain more than <br /> 6 digits and 3 decimals.</p>
+                      <p class="warn" *ngIf="!productForm.controls.productList.controls[i].controls.fcqty.valid && (productForm.controls.productList.controls[i].controls.fcqty.dirty)">Value can't be empty or contain more than <br /> 6 digits and 2 decimals.</p>
                       <p class="warn" *ngIf="!productForm.controls.productList.controls[i].controls.fcqty.valid && (submitAttempt && !productForm.controls.productList.controls[i].controls.fcqty.dirty)">Quantity required</p>
-                      <p class="warn" *ngIf="!productForm.controls.productList.controls[i].controls.fcprodname.valid && (productForm.controls.productList.controls[i].controls.fcprodname.dirty)">Product name too long</p>
+                      <p class="warn" *ngIf="!productForm.controls.productList.controls[i].controls.fcprodname.valid && (productForm.controls.productList.controls[i].controls.fcprodname.dirty)">Product name missing or too long</p>
                       <p class="warn" *ngIf="!productForm.controls.productList.controls[i].controls.fcprodname.valid && (submitAttempt && !productForm.controls.productList.controls[i].controls.fcprodname.dirty)">Product name required</p>
                     </ion-grid>
 
@@ -126,28 +126,34 @@
                         <div class="col-text price">Price:</div>
                         <ion-col col-3>
                           <ion-item>
-                            <ion-input type="number" placeholder="ex: 12.5" clear (keyup)="addPrice(product)" formControlName="fcprice" [(ngModel)]="product.pricePerUnit"  [class.invalid]="!productForm.controls.productList.controls[i].controls.fcprice.valid && (productForm.controls.productList.controls[i].controls.fcprice.dirty || submitAttempt)" ></ion-input>
+                            <ion-input type="number" placeholder="ex: 12.5" clear (blur)="addPrice(product)" formControlName="fcprice" [(ngModel)]="product.pricePerUnit"  [class.invalid]="!productForm.controls.productList.controls[i].controls.fcprice.valid && (productForm.controls.productList.controls[i].controls.fcprice.dirty || submitAttempt)" ></ion-input>
                           </ion-item>
                         </ion-col>
                         <div class="col-text float-right">Total:</div>
                         <div col-2 class="col-text total-price">{{product.totalPrice}}</div>
                       </ion-row>
-                      <p class="warn" *ngIf="!productForm.controls.productList.controls[i].controls.fcprice.valid && (productForm.controls.productList.controls[i].controls.fcprice.dirty)">Value can't contain more than <br /> 6 digits and 3 decimals.</p>
+                      <p class="warn" *ngIf="!productForm.controls.productList.controls[i].controls.fcprice.valid && (productForm.controls.productList.controls[i].controls.fcprice.dirty)">Value can't be empty or contain more than <br /> 6 digits and 2 decimals .</p>
                       <p class="warn" *ngIf="!productForm.controls.productList.controls[i].controls.fcprice.valid && (submitAttempt && !productForm.controls.productList.controls[i].controls.fcprice.dirty)">Price required</p>
                     </ion-grid>
-                    
+
                   </div>
                 </ion-item>
 
-                <ion-item-options side="right">
-                  <button ion-button color="light">
-                    <ion-icon name="attach"></ion-icon>
-                    Add
-                    Category
-                  </button>
-                  <button ion-button expandable  color="danger" (click)="deleteProduct(i)">
+
+                <ion-item-options side="left">
+                  <button ion-button color="danger" (click)="showDeleteAlert(i)">
                     <ion-icon name="trash" ></ion-icon>
                     Delete
+                  </button>
+                </ion-item-options>
+                <ion-item-options side="right">
+                  <button ion-button color="light" (click)="showCategories(product, i)">
+                    <ion-icon name="attach"></ion-icon>
+                    Categories
+                  </button>
+                  <button ion-button color="dark-grey" (click)="addCategory()">
+                    <ion-icon name="add"></ion-icon>
+                    New
                   </button>
                 </ion-item-options>
 

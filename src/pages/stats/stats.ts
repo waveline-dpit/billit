@@ -17,6 +17,7 @@ import {BillDatabase} from "../../providers/bill-database/bill-database"
 export class StatsPage {
   bills;
   dummydate;
+  stats;
   storesObj: {[k: string]: any} = {};
   storesArr= [];
 
@@ -25,6 +26,7 @@ export class StatsPage {
     public billDatabase: BillDatabase,
     public navParams: NavParams
   ) {
+    this.stats = 'days';
 
     this.dummydate = (new Date()).toISOString();
 

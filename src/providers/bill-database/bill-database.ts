@@ -14,6 +14,7 @@ export class BillDatabase {
     public db: AngularFireDatabase,
     public userInfo: UserInfo
   ) {}
+
   addBill(bill, products)
   {
     let path = '/user/' + this.userInfo.getUserToken() + '/bills';
@@ -27,6 +28,7 @@ export class BillDatabase {
       }
     });
   }
+
   addProducts(products)
   {
     let path = '/user/' + this.userInfo.getUserToken() + '/bills';
@@ -34,9 +36,12 @@ export class BillDatabase {
     user = this.db.list(path);
     user.push(products);
   }
+
   retreiveAllBills()
   {
     let path = '/user/' + this.userInfo.getUserToken() + '/bills';
     return this.db.list(path);
   }
+
+
 }

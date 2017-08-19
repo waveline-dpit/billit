@@ -22,6 +22,8 @@ export class BillsPage {
   logoutButton = {};
   bills;
   cat;
+  fabb: FabContainer;
+  clicked_fab = false;
 
   constructor(
     public platform: Platform,
@@ -39,6 +41,7 @@ export class BillsPage {
     billDatabase.retreiveAllBills().subscribe((data) =>{
       this.bills = data;
     });
+    document.addEventListener("touchstart", () => {this.closeFabIfActive();});
   }
 
   ionViewDidLoad() {
@@ -60,20 +63,17 @@ export class BillsPage {
     this.navCtrl.push(AddBillPage);
 
   }
-  share (fab: FabContainer) {
-   fab.close ();
-   console.log ( "Sharing in");
- }
+  closeFab(fab: FabContainer) {
+    setTimeout(() => {
+      fab.close ();
+      this.clicked_fab = false;
+    }, 100);
+  }
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(PopoverPage);
     popover.present({
       ev: myEvent
     });
-  }
-  addCategory()
-  {
-    this.cat = "Paine";
-    this.categoriesService.addCategory(this.cat);
   }
   addToFavourite()
   {
@@ -81,10 +81,26 @@ export class BillsPage {
   }
   showAlert(){
     let alert = this.alerCtrl.create({
+      title: 'Warning',
       message: 'Are you sure you want to delete this bill?',
       buttons: ['No' , 'Yes']
     });
     alert.present()
   }
-
+  clickedFab(fab){
+    setTimeout(() => {
+      this.clicked_fab = true;
+      this.fabb = fab;
+    }, 300);
+  }
+  closeFabIfActive(){
+    if(this.clicked_fab)
+    {
+      //console.log(this.fabb)
+      if(this.fabb._listsActive)
+      {
+        this.closeFab(this.fabb);
+      }
+    }
+  }
 }
