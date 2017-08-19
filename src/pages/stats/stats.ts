@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Subject } from 'rxjs/Subject';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
-import { UserInfo} from '../../providers/user-info/user-info'
+import { UserInfo} from '../../providers/user-info/user-info';
+import { BillDatabase } from "../../providers/bill-database/bill-database";
+
+
 
 @IonicPage()
 @Component({
