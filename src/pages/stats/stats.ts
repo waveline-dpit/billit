@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Subject } from 'rxjs/Subject';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
-import { UserInfo} from '../../providers/user-info/user-info'
+import { UserInfo} from '../../providers/user-info/user-info';
+import { BillDatabase } from "../../providers/bill-database/bill-database";
+
+
 
 @IonicPage()
 @Component({
@@ -10,15 +13,47 @@ import { UserInfo} from '../../providers/user-info/user-info'
   templateUrl: 'stats.html',
 })
 export class StatsPage {
-  bills: FirebaseListObservable <any[]>;
-  billsSubject: Subject <any>;
+  bills;
+  dummydate;
+  stats;
+  storesObj: {[k: string]: any} = {};
+  storesArr= [];
+
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
-    public db: AngularFireDatabase,
-    public userInfo:UserInfo
-  )
-  {}
+    public billDatabase: BillDatabase,
+    public navParams: NavParams
+  ) {
+    this.stats = 'days';
+
+    this.dummydate = (new Date()).toISOString();
+
+    billDatabase.retreiveAllBills().subscribe((data) =>{
+      this.bills = data;
+      this.getStores();
+    });
+  }
+
+  getStores(){
+    for(let bill of this.bills)
+    {
+      if(this.storesObj[bill.storeName]){
+        this.storesObj[bill.storeName]  += bill.totalAmount;
+      }
+      else{
+        this.storesObj[bill.storeName] = bill.totalAmount;
+      }
+    }
+    for(let key in this.storesObj)
+    {
+      this.storesArr.push({
+        name: key,
+        amount: this.storesObj[key]
+      });
+    }
+    console.log(this.bills, this.storesObj, this.storesArr);
+  }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StatsPage');

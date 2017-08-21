@@ -62,15 +62,18 @@
                   <div class="inline right"> {{bill.products[id].quantity}} buc</div>
                 </div>
                 <div class="clear">
-                  <div class="inline left"> {{bill.products[id].quantity}} X {{bill.products[id].pricePerUnit}} </div>
+                  <div class="inline left"> {{bill.products[id].quantity}} x {{bill.products[id].pricePerUnit}} </div>
                   <div class="inline right"> {{bill.products[id].totalPrice}} RON</div>
                 </div>
               </ion-item>
-              <ion-item-options>
-                <button ion-button color="light" (click)="showCheckbox(bill.products[id], id)">
+              <ion-item-options side="right">
+                <button ion-button color="light" (click)="showCategories(bill.products[id], id)">
                   <ion-icon name="attach"></ion-icon>
-                  Add
-                  Category
+                  Categories
+                </button>
+                <button ion-button color="dark-grey" (click)="addCategory()">
+                  <ion-icon name="add"></ion-icon>
+                  New
                 </button>
               </ion-item-options>
             </ion-item-sliding>

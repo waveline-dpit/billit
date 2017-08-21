@@ -5,7 +5,7 @@ export class NumberValidator {
   static isValid(control: FormControl): any {
 
     function validNumber(x) {
-      if(x > 999999 || (x.toString().split('.')[1] || []).length > 3)
+      if(x > 999999 || (x.toString().split('.')[1] || []).length > 2 || x < 0)
       {
         return false;
       }
