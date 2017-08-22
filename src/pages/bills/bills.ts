@@ -85,11 +85,24 @@ export class BillsPage {
     setTimeout(() => {slidingItem.close()}, 300);
     setTimeout(() => {this.billDatabase.removeBillFromFav(bill.$key);}, 1000);
   }
-  showAlert(){
+  showAlert(billId){
     let alert = this.alerCtrl.create({
       title: 'Warning',
       message: 'Are you sure you want to delete this bill?',
-      buttons: ['No' , 'Yes']
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel'
+
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            setTimeout(()=>{
+              this.billDatabase.removeBill(billId);
+            }, 300);
+          }
+        }]
     });
     alert.present()
   }

@@ -37,10 +37,14 @@ export class CategoriesService {
     let path = "/user/" + this.userInfo.getUserToken() + "/categories";
     return this.db.list(path);
   }
-  addProductToCategory(product, categoryID, productID)
+  addProductToCategory(product, categoryID, productID, billID)
   {
     let path = "/user/" + this.userInfo.getUserToken() + "/categories/" + categoryID + "/products/" + productID;
     this.categories = this.db.object(path);
     this.categories.update(product);
+    path = "/user/" + this.userInfo.getUserToken() + "/bills/" + billID + "/products/" + productID + "/categoryID";
+    let prod: FirebaseObjectObservable <any>;
+    prod = this.db.object(path);
+    prod.update(categoryID);
   }
 }

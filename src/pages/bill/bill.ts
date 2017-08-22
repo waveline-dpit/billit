@@ -48,14 +48,14 @@ export class BillPage {
     //console.log(this.bill);
   }
 
-  showCategories(product, id) {
+  showCategories(product, id, billId) {
     console.log("prod", product)
     this.productAlert = this.alertCtrl.create();
     this.productAlert.setTitle('Select categories');
 
     for(let category of this.categories)
     {
-
+      let isChecked;
       this.productAlert.addInput({
         type: 'checkbox',
         label: category.name,
@@ -63,14 +63,14 @@ export class BillPage {
       });
 
     }
-    this.productAlert.addButton('Cancel');
+    this.productAlert.addButton('Cancel');  
     this.productAlert.addButton({
       text: 'Okay',
       handler: data => {
         console.log('Checkbox data:', data);
         for(let cat of data)
         {
-          this.categoriesService.addProductToCategory(product, cat, id);
+          this.categoriesService.addProductToCategory(product, cat, id, billId);
         }
       }
     });

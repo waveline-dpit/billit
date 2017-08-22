@@ -252,7 +252,7 @@ export class AddBillPage {
         console.log('Checkbox data:', data);
         for(let cat of data)
         {
-          this.categoriesService.addProductToCategory(product, cat, id);
+          this.categoriesService.addProductToCategory(product, cat, id, id);
         }
       }
     });

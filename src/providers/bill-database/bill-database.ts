@@ -57,4 +57,12 @@ export class BillDatabase {
       bill.update({favourite: false});
   }
 
+  removeBill(billId)
+  {
+    let path = '/user/' + this.userInfo.getUserToken() + '/bills' + '/' + billId;
+    let bill: FirebaseObjectObservable <any>;
+    bill = this.db.object(path);
+    bill.remove();
+  }
+
 }
