@@ -5,14 +5,14 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} 
 import firebase from 'firebase/app'
 import { AngularFireAuth } from 'angularfire2/auth';
 import {Observable} from 'rxjs/Observable';
-import {UserInfo} from '../user-info/user-info'
+import {UserInfo} from '../user-info/user-info';
 
 @Injectable()
 export class BillDatabase {
   public bill;
   constructor(
     public db: AngularFireDatabase,
-    public userInfo: UserInfo
+    public userInfo: UserInfo,
   ) {}
 
   addBill(bill, products)
@@ -28,6 +28,7 @@ export class BillDatabase {
       }
     });
   }
+
 
   addProducts(products)
   {
