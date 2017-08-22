@@ -36,6 +36,8 @@ import { BillDatabase } from '../providers/bill-database/bill-database';
 import { CategoriesService} from '../providers/categories-service/categories-service';
 import { HttpModule } from '@angular/http';
 import { EditBillPage } from "../pages/edit-bill/edit-bill";
+import { NgxQRCodeModule} from 'ngx-qrcode2';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 
 // AF2 Settings
@@ -75,7 +77,8 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    HttpModule
+    HttpModule,
+    NgxQRCodeModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -102,6 +105,7 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
+    BarcodeScanner,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
     UserInfo,
