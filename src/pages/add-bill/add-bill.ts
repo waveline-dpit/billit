@@ -169,6 +169,7 @@ export class AddBillPage {
   submit() {
     this.submitAttempt = true;
     var canSubmit = true;
+    //console.log(this.bill, this.products);
     for (var key in this.bill) {
       if(this.bill[key] === null || this.bill[key] === ""){
         canSubmit = false;
@@ -214,7 +215,7 @@ export class AddBillPage {
     if(this.products.length > 1){
       let alert = this.alerCtrl.create({
         title: 'Warning',
-        message: 'Are you sure you want to delete this bill?',
+        message: 'Are you sure you want to delete this product?',
         buttons: [
           {
             text: 'No',

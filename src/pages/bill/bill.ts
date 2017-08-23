@@ -36,6 +36,7 @@ export class BillPage {
   )
   {
     this.bill = billDatabase.bill;
+    console.log(this.bill)
     this.keys = Object.keys(this.bill.products);
     categoriesService.getCategories().subscribe((data)=>
     {

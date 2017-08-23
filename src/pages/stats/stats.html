@@ -8,13 +8,13 @@
 
   <ion-navbar>
 
-    <img src="/assets/Images/logo.png" class="billit_image">
+    <img src="assets/Images/logo.png" class="billit_image">
 
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding class="backIMG">
+<ion-content padding class="backgroundIMG">
   <div padding>
   <ion-segment [(ngModel)]="stats">
     <ion-segment-button value="days">
@@ -41,7 +41,7 @@
           </ion-col>
           <ion-col col-10>
             <ion-item>
-              <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="dummydate"></ion-datetime>
+              <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="selectedDay" (ionChange)="dateHasChanged()"></ion-datetime>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -56,13 +56,14 @@
         By stores
       </ion-card-header>
       <ion-card-content>
-        <div *ngFor="let store of storesArr">
+        <div *ngFor="let store of storesArray">
+          <p *ngIf="storesArrayEmpty">
+            You don't have any bills in this day
+          </p>
           <div class="display">
             <div class="left">{{store.name}} </div>
           <div class="right">{{store.amount}} RON</div></div>
         </div>
-        <div class="display"><div class="left">Profi </div><div class="right">15 RON</div></div>
-        <div class="display"><div class="left">Penny </div><div class="right">10 RON</div></div>
       </ion-card-content>
     </ion-card>
 
