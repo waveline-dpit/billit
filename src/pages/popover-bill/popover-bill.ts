@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { AlertController, Platform } from 'ionic-angular';
 import { EditBillPage } from "../edit-bill/edit-bill";
+import { BillDatabase } from "../../providers/bill-database/bill-database"
+
 /**
  * Generated class for the PopoverBillPage page.
  *
@@ -13,22 +15,27 @@ import { EditBillPage } from "../edit-bill/edit-bill";
 @Component({
   template: `
       <ion-list>
+       <button *ngIf="bill.favourite" ion-item (click)="removeFromFavourite(bill)"><ion-icon style="margin-right:5px;" name="star-outline"></ion-icon>Remove from favourites</button>
+       <button *ngIf="!bill.favourite" ion-item (click)="addToFavourite(bill)"><ion-icon style="margin-right:5px;" name="star-outline"></ion-icon>Add to favourites</button>
        <button ion-item (click)="goToEditBillPage();close()"><ion-icon style="margin-right:5px;" name="create"></ion-icon>Edit</button>
        <button ion-item  (click)="close()"><ion-icon style="margin-right:6px;" name="share"></ion-icon>Share</button>
        <button ion-item (click)="billCheckbox();close()"><ion-icon style="margin-right:9px;" name="attach"></ion-icon>Category</button>
        <button ion-item (click)="showAlert()"><ion-icon style="margin-right:9px;" name="trash"></ion-icon>Delete</button>
-       <button ion-item (click)="addToFavourite()"><ion-icon style="margin-right:5px;" name="star-outline"></ion-icon>Add to favourite</button>
       </ion-list>
   `
 })
 export class PopoverBillPage {
 
+  bill;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
-     public alertCtrl: AlertController,
+    public alertCtrl: AlertController,
+    public billDatabase: BillDatabase
   ) {
+    this.bill = this.navParams.get('billParam');
   }
 
   close() {
@@ -40,7 +47,15 @@ export class PopoverBillPage {
   
   goToEditBillPage()
   {
-    this.navCtrl.push(EditBillPage, { 'billParam': this.navParams.get('billParam')});
+    this.navCtrl.push(EditBillPage, { 'billParam': this.bill});
+  }
+  addToFavourite(bill){
+    bill.favourite = true;
+    this.billDatabase.addBillToFav(bill.$key);
+  }
+  removeFromFavourite(bill){
+    bill.favourite = false;
+    this.billDatabase.removeBillFromFav(bill.$key);
   }
 
   billCheckbox() {

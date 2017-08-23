@@ -4,7 +4,9 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+
+
+<ion-header (click)="closeFabIfActive()">
 
   <ion-navbar>
     <ion-buttons left class="padd">
@@ -12,7 +14,7 @@
         <ion-icon  name="search"></ion-icon>
       </button>
     </ion-buttons>
-    <img src="/assets/Images/logo.png" class="billit_image">
+    <img src="assets/Images/logo.png" class="billit_image">
 
 <ion-buttons right class="padd" right *ngIf="platform.is('ios')">
   <button ion-button icon-only (click)="presentPopover($event)">
@@ -25,11 +27,35 @@
 
 
 <ion-content padding class="backgroundIMG">
+  <!--<ion-item>
+    <ion-input type="text" placeholder="qr data" [(ngModel)]="qrData"></ion-input>
+  </ion-item>
+  <button ion-button full (click)="createCode()">Create code</button>
+  <button ion-button full (click)="scanCode()">Scan code</button>
+
+  <ion-card *ngIf="createdCode">
+    <ngx-qrcode [qrc-value]="createdCode" ></ngx-qrcode>
+    <ion-card-content>
+      <p>
+        value: {{createdCode}}
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="scannedCode">
+    <ion-card-content>
+      <p>
+        result from scan: {{scannedCode}}
+      </p>
+    </ion-card-content>
+  </ion-card>
+-->
+
   <div *ngFor="let bill of bills">
     <ion-card>
       <ion-card-content>
         <ion-list>
-          <ion-item-sliding>
+          <ion-item-sliding #slidingItem>
 
             <ion-item (click)="goToBillPage(bill)">
               <div>
@@ -55,7 +81,12 @@
             </ion-item>
 
             <ion-item-options side="right">
-              <button class="fav" ion-button color="light" (onclick)="addToFavourite()">
+
+              <button *ngIf="!bill.favourite" class="fav" ion-button color="light" (click)="addToFavourite(bill, slidingItem)">
+                <ion-icon name="star-outline"></ion-icon>
+                Favourite
+              </button>
+              <button *ngIf="bill.favourite" class="fav" ion-button color="fav-yellow" (click)="removeFromFavourite(bill, slidingItem)">
                 <ion-icon name="star-outline"></ion-icon>
                 Favourite
               </button>
@@ -76,12 +107,14 @@
   </div>
 
 
-  <ion-fab  right bottom *ngIf="!platform.is('ios')" #fab>
-    <button ion-fab mini class="fab" color='primary'><ion-icon name="add"></ion-icon></button>
+  <ion-fab id="fabId" right bottom *ngIf="!platform.is('ios')" #fab>
+    <button (click)="clickedFab(fab)" ion-fab mini class="fab" color='primary'>
+      <ion-icon name="add"></ion-icon>
+    </button>
     <ion-fab-list side="top">
-      <button ion-fab color="primary"(click)="share(fab)"><ion-icon name="cloud-download"></ion-icon></button>
-      <button ion-fab color="primary"(click)="goToAddBillPage();share(fab)"><ion-icon name="create" ></ion-icon></button>
-      <button ion-fab  color="primary"(click)="share(fab)"><ion-icon  name="camera"></ion-icon></button>
+      <button ion-fab color="primary"(click)="scanCode()"><ion-icon name="cloud-download"></ion-icon></button>
+      <button ion-fab color="primary"(click)="goToAddBillPage();"><ion-icon name="create" ></ion-icon></button>
+      <button ion-fab  color="primary"(click)="closeFab(fab)"><ion-icon  name="camera"></ion-icon></button>
 
     </ion-fab-list>
   </ion-fab>

@@ -1,167 +1,167 @@
-page-edit-bill {
-  p.warn
-  {
-    text-align: center;
-    color: red;
-    font-size: 2vh;
-    margin: 5px 0 0px 0px;
-    transition: opacity 2s ease-in;
-  }
-  p.ios.warn
-  {
-      margin: 0 0 0 16px;
-  }
-  .icon{
-      margin: auto;
-  }
-  .item
-  {
-      padding-left: 0px;
-  }
-  .padd-content
-  {
-    padding: 16px;
-    width: 100%;
-    height: 100%;
-  }
-  .row
-  {
-      padding: 0px;
-  }
-  .inline
-  {
-      display: inline;
-  }
-  .row
-  {
+page-add-bill {
+    p.warn
+    {
       text-align: center;
-  }
-  .card
-  {
-    margin: 10px;
-    padding: 5px;
-    border-radius: 2px;
-    width: calc(100% - 20px);
-    font-size: 1.4rem;
-    background: #fff;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  }
-  .datetime
-  {
-    padding: 7px 5px;
-    align-items: center;
-  }
-  .grid,.col,[col-1],[col-2],[col-3],[col-4],[col-5],[col-6],[col-7],[col-8],[col-9],[col-10],[col-11],[col-12]
-  {
-    padding: 0 5px;
-  }
-  .info
-  {
-    padding: 10px 40px 5px 30px;
-  }
-  .products
-  {
-    padding-top: 7px;
-    .col
-    {
-      padding: 0;
+      color: red;
+      font-size: 2vh;
+      margin: 5px 0 0px 0px;
+      transition: opacity 2s ease-in;
     }
-    .list,.label
+    p.ios.warn
     {
-      margin: 0;
+        margin: 0 0 0 16px;
+    }
+    .icon{
+        margin: auto;
     }
     .item
     {
-      background-color: white;
+        padding-left: 0px;
     }
-  }
-  .bottom-margin
-  {
-    margin-bottom: 5px;
-  }
-  .item,.datetime
-  {
-    min-height: 10px;
-  }
-  .item.item-block .item-inner
-  {
-    padding: 0;
-    height: 50%;
-  }
-  .text-input
-  {
-    width: 100%;
-    margin: 8px 0;
-  }
-  .label
-  {
-    margin: 8px 8px 13px 0;
-  }
-  .col-text
-  {
-    margin: auto 8px auto 0;
-    text-align: left;
-    font-size: 2.5vh;
-  }
-  .col-text2
-  {
-    margin: auto 0;
-    padding: 0;
-    text-align: center;
-    font-size: 2.5vh;
-    font-weight: bold;
-  }
-  .float-right
-  {
-    margin-left: auto;
-  }
-  .total-price
-  {
-    padding: 0;
-    margin: auto 0;
-    text-align: center;
-  }
-  .qty
-  {
+    .padd-content
+    {
+      padding: 16px;
+      width: 100%;
+      height: 100%;
+    }
+    .row
+    {
+        padding: 0px;
+    }
+    .inline
+    {
+        display: inline;
+    }
+    .row
+    {
+        text-align: center;
+    }
+    .card
+    {
+      margin: 10px;
+      padding: 5px;
+      border-radius: 2px;
+      width: calc(100% - 20px);
+      font-size: 1.4rem;
+      background: #fff;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    }
+    .datetime
+    {
+      padding: 7px 5px;
+      align-items: center;
+    }
+    .grid,.col,[col-1],[col-2],[col-3],[col-4],[col-5],[col-6],[col-7],[col-8],[col-9],[col-10],[col-11],[col-12]
+    {
+      padding: 0 5px;
+    }
+    .info
+    {
+      padding: 10px 40px 5px 30px;
+    }
+    .products
+    {
+      padding-top: 7px;
+      .col
+      {
+        padding: 0;
+      }
+      .list,.label
+      {
+        margin: 0;
+      }
+      .item
+      {
+        background-color: white;
+      }
+    }
+    .bottom-margin
+    {
+      margin-bottom: 5px;
+    }
+    .item,.datetime
+    {
+      min-height: 10px;
+    }
+    .item.item-block .item-inner
+    {
+      padding: 0;
+      height: 50%;
+    }
     .text-input
     {
+      width: 100%;
+      margin: 8px 0;
+    }
+    .label
+    {
+      margin: 8px 8px 13px 0;
+    }
+    .col-text
+    {
+      margin: auto 8px auto 0;
+      text-align: left;
+      font-size: 2.5vh;
+    }
+    .col-text2
+    {
+      margin: auto 0;
+      padding: 0;
+      text-align: center;
+      font-size: 2.5vh;
+      font-weight: bold;
+    }
+    .float-right
+    {
+      margin-left: auto;
+    }
+    .total-price
+    {
+      padding: 0;
+      margin: auto 0;
       text-align: center;
     }
-  }
-  .price
-  {
-    margin-right: 14.2px;
-  }
-  .add-button
-  {
-    font-size: 5vh;
-  }
-  .animate-fade-in
-  {
-    animation: fadein 0.2s;
-    @keyframes fadein {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    .qty
+    {
+      .text-input
+      {
+        text-align: center;
+      }
     }
-  }
-  .animation-fade-out
-  {
-    animation: fadein 0.2s;
-    @keyframes fadein {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    .price
+    {
+      margin-right: 14.2px;
     }
-  }
-  ion-scroll
-  {
-    width: 100%;
-    height: 88%;
-    //margin: 16px;
-  }
-  .footer
-  {
-    bottom: 10%;
-    position: fixed;
-    padding: 16px 16px 0 16px;
-  }
+    .add-button
+    {
+      font-size: 5vh;
+    }
+    .animate-fade-in
+    {
+      animation: fadein 0.2s;
+      @keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+    }
+    .animation-fade-out
+    {
+      animation: fadein 0.2s;
+      @keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+    }
+    ion-scroll
+    {
+      width: 100%;
+      height: 88%;
+      //margin: 16px;
+    }
+    .footer
+    {
+      bottom: 10%;
+      position: fixed;
+      padding: 16px 16px 0 16px;
+    }
 }

@@ -37,6 +37,7 @@ export class BillPage {
   )
   {
     this.bill = billDatabase.bill;
+    console.log(this.bill)
     this.keys = Object.keys(this.bill.products);
     categoriesService.getCategories().subscribe((data)=>
     {
@@ -49,10 +50,11 @@ export class BillPage {
     //console.log(this.bill);
   }
 
-  showCheckbox(product, id) {
-    this.productAlert = this.alertCtrl.create({
-      title: 'Select Categories'
-    });
+  showCategories(product, id) {
+    console.log("prod", product)
+    this.productAlert = this.alertCtrl.create();
+    this.productAlert.setTitle('Select categories');
+
     for(let category of this.categories)
     {
 
@@ -61,9 +63,8 @@ export class BillPage {
         label: category.name,
         value: category.$key,
       });
-      
-    }
 
+    }
     this.productAlert.addButton('Cancel');
     this.productAlert.addButton({
       text: 'Okay',
@@ -85,7 +86,7 @@ export class BillPage {
       inputs: [
         {
           name: 'title',
-          placeholder: 'ex: coffe'
+          placeholder: 'ex: vegetables'
         },
       ],
       buttons: [
@@ -98,8 +99,8 @@ export class BillPage {
         {
           text: 'Save',
           handler: data => {
-            console.log('Saved clicked',data.title);
-            this.categoriesService.addCategory(data.title);            
+            console.log('Saved clicked');
+            this.categoriesService.addCategory(data.title);
           }
         }
       ]

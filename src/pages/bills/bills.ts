@@ -12,6 +12,7 @@ import {UserInfo} from '../../providers/user-info/user-info';
 import {CategoriesService} from '../../providers/categories-service/categories-service'
 import {  FabContainer } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { BarcodeScanner} from '@ionic-native/barcode-scanner'
 
 @IonicPage()
 @Component({
@@ -22,6 +23,11 @@ export class BillsPage {
   logoutButton = {};
   bills;
   cat;
+  fabb: FabContainer;
+  clicked_fab = false;
+  qrData;
+  createdCode;
+  scannedCode;
 
   constructor(
     public platform: Platform,
@@ -34,11 +40,13 @@ export class BillsPage {
     public db: AngularFireDatabase,
     public categoriesService: CategoriesService,
     public alerCtrl: AlertController,
+    private barcodeScanner: BarcodeScanner
   )
   {
     billDatabase.retreiveAllBills().subscribe((data) =>{
       this.bills = data;
     });
+    document.addEventListener("touchstart", () => {this.closeFabIfActive()});
   }
 
   ionViewDidLoad() {
@@ -57,34 +65,107 @@ export class BillsPage {
   }
   goToAddBillPage()
   {
+    console.log("addbill")
     this.navCtrl.push(AddBillPage);
-
+    this.closeFab(this.fabb);
   }
-  share (fab: FabContainer) {
-   fab.close ();
-   console.log ( "Sharing in");
- }
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(PopoverPage);
     popover.present({
       ev: myEvent
     });
   }
-  addCategory()
-  {
-    this.cat = "Paine";
-    this.categoriesService.addCategory(this.cat);
+  addToFavourite(bill, slidingItem){
+    bill.favourite = true;
+    setTimeout(() => {slidingItem.close()}, 300);
+    setTimeout(() => {this.billDatabase.addBillToFav(bill.$key);}, 1000);
   }
-  addToFavourite()
-  {
-    console.log("Raul added to favourite");
+  removeFromFavourite(bill, slidingItem){
+    bill.favourite = false;
+    setTimeout(() => {slidingItem.close()}, 300);
+    setTimeout(() => {this.billDatabase.removeBillFromFav(bill.$key);}, 1000);
   }
   showAlert(){
     let alert = this.alerCtrl.create({
+      title: 'Warning',
       message: 'Are you sure you want to delete this bill?',
       buttons: ['No' , 'Yes']
     });
     alert.present()
   }
+  closeFab(fab: FabContainer) {
+      console.log("fab closed")
+      fab.close();
+      this.clicked_fab = false;
+  }
+  clickedFab(fab){
+    console.log("fab opened")
+    this.clicked_fab = true;
+    this.fabb = fab;
+  }
+  closeFabIfActive(){
+    if(this.clicked_fab)
+    {
+      setTimeout(()=>{
+        if(this.fabb._listsActive){
+          console.log("closed from here");
+          this.closeFab(this.fabb);
+        }
+      },300);
+    }
+  }
+  createCode(){
+    this.createdCode = this.qrData;
+  }
+  scanCode(){
+    this.barcodeScanner.scan().then(barcodeData =>{
+      this.scannedCode = barcodeData.text;
+      let billInfo, products, bill;
+      bill = JSON.parse(this.scannedCode);
+      if(bill.b != null && bill.pr.length > 0){
+        billInfo = {
+          date: bill.b.dt,
+          dateISO: bill.b.dISO,
+          time: bill.b.t,
+          favourite: false,
+          number: bill.b.nr,
+          totalAmount: bill.b.tA,
+          storeName: bill.b.sN
+        }
+        products = [];
+        for(let i in bill.pr){
+          let product = {
+            name: bill.pr[i].n,
+            quantity: bill.pr[i].qty,
+            pricePerUnit: bill.pr[i].U,
+            totalPrice: bill.pr[i].tp
+          }
+          products.push(product);
+        }
+        this.addBillFromScan(billInfo, products);
+      }
+      else{
 
+      }
+    });
+    setTimeout(()=>{this.closeFab(this.fabb);},500);
+  }
+  addBillFromScan(bill, products)
+  {
+    let path = '/user/' + this.userInfo.getUserToken() + '/bills';
+    let user : FirebaseListObservable <any>;
+    user = this.db.list(path);
+    user.push(bill).then((response) => {
+      let billPath =  path + '/' + response.path.o[3] ;
+      path = path + '/' + response.path.o[3] + '/products';
+      user = this.db.list(path);
+      for (let eachProduct of products) {
+        user.push(eachProduct);
+      }
+      this.db.object(billPath).subscribe(wholeBill =>{
+          console.log(wholeBill)
+          this.goToBillPage(wholeBill);
+      })
+    });
+  }
 }

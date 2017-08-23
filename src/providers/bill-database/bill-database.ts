@@ -5,15 +5,16 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} 
 import firebase from 'firebase/app'
 import { AngularFireAuth } from 'angularfire2/auth';
 import {Observable} from 'rxjs/Observable';
-import {UserInfo} from '../user-info/user-info'
+import {UserInfo} from '../user-info/user-info';
 
 @Injectable()
 export class BillDatabase {
   public bill;
   constructor(
     public db: AngularFireDatabase,
-    public userInfo: UserInfo
+    public userInfo: UserInfo,
   ) {}
+
   addBill(bill, products)
   {
     let path = '/user/' + this.userInfo.getUserToken() + '/bills';
@@ -27,6 +28,8 @@ export class BillDatabase {
       }
     });
   }
+
+
   addProducts(products)
   {
     let path = '/user/' + this.userInfo.getUserToken() + '/bills';
@@ -34,9 +37,25 @@ export class BillDatabase {
     user = this.db.list(path);
     user.push(products);
   }
+
   retreiveAllBills()
   {
     let path = '/user/' + this.userInfo.getUserToken() + '/bills';
     return this.db.list(path);
   }
+
+  addBillToFav(pathBill){
+      let path = '/user/' + this.userInfo.getUserToken() + '/bills' + '/' + pathBill;
+      let bill: FirebaseObjectObservable <any>;
+      bill = this.db.object(path);
+      bill.update({favourite: true});
+  }
+
+  removeBillFromFav(pathBill){
+      let path = '/user/' + this.userInfo.getUserToken() + '/bills' + '/' + pathBill;
+      let bill: FirebaseObjectObservable <any>;
+      bill = this.db.object(path);
+      bill.update({favourite: false});
+  }
+
 }

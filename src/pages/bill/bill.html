@@ -6,7 +6,7 @@
 
 <ion-header>
   <ion-navbar >
-    <img src="/assets/Images/logo.png" class="billit_image">
+    <img src="assets/Images/logo.png" class="billit_image">
     <ion-buttons right class="margin-right">
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="add"></ion-icon>
@@ -24,11 +24,11 @@
         <div class="col col-center text-center">
           <ion-icon name="calendar" isActive="false"></ion-icon>
           <div class="inline-display margin-right">
-            {{bill.date}}
+            {{newBill.dt}}
           </div>
           <ion-icon name="time" isActive="false"></ion-icon>
           <div class="inline-display">
-            {{bill.time}}
+            {{newBill.t}}
           </div>
         </div>
       </div>
@@ -62,16 +62,16 @@
                   <div class="inline right"> {{bill.products[id].quantity}} buc</div>
                 </div>
                 <div class="clear">
-                  <div class="inline left"> {{bill.products[id].quantity}} X {{bill.products[id].pricePerUnit}} </div>
+                  <div class="inline left"> {{bill.products[id].quantity}} x {{bill.products[id].pricePerUnit}} </div>
                   <div class="inline right"> {{bill.products[id].totalPrice}} RON</div>
                 </div>
               </ion-item>
-              <ion-item-options>
-                <button ion-button color='light' (click)="showCheckbox(bill.products[id], id)">
+              <ion-item-options side="right">
+                <button ion-button color="light" (click)="showCategories(bill.products[id], id)">
                   <ion-icon name="attach"></ion-icon>
                   Categories
                 </button>
-                <button ion-button style="background-color: #a9a9a9" (click)="addNewCategory()">
+                <button ion-button color="dark-grey" (click)="addCategory()">
                   <ion-icon name="add"></ion-icon>
                   New
                 </button>
