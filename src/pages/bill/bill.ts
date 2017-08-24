@@ -97,6 +97,34 @@ export class BillPage {
     this.productAlert.present();
   }
 
+  addNewCategory() {
+    let prompt = this.alertCtrl.create({
+      title: 'New category',
+      message: "Add a new category for your products",
+      inputs: [
+        {
+          name: 'title',
+          placeholder: 'ex: vegetables'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            console.log('Saved clicked');
+            this.categoriesService.addCategory(data.title);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
 
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(PopoverBillPage, { 'billParam': this.bill });
