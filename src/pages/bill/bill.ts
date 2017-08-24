@@ -24,6 +24,7 @@ export class BillPage {
   billAlert;
   productAlert;
   categories;
+  produsAlert;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
