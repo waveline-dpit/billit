@@ -41,6 +41,7 @@
         "node-sass": "^4.5.3",
         "phonegap-plugin-barcodescanner": "^6.0.8",
         "promise-polyfill": "6.0.2",
+        "qrcode": "^0.9.0",
         "rxjs": "5.4.0",
         "sw-toolbox": "3.6.0",
         "zone.js": "0.8.12"
