@@ -56,13 +56,11 @@ export class BillPage {
 
     for(let category of this.categories)
     {
-
       this.productAlert.addInput({
         type: 'checkbox',
         label: category.name,
         value: category.$key,
       });
-
     }
     this.productAlert.addButton('Cancel');
     this.productAlert.addButton({

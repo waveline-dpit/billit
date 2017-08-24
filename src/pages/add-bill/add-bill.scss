@@ -3,7 +3,7 @@ page-add-bill {
     {
       text-align: center;
       color: red;
-      font-size: 2vh;
+      font-size: 12px;
       margin: 5px 0 0px 0px;
       transition: opacity 2s ease-in;
     }
@@ -97,18 +97,18 @@ page-add-bill {
     {
       margin: 8px 8px 13px 0;
     }
-    .col-text
+    .col-textt
     {
       margin: auto 8px auto 0;
       text-align: left;
-      font-size: 2.5vh;
     }
-    .col-text2
+    .col-textt2
     {
       margin: auto 0;
+      padding-left: 10px;
       padding: 0;
       text-align: center;
-      font-size: 2.5vh;
+      font-size: 18px;
       font-weight: bold;
     }
     .float-right
@@ -134,7 +134,7 @@ page-add-bill {
     }
     .add-button
     {
-      font-size: 5vh;
+      font-size: 30px;
     }
     .animate-fade-in
     {

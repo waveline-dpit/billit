@@ -28,7 +28,9 @@ export class StatsPage {
   ) {
     this.stats = 'days';
     this.storesArrayEmpty = true;
-    this.selectedDay = (new Date()).toISOString();
+    this.selectedDay = new Date();
+    this.selectedDay.setHours(this.selectedDay.getHours() + 3);
+    this.selectedDay = this.selectedDay.toISOString();
     this.billDatabase.retreiveAllBills().subscribe((data) =>{
       this.bills = data;
       this.dateHasChanged();
@@ -75,7 +77,7 @@ export class StatsPage {
     {
       storesArr.push({
         name: key,
-        amount: storesObj[key]
+        amount: Math.round(storesObj[key] * 100) / 100,
       });
     }
     storesArr.sort(function(a, b){ return (b.amount - a.amount);});

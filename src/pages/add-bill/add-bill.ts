@@ -100,10 +100,14 @@ export class AddBillPage {
     control.push(this.initProduct());
   }
   deleteProduct(index){
-      (<FormArray>this.productForm.controls['productList']).removeAt(index);
-      this.bill.totalAmount -= this.products[index].totalPrice;
-      this.products.splice(index,1);
-    }
+    (<FormArray>this.productForm.controls['productList']).removeAt(index);
+    this.bill.totalAmount -= this.products[index].totalPrice;
+    this.products.splice(index,1);
+  }
+
+  closeSlideIfOpen(slidingItem){
+    setTimeout(() => {slidingItem.close()}, 2000);
+  }
 
   isNumber(val)
   {
@@ -111,6 +115,7 @@ export class AddBillPage {
       return true;
     return false;
   }
+
   addPrice(product)
   {
     this.bill.totalAmount = parseFloat(this.bill.totalAmount);
@@ -152,9 +157,12 @@ export class AddBillPage {
 
     return  day + ' ' + monthNames[monthIndex - 1] + ' ' + year;
   }
+
   getDateTime()
   {
-    this.ISOdate = (new Date()).toISOString();
+    this.ISOdate = new Date();
+    this.ISOdate.setHours(this.ISOdate.getHours() + 3)
+    this.ISOdate = this.ISOdate.toISOString();
     var hour =  ((new Date()).getHours()).toString();
     var min =  ((new Date()).getMinutes()).toString();
     if(parseInt(min) < (10)){
@@ -232,6 +240,7 @@ export class AddBillPage {
       alert.present()
     }
   }
+
   showCategories(product, id) {
     this.productAlert = this.alerCtrl.create();
     this.productAlert.setTitle('Select categories');
