@@ -8,6 +8,7 @@
 
 <ion-header (click)="closeFabIfActive()">
 
+
   <ion-navbar>
     <ion-buttons left class="padd">
       <button ion-button icon-only (click)="openModal()" class="share_button" >
@@ -16,11 +17,16 @@
     </ion-buttons>
     <img src="assets/Images/logo.png" class="billit_image">
 
-<ion-buttons right class="padd" right *ngIf="platform.is('ios')">
-  <button ion-button icon-only (click)="presentPopover($event)">
-    <ion-icon name="add"></ion-icon>
-  </button>
-</ion-buttons>
+    <ion-buttons right class="padd">
+      <button ion-button icon-only (click)="presentPopoverSort($event)">
+        <ion-icon ios="ios-funnel-outline" name="funnel"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons right class="padd" right *ngIf="platform.is('ios')">
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
 
   </ion-navbar>
 </ion-header>
@@ -51,13 +57,21 @@
   </ion-card>
 -->
 
-  <div *ngFor="let bill of bills">
-    <ion-card>
+
+  <div *ngFor="let bill of billsToShow; let i = index">
+
+    <div class="interval" >
+      <div *ngIf="intervalToShow[i] != null">
+        <div class="linee">- </div>{{intervalToShow[i]}}<div class="linee"> -</div>
+      </div>
+
+    </div>
+    <ion-card >
       <ion-card-content>
         <ion-list>
           <ion-item-sliding #slidingItem>
 
-            <ion-item (click)="goToBillPage(bill)">
+            <ion-item class="itemlist" (click)="goToBillPage(bill)" (touchstart)="closeSlideIfOpen(slidingItem)">
               <div>
                 <div class="inline ">
                   <div class="inline">

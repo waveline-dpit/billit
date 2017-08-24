@@ -34,7 +34,7 @@
               </ion-col>
               <ion-col col-6>
                 <ion-item>
-                  <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="bill.date"></ion-datetime>
+                  <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="bill.date" [(ngModel)]="bill.dateISO"></ion-datetime>
                 </ion-item>
               </ion-col>
               <ion-col class="icon" col-1>
@@ -95,20 +95,20 @@
             <!--<div *ngFor="let product of products; let i = index" [attr.data-index]="i">-->
             <div class="card products animate-fade-in animation-fade-out">
               <ion-list>
-                <ion-item-sliding>
+                <ion-item-sliding #slidingItem>
 
-                  <ion-item>
+                  <ion-item  (touchstart)="closeSlideIfOpen(slidingItem)">
                     <div [formGroupName]="i">
 
                       <ion-grid>
                         <ion-row>
-                          <div class="col-text">Name:</div>
+                          <div class="col-textt">Name:</div>
                           <ion-col col-5>
                             <ion-item>
                               <ion-input type="text" placeholder="ex: Milk" formControlName="fcprodname" [(ngModel)]="product.name" [class.invalid]="!productForm.controls.productList.controls[i].controls.fcprodname.valid && (productForm.controls.productList.controls[i].controls.fcprodname.dirty || submitAttempt)"></ion-input>
                             </ion-item>
                           </ion-col>
-                          <div class="col-text float-right">Qty:</div>
+                          <div class="col-textt float-right">Qty:</div>
                           <ion-col col-2>
                             <ion-item>
                               <ion-input class="qty" type="number" clear (blur)="addPrice(product)" formControlName="fcqty" [(ngModel)]="product.quantity" [class.invalid]="!productForm.controls.productList.controls[i].controls.fcqty.valid && (productForm.controls.productList.controls[i].controls.fcqty.dirty || submitAttempt)"></ion-input>
@@ -123,14 +123,14 @@
 
                       <ion-grid class="bottom-margin">
                         <ion-row>
-                          <div class="col-text price">Price:</div>
+                          <div class="col-textt price">Price:</div>
                           <ion-col col-3>
                             <ion-item>
                               <ion-input type="number" placeholder="ex: 12.5" clear (blur)="addPrice(product)" formControlName="fcprice" [(ngModel)]="product.pricePerUnit" [class.invalid]="!productForm.controls.productList.controls[i].controls.fcprice.valid && (productForm.controls.productList.controls[i].controls.fcprice.dirty || submitAttempt)"></ion-input>
                             </ion-item>
                           </ion-col>
-                          <div class="col-text float-right">Total:</div>
-                          <div col-2 class="col-text total-price">{{product.totalPrice}}</div>
+                          <div class="col-textt float-right">Total:</div>
+                          <div col-2 class="col-textt total-price">{{product.totalPrice}}</div>
                         </ion-row>
                         <p class="warn" *ngIf="!productForm.controls.productList.controls[i].controls.fcprice.valid && (productForm.controls.productList.controls[i].controls.fcprice.dirty)">Value can't be empty or contain more than <br /> 6 digits and 2 decimals .</p>
                         <p class="warn" *ngIf="!productForm.controls.productList.controls[i].controls.fcprice.valid && (submitAttempt && !productForm.controls.productList.controls[i].controls.fcprice.dirty)">Price required</p>
@@ -139,24 +139,12 @@
                     </div>
                   </ion-item>
 
-
                   <ion-item-options side="left">
                     <button ion-button color="danger" (click)="showDeleteAlert(i)">
-                    <ion-icon name="trash" ></ion-icon>
-                    Delete
-                  </button>
+                      <ion-icon name="trash" ></ion-icon>
+                      Delete
+                    </button>
                   </ion-item-options>
-                  <ion-item-options side="right">
-                    <button ion-button color="light" (click)="showCategories(product, i)">
-                    <ion-icon name="attach"></ion-icon>
-                    Categories
-                  </button>
-                    <button ion-button color="dark-grey" (click)="addCategory()">
-                    <ion-icon name="add"></ion-icon>
-                    New
-                  </button>
-                  </ion-item-options>
-
 
                 </ion-item-sliding>
               </ion-list>
@@ -174,8 +162,8 @@
 
   <ion-grid class="footer">
     <ion-row>
-      <ion-col col-3 class="col-text2">TOTAL: </ion-col>
-      <ion-col col-4 class="col-text2"> {{bill.totalAmount}} RON</ion-col>
+      <ion-col col-3 class="col-textt2">TOTAL: </ion-col>
+      <ion-col col-4 class="col-textt2"> {{bill.totalAmount}} RON</ion-col>
       <ion-col col-5>
         <button ion-button color="primary" round (click)="submit()">Save</button>
       </ion-col>

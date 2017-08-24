@@ -12,7 +12,11 @@ import {UserInfo} from '../../providers/user-info/user-info';
 import {CategoriesService} from '../../providers/categories-service/categories-service'
 import {  FabContainer } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-import { BarcodeScanner} from '@ionic-native/barcode-scanner'
+import { BarcodeScanner} from '@ionic-native/barcode-scanner';
+import { PopoverSortPage } from "../popover-sort/popover-sort";
+import * as moment from 'moment';
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
 
 @IonicPage()
 @Component({
@@ -22,12 +26,17 @@ import { BarcodeScanner} from '@ionic-native/barcode-scanner'
 export class BillsPage {
   logoutButton = {};
   bills;
+  billsToShow;
   cat;
   fabb: FabContainer;
   clicked_fab = false;
   qrData;
   createdCode;
   scannedCode;
+  sortOption = "dateDesc";
+
+  intervals = [];
+  intervalToShow = [];
 
   constructor(
     public platform: Platform,
@@ -43,8 +52,12 @@ export class BillsPage {
     private barcodeScanner: BarcodeScanner
   )
   {
+    this.buildIntervals();
     billDatabase.retreiveAllBills().subscribe((data) =>{
       this.bills = data;
+      this.billsToShow = data;
+      this.sortBills();
+      console.log(this.bills);
     });
     document.addEventListener("touchstart", () => {this.closeFabIfActive()});
   }
@@ -75,6 +88,171 @@ export class BillsPage {
       ev: myEvent
     });
   }
+  presentPopoverSort(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverSortPage, { sortOption: this.sortOption});
+    popover.present({
+      ev: myEvent
+    });
+    popover.onDidDismiss((popoverData) => {
+      this.sortOption = popoverData;
+      this.sortBills();
+    })
+  }
+
+  buildIntervals(){
+    const moment = extendMoment(Moment);
+    let today = moment().startOf('day');
+    let firstDayOfWeek = moment().startOf('week').add(1, 'days').startOf('day');
+    let month = firstDayOfWeek.clone().subtract(15, 'days').startOf('day').toDate().getMonth();
+    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January'];
+    let firstDayOfLastMonth = moment(firstDayOfWeek.clone().subtract(15, 'days').startOf('day').toDate()).startOf('month');
+
+    this.intervals.push({
+      name:"Today",
+      range: moment.range(today.toDate(), today.toDate())
+    });
+    this.intervals.push({
+      name:"Yesterday",
+      range: moment.range(today.clone().subtract(1, 'days').startOf('day').toDate(),  today.clone().subtract(1, 'days').startOf('day'))
+    });
+    this.intervals.push({
+      name:"Earlier this week",
+      range: moment.range(firstDayOfWeek.toDate(), today.clone().subtract(2, 'days').startOf('day').toDate())
+    });
+    this.intervals.push({
+      name:"Last week",
+      range: moment.range(firstDayOfWeek.clone().subtract(7, 'days').startOf('day').toDate(), firstDayOfWeek.clone().subtract(1, 'days').startOf('day').toDate())
+    });
+    this.intervals.push({
+      name:"Two weeks ago",
+      range: moment.range(firstDayOfWeek.clone().subtract(14, 'days').startOf('day').toDate(), firstDayOfWeek.clone().subtract(8, 'days').startOf('day').toDate())
+    });
+    this.intervals.push({
+      name:"Earlier in " + months[month],
+      range: moment.range(firstDayOfLastMonth.toDate(), firstDayOfWeek.clone().subtract(15, 'days').startOf('day').toDate())
+    });
+    let firstDayOfLastUsedMonth = firstDayOfLastMonth.clone().subtract(1, 'days').startOf('month');
+    if(month - 1 >= 0){
+      this.intervals.push({
+        name: months[month - 1],
+        range: moment.range(firstDayOfLastUsedMonth.toDate(), firstDayOfLastMonth.clone().subtract(1, 'days').startOf('day').toDate())
+      });
+    }
+    for(let i = 2; i <= 5 && month - i >= 0; i++){
+      this.intervals.push({
+        name: months[month - i],
+        range: moment.range(firstDayOfLastUsedMonth.clone().subtract(1, 'days').startOf('month').toDate(), firstDayOfLastUsedMonth.clone().subtract(1, 'days').startOf('day').toDate())
+      });
+      firstDayOfLastUsedMonth = firstDayOfLastUsedMonth.clone().subtract(1, 'days').startOf('month');
+    }
+    let year = firstDayOfLastUsedMonth.clone().subtract(1, 'days').startOf('day').toDate().getFullYear();
+    this.intervals.push({
+      name: "Earlier in " + year.toString(),
+      range: moment.range(firstDayOfLastUsedMonth.clone().subtract(1, 'days').startOf('year').toDate(), firstDayOfLastUsedMonth.clone().subtract(1, 'days').startOf('day').toDate())
+    });
+    let firstDayOfLastYear = firstDayOfLastUsedMonth.clone().subtract(1, 'days').startOf('year').subtract(1, 'days');
+    for(let i = 1; i <= 10; i++){
+      this.intervals.push({
+        name: (year - i).toString(),
+        range: moment.range(firstDayOfLastYear.clone().startOf('year').toDate(), firstDayOfLastYear.clone().toDate())
+      });
+      firstDayOfLastYear = firstDayOfLastYear.clone().startOf('year').subtract(1, 'days');
+    }
+    this.intervals.push({
+      name: "A long time ago...",
+      range: moment.range(moment(new Date('1970-01-01')), firstDayOfLastYear.toDate())
+    });
+
+    console.log(this.intervals, firstDayOfLastUsedMonth.toDate())
+  }
+
+  sortBills(){
+    this.intervalToShow = [];
+    /*if(this.sortOption == "dateDesc"){
+      this.billsToShow = this.bills;
+      this.billsToShow.sort(function(a, b){
+        a = new Date(a.dateISO);
+        b = new Date(b.dateISO);
+        return (b - a);
+      });
+      this.intervalToShow = [];
+      let usedInterval = [];
+      let last = 0;
+      for(let billIndex in this.billsToShow){
+        let billdate = moment(new Date(this.billsToShow[billIndex].dateISO)).startOf('day');
+        if(billdate.isValid()){
+          while(!this.intervals[last].range.contains(billdate) && last + 1 < this.intervals.length ){
+            last++;
+
+          }
+          if(usedInterval[last] == null){
+            this.intervalToShow[billIndex] = this.intervals[last].name;
+            usedInterval[last] = true;
+          }
+        }
+      }
+      console.log(this.intervalToShow);
+    }*/
+    if(this.sortOption == "dateDesc"){
+      this.billsToShow = this.bills;
+      this.billsToShow.sort(function(a, b){
+        a = new Date(a.dateISO);
+        b = new Date(b.dateISO);
+        return (b - a);
+      });
+      this.intervalToShow = [];
+      let usedInterval = [];
+      for(let i in this.billsToShow){
+        let billdate = moment(new Date(this.billsToShow[i].dateISO)).startOf('day');
+        for(let intervalIndex in this.intervals){
+          if(this.intervals[intervalIndex].range.contains(billdate) && usedInterval[intervalIndex] == null){
+            this.intervalToShow[i] = this.intervals[intervalIndex].name;
+            usedInterval[intervalIndex] = true;
+          }
+        }
+      }
+      console.log(this.intervalToShow);
+    }
+    if(this.sortOption == "dateAsc"){
+      this.billsToShow = this.bills;
+      this.billsToShow.sort(function(a, b){
+        a = new Date(a.dateISO);
+        b = new Date(b.dateISO);
+        return (a - b);
+      });
+      this.intervalToShow = [];
+      let copyIntervals = this.intervals;
+      copyIntervals.reverse();
+      let usedInterval = [];
+      for(let i in this.billsToShow){
+        let billdate = moment(new Date(this.billsToShow[i].dateISO)).startOf('day');
+        for(let intervalIndex in copyIntervals){
+          if(copyIntervals[intervalIndex].range.contains(billdate) && usedInterval[intervalIndex] == null){
+            this.intervalToShow[i] = copyIntervals[intervalIndex].name;
+            usedInterval[intervalIndex] = true;
+          }
+        }
+      }
+    }
+    if(this.sortOption == "priceDesc"){
+      this.billsToShow = this.bills;
+      this.billsToShow.sort(function(a, b){ return (b.totalAmount - a.totalAmount);});
+    }
+    if(this.sortOption == "priceAsc"){
+      this.billsToShow = this.bills;
+      this.billsToShow.sort(function(a, b){ return (a.totalAmount - b.totalAmount);});
+    }
+    if(this.sortOption == "favourites"){
+      let favBills = [];
+      for(let bill of this.bills){
+        if(bill.favourite){
+          favBills.push(bill);
+        }
+      }
+      this.billsToShow = favBills;
+    }
+  }
+
   addToFavourite(bill, slidingItem){
     bill.favourite = true;
     setTimeout(() => {slidingItem.close()}, 300);
@@ -84,6 +262,9 @@ export class BillsPage {
     bill.favourite = false;
     setTimeout(() => {slidingItem.close()}, 300);
     setTimeout(() => {this.billDatabase.removeBillFromFav(bill.$key);}, 1000);
+  }
+  closeSlideIfOpen(slidingItem){
+    setTimeout(() => {slidingItem.close()}, 2000);
   }
   showAlert(billId){
     let alert = this.alerCtrl.create({
@@ -163,8 +344,7 @@ export class BillsPage {
     });
     setTimeout(()=>{this.closeFab(this.fabb);},500);
   }
-  addBillFromScan(bill, products)
-  {
+  addBillFromScan(bill, products){
     let path = '/user/' + this.userInfo.getUserToken() + '/bills';
     let user : FirebaseListObservable <any>;
     user = this.db.list(path);

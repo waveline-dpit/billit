@@ -8,9 +8,11 @@ import {AuthService} from '../providers/auth-service/auth-service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TabsPage } from '../pages/tabs/tabs';
 import { Http } from '@angular/http';
+import { Keyboard } from '@ionic-native/keyboard';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [Keyboard]
 })
 export class MyApp {
   rootPage:any;

@@ -16,7 +16,7 @@ import { AddBillPage } from "../add-bill/add-bill";
         <button ion-item  (click)="close()">
         <div class="rows">
           <ion-icon style="margin-right:5px;"name="cloud-download"></ion-icon>
-          Recive
+          Receive
         </div>
         </button>
         <button ion-item (click)="goToAddBillPage();close()">

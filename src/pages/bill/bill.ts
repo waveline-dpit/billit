@@ -77,7 +77,6 @@ export class BillPage {
         value: category.$key,
         checked: isChecked
       });
-
     }
     this.productAlert.addButton('Cancel');
     this.productAlert.addButton({
