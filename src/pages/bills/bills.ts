@@ -266,11 +266,24 @@ export class BillsPage {
   closeSlideIfOpen(slidingItem){
     setTimeout(() => {slidingItem.close()}, 2000);
   }
-  showAlert(){
+  showAlert(billId){
     let alert = this.alerCtrl.create({
       title: 'Warning',
       message: 'Are you sure you want to delete this bill?',
-      buttons: ['No' , 'Yes']
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel'
+
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            setTimeout(()=>{
+              this.billDatabase.removeBill(billId);
+            }, 300);
+          }
+        }]
     });
     alert.present()
   }

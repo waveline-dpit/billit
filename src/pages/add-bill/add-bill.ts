@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {BillDatabase} from '../../providers/bill-database/bill-database';
 import { AlertController } from 'ionic-angular';
@@ -262,7 +262,7 @@ export class AddBillPage {
         console.log('Checkbox data:', data);
         for(let cat of data)
         {
-          this.categoriesService.addProductToCategory(product, cat, id);
+          this.categoriesService.addProductToCategory(product, cat, id, id);
         }
       }
     });

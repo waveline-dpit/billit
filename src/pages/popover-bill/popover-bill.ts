@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { AlertController, Platform } from 'ionic-angular';
 import { EditBillPage } from "../edit-bill/edit-bill";
 import { BillDatabase } from "../../providers/bill-database/bill-database"
-
+import { TabsPage} from "../tabs/tabs"
+import {CategoriesService} from '../../providers/categories-service/categories-service';
 /**
  * Generated class for the PopoverBillPage page.
  *
@@ -25,17 +26,22 @@ import { BillDatabase } from "../../providers/bill-database/bill-database"
   `
 })
 export class PopoverBillPage {
-
   bill;
-
+  categories;
+  billAlert = this.alertCtrl.create();
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
     public alertCtrl: AlertController,
-    public billDatabase: BillDatabase
+    public billDatabase: BillDatabase,
+    public categoriesService: CategoriesService
   ) {
     this.bill = this.navParams.get('billParam');
+    categoriesService.getCategories().subscribe((data)=>
+    {
+      this.categories = data;
+    });
   }
 
   close() {
@@ -59,42 +65,27 @@ export class PopoverBillPage {
   }
 
   billCheckbox() {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Select the bill category');
-    alert.setMessage('This category will be set for all products on this bill');
+    this.billAlert = this.alertCtrl.create();
+    this.billAlert.setTitle('Select the bill category');
+    this.billAlert.setMessage('This category will be set for all products on this bill');
+    for(let category of this.categories)
+    {
 
-    alert.addInput({
-      type: 'radio',
-      label: 'Blue',
-      value: 'blue',
-
-    });
-    alert.addInput({
-      type: 'radio',
-      label: 'Blue',
-      value: 'blue',
-
-    });
-      alert.addInput({
-      type: 'radio',
-      label: 'Blue',
-      value: 'blue',
-
-    });
-      alert.addInput({
-      type: 'radio',
-      label: 'Blue',
-      value: 'blue',
-    });
-
-    alert.addButton('Cancel');
-
-    alert.addButton({
+      this.billAlert.addInput({
+        type: 'radio',
+        label: category.name,
+        value: category.$key,
+      });
+    }
+    this.billAlert.addButton('Cancel');
+    this.billAlert.addButton({
       text: 'OK',
+      handler: data =>
+      {
+        console.log(data);
+      }
     });
-
-    this.close();
-    alert.present();
+    this.billAlert.present();
   }
   showAlert(){
     let alert = this.alertCtrl.create({

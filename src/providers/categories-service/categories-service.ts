@@ -37,10 +37,28 @@ export class CategoriesService {
     let path = "/user/" + this.userInfo.getUserToken() + "/categories";
     return this.db.list(path);
   }
-  addProductToCategory(product, categoryID, productID)
+  addProductToCategory(product, categoryID, productID, billID)
   {
     let path = "/user/" + this.userInfo.getUserToken() + "/categories/" + categoryID + "/products/" + productID;
     this.categories = this.db.object(path);
     this.categories.update(product);
+    path = "/user/" + this.userInfo.getUserToken() + "/bills/" + billID + "/products/" + productID + "/categoryID";
+    let prod: FirebaseObjectObservable <any>;
+    let obj = {}, key = categoryID;
+    obj[categoryID] = true;
+    prod = this.db.object(path);
+    prod.update(obj);
+  }
+  unCheckAllProdctFromCat(productID, billID)
+  {
+    let pathBill = "/user/" + this.userInfo.getUserToken() + "/bills/" + billID + "/products/" + productID + "/categoryID";
+    let pathCategory = "/user/" + this.userInfo.getUserToken() + "/categories";
+    let bill;
+    this.db.list(pathBill).subscribe((billCat) =>
+    {
+      bill = billCat;
+      for(let cat of bill)
+        this.db.object(pathCategory + "/" + cat.$key + "/products/" + productID).remove();
+    });
   }
 }
