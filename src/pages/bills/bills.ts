@@ -34,6 +34,7 @@ export class BillsPage {
   createdCode;
   scannedCode;
   sortOption = "dateDesc";
+  lastSortOption = this.sortOption;
 
   intervals = [];
   intervalToShow = [];
@@ -95,16 +96,31 @@ export class BillsPage {
     });
     popover.onDidDismiss((popoverData) => {
       this.sortOption = popoverData;
+      console.log("didDismiss", this.sortOption, this.lastSortOption)
+      if(this.sortOption != null){
+        this.lastSortOption = this.sortOption;
+      }
+      else{
+        this.sortOption = this.lastSortOption;
+      }
       this.sortBills();
     })
   }
 
   buildIntervals(){
     const moment = extendMoment(Moment);
+    moment.locale('en-AU');
     let today = moment().startOf('day');
-    let firstDayOfWeek = moment().startOf('week').add(1, 'days').startOf('day');
+    let firstDayOfWeek = moment().startOf('week')
+    /*if(firstDayOfWeek.day() == 0){
+      firstDayOfWeek = moment().startOf('week').subtract(6, 'days').startOf('day');
+    }
+    else{
+      firstDayOfWeek = moment().startOf('week').add(1, 'days').startOf('day');
+    }*/
+    console.log("fdow", moment().startOf('week').day())
     let month = firstDayOfWeek.clone().subtract(15, 'days').startOf('day').toDate().getMonth();
-    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January'];
+    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     let firstDayOfLastMonth = moment(firstDayOfWeek.clone().subtract(15, 'days').startOf('day').toDate()).startOf('month');
 
     this.intervals.push({
@@ -117,7 +133,7 @@ export class BillsPage {
     });
     this.intervals.push({
       name:"Earlier this week",
-      range: moment.range(firstDayOfWeek.toDate(), today.clone().subtract(2, 'days').startOf('day').toDate())
+      range: moment.range(firstDayOfWeek.clone().toDate(), today.clone().subtract(2, 'days').startOf('day').toDate())
     });
     this.intervals.push({
       name:"Last week",
@@ -128,19 +144,19 @@ export class BillsPage {
       range: moment.range(firstDayOfWeek.clone().subtract(14, 'days').startOf('day').toDate(), firstDayOfWeek.clone().subtract(8, 'days').startOf('day').toDate())
     });
     this.intervals.push({
-      name:"Earlier in " + months[month],
+      name:"Earlier in " + months[month + 12],
       range: moment.range(firstDayOfLastMonth.toDate(), firstDayOfWeek.clone().subtract(15, 'days').startOf('day').toDate())
     });
     let firstDayOfLastUsedMonth = firstDayOfLastMonth.clone().subtract(1, 'days').startOf('month');
-    if(month - 1 >= 0){
+    if(month + 12 - 1 >= 0){
       this.intervals.push({
-        name: months[month - 1],
+        name: months[month + 12 - 1],
         range: moment.range(firstDayOfLastUsedMonth.toDate(), firstDayOfLastMonth.clone().subtract(1, 'days').startOf('day').toDate())
       });
     }
-    for(let i = 2; i <= 5 && month - i >= 0; i++){
+    for(let i = 2; i <= 5 && month + 12 - i >= 0; i++){
       this.intervals.push({
-        name: months[month - i],
+        name: months[month + 12 - i],
         range: moment.range(firstDayOfLastUsedMonth.clone().subtract(1, 'days').startOf('month').toDate(), firstDayOfLastUsedMonth.clone().subtract(1, 'days').startOf('day').toDate())
       });
       firstDayOfLastUsedMonth = firstDayOfLastUsedMonth.clone().subtract(1, 'days').startOf('month');

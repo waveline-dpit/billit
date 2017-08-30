@@ -19,6 +19,7 @@ import { MyAccountPage } from "../pages/my-account/my-account";
 import { EditPage } from "../pages/edit/edit";
 import { LidlPage } from "../pages/lidl/lidl";
 import { CategoriesPage } from '../pages/categories/categories';
+import { ShareModalPage } from '../pages/share-modal/share-modal';
 
 import { AuthService } from '../providers/auth-service/auth-service';
 
@@ -71,7 +72,8 @@ export const firebaseConfig = {
     PopoverSortPage,
     AboutPage,
     EditBillPage,
-    CategoriesPage
+    CategoriesPage,
+    ShareModalPage
   ],
   imports: [
     BrowserModule,
@@ -103,7 +105,8 @@ export const firebaseConfig = {
     PopoverSortPage,
     AboutPage,
     EditBillPage,
-    CategoriesPage
+    CategoriesPage,
+    ShareModalPage
   ],
   providers: [
     StatusBar,

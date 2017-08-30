@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AlertController, Platform } from 'ionic-angular';
+import { AlertController, Platform, ModalController, ViewController } from 'ionic-angular';
 import { PopoverController } from 'ionic-angular';
 import { PopoverBillPage } from "../popover-bill/popover-bill";
 import { BillDatabase } from "../../providers/bill-database/bill-database"
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import {UserInfo} from '../../providers/user-info/user-info';
 import {CategoriesService} from '../../providers/categories-service/categories-service';
+import { ShareModalPage } from '../share-modal/share-modal';
+
 /**
  * Generated class for the BillPage page.
  *
@@ -33,7 +35,8 @@ export class BillPage {
     public popoverCtrl: PopoverController,
     public userInfo: UserInfo,
     public db: AngularFireDatabase,
-    public categoriesService: CategoriesService
+    public categoriesService: CategoriesService,
+    public modalCtrl: ModalController
   )
   {
     db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billDatabase.bill.$key).subscribe((data) =>
@@ -129,6 +132,13 @@ export class BillPage {
     let popover = this.popoverCtrl.create(PopoverBillPage, { 'billParam': this.bill });
     popover.present({
       ev: myEvent
-  });
+    });
+    popover.onDidDismiss((popoverData) => {
+      if(popoverData == "share"){
+        let modal = this.modalCtrl.create(ShareModalPage, {"bill":this.bill});
+        modal.present();
+      }
+    })
   }
+
 }
