@@ -12,7 +12,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 @Component({
   template: `
     <ion-list radio-group>
-      <ion-item>
+      <ion-item class="sort-header">
         Sort bills by:
       </ion-item>
       <ion-item  *ngFor="let item of items">

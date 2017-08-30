@@ -36,25 +36,24 @@
 
   <div *ngFor="let bill of billsToShow; let i = index">
 
-    <div class="interval" >
-      <div *ngIf="intervalToShow[i] != null">
-        <div class="linee">- </div>{{intervalToShow[i]}}<div class="linee"> -</div>
+
+      <div class="interval"*ngIf="intervalToShow[i] != null">
+        {{intervalToShow[i]}}
       </div>
 
-    </div>
     <ion-card >
       <ion-card-content>
         <ion-list radio-group>
           <ion-item-sliding #slidingItem>
 
-            <ion-item class="itemlist" (click)="goToBillPage(bill)" (touchstart)="closeSlideIfOpen(slidingItem)">
+            <ion-item class="itemlist" (click)="goToBillPage(bill)" (touchend)="closeSlideIfOpen(slidingItem)">
               <div>
                 <div class="inline ">
-                  <div class="inline">
+                  <div class="inline left topp bott">
                     <ion-icon name="calendar" isActive="false"></ion-icon>
                     {{bill.date}}
                   </div>
-                  <div class="inline">
+                  <div class="inline right topp bott">
                     <ion-icon class="margin-left" name="time" isActive="false"></ion-icon>
                     {{bill.time}}
                   </div>
@@ -65,7 +64,7 @@
                   <ion-icon name="cart" isActive="false"></ion-icon>
                   {{bill.storeName}}
                 </div>
-                <div class="inline right topp bott6">
+                <div class="inline right topp bott  ">
                   {{bill.totalAmount}} RON
                 </div>
               </div>
@@ -100,7 +99,7 @@
 
   <ion-fab id="fabId" right bottom *ngIf="!platform.is('ios')" #fab>
     <button (click)="clickedFab(fab)" ion-fab mini class="fab" color='primary'>
-      <ion-icon name="add"></ion-icon>
+      <ion-icon name="add" class="add"></ion-icon>
     </button>
     <ion-fab-list side="top">
       <button ion-fab color="primary"(click)="scanCode()"><ion-icon name="qr-scanner"></ion-icon></button>

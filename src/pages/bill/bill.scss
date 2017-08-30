@@ -31,6 +31,13 @@ page-bill {
   {
       margin: auto;
   }
+  .new-button
+  {
+    ion-icon
+    {
+      color: white;
+    }
+  }
   .select
   {
       margin: 0 10px;
@@ -44,6 +51,7 @@ page-bill {
     margin-top: -20px;
     font-size: 18px;
     font-weight: bold;
+    color: #424242;
   }
   .label-md,.label-ios
   {

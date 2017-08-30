@@ -15,3 +15,10 @@ button.item-ios:not([detail-none]) .item-inner{
 .list-ios {
   margin: -1px 0 12px;
 }
+.item-radio-checked
+{
+  ion-icon
+  {
+    color: #c0392b;
+  }
+}

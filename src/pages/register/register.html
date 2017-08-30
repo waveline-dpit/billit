@@ -27,7 +27,7 @@
     <p *ngIf="!registerForm.controls.fclname.valid && (registerForm.controls.fclname.dirty || submitAttempt)">Please enter a real name.</p>
     <ion-item>
       <ion-label floating>Email</ion-label>
-      <ion-input type="text" formControlName="fcemail" [(ngModel)]="regEmail" [class.invalid]="!registerForm.controls.fcemail.valid && (registerForm.controls.fcemail.dirty || submitAttempt)"></ion-input>
+      <ion-input type="email" formControlName="fcemail" [(ngModel)]="regEmail" [class.invalid]="!registerForm.controls.fcemail.valid && (registerForm.controls.fcemail.dirty || submitAttempt)"></ion-input>
     </ion-item>
     <p *ngIf="!registerForm.controls.fcemail.valid && (registerForm.controls.fcemail.dirty || submitAttempt)">Please enter a valid email.</p>
     <ion-item>
