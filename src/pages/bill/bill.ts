@@ -127,7 +127,9 @@ export class BillPage {
     });
     prompt.present();
   }
-
+   closeSlideIfOpen(slidingItem){
+    setTimeout(() => {slidingItem.close()}, 2000);
+  }
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(PopoverBillPage, { 'billParam': this.bill });
     popover.present({
