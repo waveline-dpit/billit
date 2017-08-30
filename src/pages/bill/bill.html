@@ -56,7 +56,7 @@
           <div *ngFor="let id of keys" >
 
             <ion-item-sliding #slidingItem>
-             <ion-item (touchstart)="closeSlideIfOpen(slidingItem)">
+             <ion-item (touchend)="closeSlideIfOpen(slidingItem)">
                 <div class="clear">
                   <div class="inline left"> {{bill.products[id].name}} </div>
                   <div class="inline right"> {{bill.products[id].quantity}} buc</div>
@@ -71,7 +71,7 @@
                   <ion-icon name="attach"></ion-icon>
                   Categories
                 </button>
-                <button ion-button color="dark-grey" (click)="addCategory()">
+                <button class="new-button" ion-button color="dark-grey" (click)="addCategory()">
                   <ion-icon name="add"></ion-icon>
                   New
                 </button>

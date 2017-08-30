@@ -184,31 +184,7 @@ export class BillsPage {
 
   sortBills(){
     this.intervalToShow = [];
-    /*if(this.sortOption == "dateDesc"){
-      this.billsToShow = this.bills;
-      this.billsToShow.sort(function(a, b){
-        a = new Date(a.dateISO);
-        b = new Date(b.dateISO);
-        return (b - a);
-      });
-      this.intervalToShow = [];
-      let usedInterval = [];
-      let last = 0;
-      for(let billIndex in this.billsToShow){
-        let billdate = moment(new Date(this.billsToShow[billIndex].dateISO)).startOf('day');
-        if(billdate.isValid()){
-          while(!this.intervals[last].range.contains(billdate) && last + 1 < this.intervals.length ){
-            last++;
 
-          }
-          if(usedInterval[last] == null){
-            this.intervalToShow[billIndex] = this.intervals[last].name;
-            usedInterval[last] = true;
-          }
-        }
-      }
-      console.log(this.intervalToShow);
-    }*/
     if(this.sortOption == "dateDesc"){
       this.billsToShow = this.bills;
       this.billsToShow.sort(function(a, b){

@@ -1,4 +1,8 @@
-
+page-login{
+  ion-icon{
+    color:white;
+  }
+}
 .backgroundIMG
 {
   background-image: url("https://image.ibb.co/iMY7Rk/background_polygons.png");
@@ -51,6 +55,7 @@
 .sup
 {
     margin-top: -1.5vh;
+    margin-bottom: 3px;
     color: #8e8e8e;
     line-height:40px;
     text-align: center;
