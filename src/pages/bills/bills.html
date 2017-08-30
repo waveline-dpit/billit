@@ -68,7 +68,7 @@
     </div>
     <ion-card >
       <ion-card-content>
-        <ion-list>
+        <ion-list radio-group>
           <ion-item-sliding #slidingItem>
 
             <ion-item class="itemlist" (click)="goToBillPage(bill)" (touchstart)="closeSlideIfOpen(slidingItem)">
@@ -86,6 +86,7 @@
               </div>
               <div class="clear">
                 <div class=" inline left topp bott">
+                  <ion-icon name="cart" isActive="false"></ion-icon>
                   {{bill.storeName}}
                 </div>
                 <div class="inline right topp bott6">

@@ -15,18 +15,20 @@
 
 <ion-content padding>
 
-  <ion-list>
-    <button ion-item (click)="goToMyAccount()" icon-start>
-      My Account
-    </button>
 
-    <button ion-item (click)="goToAbout()" icon-start>
-      About
-    </button>
-
-    <button ion-item (click)="goToCategories()" icon-start>
-      Categories
-    </button>
-  </ion-list>
+        <ion-list>
+          <button ion-item (click)="goToMyAccount()" icon-start>
+            <ion-icon name="person"></ion-icon>
+            My Account
+          </button>
+          <button ion-item (click)="goToAbout()" icon-start>
+            <ion-icon name="book"></ion-icon>
+            About
+          </button>
+          <button ion-item (click)="goToCategories()" icon-start>
+            <ion-icon name="list"></ion-icon>
+            Categories
+          </button>
+        </ion-list>
 
 </ion-content>

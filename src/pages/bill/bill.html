@@ -55,8 +55,8 @@
         <ion-scroll class="scroll-zone" scrollY="true">
           <div *ngFor="let id of keys" >
 
-            <ion-item-sliding>
-             <ion-item>
+            <ion-item-sliding #slidingItem>
+             <ion-item (touchstart)="closeSlideIfOpen(slidingItem)">
                 <div class="clear">
                   <div class="inline left"> {{bill.products[id].name}} </div>
                   <div class="inline right"> {{bill.products[id].quantity}} buc</div>

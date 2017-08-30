@@ -11,8 +11,7 @@ import { AddBillPage } from "../add-bill/add-bill";
 
 @Component({
   template: `
-      <ion-list>
-
+        <ion-list>
         <button ion-item  (click)="close()">
         <div class="rows">
           <ion-icon style="margin-right:5px;"name="cloud-download"></ion-icon>
@@ -28,7 +27,7 @@ import { AddBillPage } from "../add-bill/add-bill";
           Scan
         </button>
       </ion-list>
-  `
+   `
 })
 export class PopoverPage {
   popover: any;
