@@ -57,7 +57,7 @@ export class BillsPage {
       this.bills = data;
       this.billsToShow = data;
       this.sortBills();
-      console.log(this.bills);
+      //console.log(this.bills);
     });
     document.addEventListener("touchstart", () => {this.closeFabIfActive()});
   }
@@ -211,7 +211,7 @@ export class BillsPage {
           }
         }
       }
-      console.log(this.intervalToShow);
+      //console.log(this.intervalToShow);
     }
     if(this.sortOption == "dateAsc"){
       this.billsToShow = this.bills;

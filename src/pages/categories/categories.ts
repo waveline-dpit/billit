@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { Subject } from 'rxjs/Subject';
+import {UserInfo} from '../../providers/user-info/user-info';
 
 
 /**
@@ -16,7 +19,24 @@ import { AlertController } from 'ionic-angular';
 })
 export class CategoriesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams ,public alerCtrl: AlertController,) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams ,
+    public alerCtrl: AlertController,
+    public db: AngularFireDatabase,
+    public userInfo: UserInfo
+  )
+  {
+    /*const queryObservable = db.list("/user/" + this.userInfo.getUserToken() + '/bills', {
+      query: {
+        orderByChild: 'dateISO',
+        startAt: "2010-08-19T09:04:19.026Z",
+        endAt: "2017-08-19T23:04:19.026Z"
+      }
+    });
+    queryObservable.subscribe(queriedItems => {
+      console.log(queriedItems);
+    });*/
   }
 
   ionViewDidLoad() {
