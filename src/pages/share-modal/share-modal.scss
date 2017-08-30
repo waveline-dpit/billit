@@ -1,0 +1,20 @@
+page-share-modal {
+  img{
+    width: 300px;
+    height: auto;
+  }
+  .ion-page{
+    border-radius: 25px;
+  }
+
+  .content{
+    border-radius: 3px;
+    -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+ion-modal {
+  padding: 60px 30px 100px 30px;
+  background: rgba(0,0,0,0.3);
+  overflow-y: hidden;
+}

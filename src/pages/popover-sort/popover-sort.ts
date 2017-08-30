@@ -11,36 +11,30 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 
 @Component({
   template: `
-      <ion-list>
-        <ion-item>
-          Sort bills by:
-        </ion-item>
-        <button ion-item  (click)="setSortOption('dateDesc')">
-          <ion-icon style="margin-right:5px;"name="calendar"></ion-icon>
-          Date (desc)
-        </button>
-        <button ion-item  (click)="setSortOption('dateAsc')">
-          <ion-icon style="margin-right:5px;"name="calendar"></ion-icon>
-          Date (asc)
-        </button>
-        <button ion-item  (click)="setSortOption('priceDesc')">
-          <ion-icon style="margin-right:5px;"ios="logo-usd" md="logo-usd"></ion-icon>
-          Price (desc)
-        </button>
-        <button ion-item  (click)="setSortOption('priceAsc')">
-          <ion-icon style="margin-right:5px;"ios="logo-usd" md="logo-usd"></ion-icon>
-          Price (asc)
-        </button>
-        <button ion-item (click)="setSortOption('favourites')">
-          <ion-icon style="margin-right:5px;" name="star-outline"></ion-icon>
-          Favourites
-        </button>
-      </ion-list>
+    <ion-list radio-group>
+      <ion-item>
+        Sort bills by:
+      </ion-item>
+      <ion-item  *ngFor="let item of items">
+        <ion-label>
+          <ion-icon style="margin-right:5px;"name="{{item.icon}}"></ion-icon>
+          {{item.name}}
+        </ion-label>
+        <ion-radio [checked]="sortOpt == item.opt" (click)="setSortOption(item.opt)"></ion-radio>
+      </ion-item>
+    </ion-list>
   `
 })
 export class PopoverSortPage {
 
   sortOpt;
+  items = [
+   {  name: "Date (desc)", icon:"calendar", opt:"dateDesc"},
+   {  name: "Date (asc)", icon:"calendar", opt:"dateAsc"},
+   {  name: "Price (desc)", icon:"logo-usd", opt:"priceDesc"},
+   {  name: "Price (desc)", icon:"logo-usd", opt:"priceAsc"},
+   {  name: "Favourites", icon:"star-outline", opt:"favourites"}
+  ]
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

@@ -14,7 +14,7 @@ import {CategoriesService} from '../../providers/categories-service/categories-s
        <button *ngIf="bill.favourite" ion-item (click)="removeFromFavourite(bill)"><ion-icon style="margin-right:5px;" name="star-outline"></ion-icon>Remove from favs</button>
        <button *ngIf="!bill.favourite" ion-item (click)="addToFavourite(bill)"><ion-icon style="margin-right:5px;" name="star-outline"></ion-icon>Add to favourites</button>
        <button ion-item (click)="goToEditBillPage();close()"><ion-icon style="margin-right:5px;" name="create"></ion-icon>Edit</button>
-       <button ion-item  (click)="close()"><ion-icon style="margin-right:6px;" name="share"></ion-icon>Share</button>
+       <button ion-item  (click)="openShareModal()"><ion-icon style="margin-right:6px;" name="share"></ion-icon>Share</button>
        <button ion-item (click)="billCheckbox();close()"><ion-icon style="margin-right:9px;" name="attach"></ion-icon>Category</button>
        <button ion-item (click)="showAlert()"><ion-icon style="margin-right:9px;" name="trash"></ion-icon>Delete</button>
       </ion-list>
@@ -105,6 +105,9 @@ export class PopoverBillPage {
         }]
     });
     alert.present()
+  }
+  openShareModal(){
+    this.viewCtrl.dismiss("share");
   }
 
 }
