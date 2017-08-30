@@ -33,30 +33,6 @@
 
 
 <ion-content padding class="backgroundIMG">
-  <!--<ion-item>
-    <ion-input type="text" placeholder="qr data" [(ngModel)]="qrData"></ion-input>
-  </ion-item>
-  <button ion-button full (click)="createCode()">Create code</button>
-  <button ion-button full (click)="scanCode()">Scan code</button>
-
-  <ion-card *ngIf="createdCode">
-    <ngx-qrcode [qrc-value]="createdCode" ></ngx-qrcode>
-    <ion-card-content>
-      <p>
-        value: {{createdCode}}
-      </p>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card *ngIf="scannedCode">
-    <ion-card-content>
-      <p>
-        result from scan: {{scannedCode}}
-      </p>
-    </ion-card-content>
-  </ion-card>
--->
-
 
   <div *ngFor="let bill of billsToShow; let i = index">
 
@@ -127,7 +103,7 @@
       <ion-icon name="add"></ion-icon>
     </button>
     <ion-fab-list side="top">
-      <button ion-fab color="primary"(click)="scanCode()"><ion-icon name="cloud-download"></ion-icon></button>
+      <button ion-fab color="primary"(click)="scanCode()"><ion-icon name="qr-scanner"></ion-icon></button>
       <button ion-fab color="primary"(click)="goToAddBillPage();"><ion-icon name="create" ></ion-icon></button>
       <button ion-fab  color="primary"(click)="closeFab(fab)"><ion-icon  name="camera"></ion-icon></button>
 

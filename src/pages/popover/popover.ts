@@ -14,7 +14,7 @@ import { AddBillPage } from "../add-bill/add-bill";
         <ion-list>
         <button ion-item  (click)="close()">
         <div class="rows">
-          <ion-icon style="margin-right:5px;"name="cloud-download"></ion-icon>
+          <ion-icon style="margin-right:5px;"name="qr-scanner"></ion-icon>
           Receive
         </div>
         </button>
