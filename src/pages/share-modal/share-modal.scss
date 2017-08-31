@@ -4,17 +4,15 @@ page-share-modal {
     height: auto;
   }
   .ion-page{
-    border-radius: 25px;
+    border-radius: 50px;
   }
 
   .content{
-    border-radius: 3px;
-    -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
-    box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
   }
 }
 ion-modal {
-  padding: 60px 30px 100px 30px;
-  background: rgba(0,0,0,0.3);
+  padding: 150px 40px 150px 40px;
+  background: rgba(0,0,0,0.4);
   overflow-y: hidden;
 }

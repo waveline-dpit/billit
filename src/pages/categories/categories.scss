@@ -1,3 +1,23 @@
 page-categories {
-
+  .category-card{
+    -webkit-transition: height .25s ease;
+       -moz-transition: height .25s ease;
+            transition: height .25s ease;
+  }
+  .animate-fade-in
+  {
+    animation: fadein 1.2s;
+    @keyframes fadein {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+  }
+  .animation-fade-out
+  {
+    animation: fadein 1.2s;
+    @keyframes fadein {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+  }
 }

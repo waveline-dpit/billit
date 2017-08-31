@@ -13,9 +13,20 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="backgroundIMG">
 
-    <button ion-button color="primary" round (click)="addNewCategory()" class="save_bttn">Add</button>
+    <div *ngFor="let category of categoriesToShow; let i = index">
+      <ion-card class="category-card animate-fade-in animate-fade-out" (click)="expandCategory(i)">
+        {{category.name}}
+        <div *ngIf="category.clicked">
 
+          <div  *ngFor="let product of category.products; let i = index">
+            {{product.name}}
+
+            {{product.pricePerUnit}}
+          </div> <!-- ngFor -->
+        </div> <!-- ngIf -->
+      </ion-card>
+    </div>
 
 </ion-content>
