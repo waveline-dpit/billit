@@ -99,7 +99,7 @@ export class BillPage {
     this.productAlert.present();
   }
 
-  addNewCategory() {
+  addCategory() {
     let prompt = this.alertCtrl.create({
       title: 'New category',
       message: "Add a new category for your products",

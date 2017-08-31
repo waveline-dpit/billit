@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {UserInfo} from '../user-info/user-info';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
+import 'rxjs/add/operator/first'
 /*
   Generated class for the CategorisServiceProvider provider.
 
@@ -39,26 +40,38 @@ export class CategoriesService {
   }
   addProductToCategory(product, categoryID, productID, billID)
   {
-    let path = "/user/" + this.userInfo.getUserToken() + "/categories/" + categoryID + "/products/" + productID;
-    this.categories = this.db.object(path);
-    this.categories.update(product);
-    path = "/user/" + this.userInfo.getUserToken() + "/bills/" + billID + "/products/" + productID + "/categoryID";
-    let prod: FirebaseObjectObservable <any>;
-    let obj = {}, key = categoryID;
-    obj[categoryID] = true;
-    prod = this.db.object(path);
-    prod.update(obj);
+    this.db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billID).first().subscribe((data)=>
+    {
+      product["dateISO"] = data.dateISO;
+      let path = "/user/" + this.userInfo.getUserToken() + "/categories/" + categoryID + "/products/" + productID;
+      this.categories = this.db.object(path);
+      this.categories.update(product);
+      path = "/user/" + this.userInfo.getUserToken() + "/bills/" + billID + "/products/" + productID + "/categoryID";
+      let prod: FirebaseObjectObservable <any>;
+      let obj = {}, key = categoryID;
+      obj[categoryID] = true;
+      prod = this.db.object(path);
+      prod.update(obj);
+    });
+
   }
   unCheckAllProdctFromCat(productID, billID)
   {
     let pathBill = "/user/" + this.userInfo.getUserToken() + "/bills/" + billID + "/products/" + productID + "/categoryID";
     let pathCategory = "/user/" + this.userInfo.getUserToken() + "/categories";
     let bill;
-    this.db.list(pathBill).subscribe((billCat) =>
+    let authObserver = this.getSmth(pathBill).first().subscribe(billCat =>
     {
+      console.log("sugipula1");
       bill = billCat;
       for(let cat of bill)
         this.db.object(pathCategory + "/" + cat.$key + "/products/" + productID).remove();
     });
+
+  }
+
+  private getSmth(path)
+  {
+    return this.db.list(path);
   }
 }

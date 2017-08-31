@@ -5,12 +5,7 @@ import { EditBillPage } from "../edit-bill/edit-bill";
 import { BillDatabase } from "../../providers/bill-database/bill-database"
 import { TabsPage} from "../tabs/tabs"
 import {CategoriesService} from '../../providers/categories-service/categories-service';
-/**
- * Generated class for the PopoverBillPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @IonicPage()
 
 @Component({
@@ -68,6 +63,7 @@ export class PopoverBillPage {
     this.billAlert = this.alertCtrl.create();
     this.billAlert.setTitle('Select the bill category');
     this.billAlert.setMessage('This category will be set for all products on this bill');
+
     for(let category of this.categories)
     {
 
@@ -82,7 +78,10 @@ export class PopoverBillPage {
       text: 'OK',
       handler: data =>
       {
-        console.log(data);
+        for(let productID in this.bill.products)
+        {
+          this.categoriesService.addProductToCategory(this.bill.products[productID], data, productID, this.bill.$key);
+        }
       }
     });
     this.billAlert.present();
@@ -90,7 +89,20 @@ export class PopoverBillPage {
   showAlert(){
     let alert = this.alertCtrl.create({
       message: 'Are you sure you want to delete this bill?',
-      buttons: ['No' , 'Yes']
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel'
+
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            setTimeout(()=>{
+              this.billDatabase.removeBill(this.bill.$key);
+            }, 300);
+          }
+        }]
     });
     alert.present()
   }
