@@ -39,10 +39,21 @@ export class BillPage {
     public modalCtrl: ModalController
   )
   {
-    db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billDatabase.bill.$key).subscribe((data) =>
-    {
-      this.bill = data;
-    });
+    if(this.navParams.get('comingFromCategories')){
+      let billID = this.navParams.get('billID');
+      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billID).subscribe((data) =>
+      {
+        this.bill = data;
+      });
+      console.log(this.navParams)
+    }
+    else{
+      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billDatabase.bill.$key).subscribe((data) =>
+      {
+        this.bill = data;
+      });
+    }
+   
     this.keys = Object.keys(this.bill.products);
     categoriesService.getCategories().subscribe((data)=>
     {
@@ -57,9 +68,11 @@ export class BillPage {
 
   showCategories(product, id, billId) {
     console.log("prod", product)
-    this.productAlert = this.alertCtrl.create();
+    this.productAlert = this.alertCtrl.create({
+      message: product.name
+    });
     this.productAlert.setTitle('Select categories');
-
+    
     for(let category of this.categories)
     {
       let isChecked;
@@ -85,6 +98,7 @@ export class BillPage {
     this.productAlert.addButton({
       text: 'Okay',
       handler: data => {
+        console.log(data);
         this.categoriesService.unCheckAllProdctFromCat(id, billId);
         let pathBill = "/user/" + this.userInfo.getUserToken() + "/bills/" + billId + "/products/" + id + "/categoryID";
         this.db.object(pathBill).remove().then(()=>
