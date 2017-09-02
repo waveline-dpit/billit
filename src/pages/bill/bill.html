@@ -22,11 +22,11 @@
     <ion-card-header>
       <div class="row">
         <div class="col col-center text-center">
-          <ion-icon name="calendar" isActive="false"></ion-icon>
+          <ion-icon style="margin-right:3px;" name="calendar" isActive="false"></ion-icon>
           <div class="inline-display margin-right">
             {{bill.date}}
           </div>
-          <ion-icon name="time" isActive="false"></ion-icon>
+          <ion-icon style="margin-right:3px;" name="time" isActive="false"></ion-icon>
           <div class="inline-display">
             {{bill.time}}
           </div>
@@ -34,7 +34,7 @@
       </div>
       <div class="row">
         <div class="col col-center text-center">
-          <ion-icon name="cart" isActive="false"></ion-icon>
+          <ion-icon style="margin-right:3px;" name="cart" isActive="false"></ion-icon>
           <div class="inline-display">
              {{bill.storeName}}
           </div>
@@ -42,7 +42,7 @@
       </div>
       <div class="row">
         <div class="col col-center text-center">
-          <ion-icon name="finger-print" isActive="false"></ion-icon>
+          <ion-icon style="margin-right:3px;" name="finger-print" isActive="false"></ion-icon>
           <div class="inline-display">
             {{bill.number}}
           </div>
@@ -84,7 +84,7 @@
     </ion-card-content>
 
     <ion-grid>
-      <ion-row  class="total">
+      <ion-row  class="total footer">
         <ion-col col-4>TOTAL</ion-col>
         <ion-col col-3></ion-col>
         <ion-col col-5>{{bill.totalAmount}} RON</ion-col>

@@ -1,25 +1,74 @@
 page-stats {
-
-}
-.center
-{
-    text-align: center;
-}
-.left
-{
-    text-align:left;
-    flex: 1;
-}
-.right
-{
+  canvas
+  {
+    width: 80%;
+  }
+  .center
+  {
+      text-align: center;
+  }
+  .left
+  {
+      text-align:left;
+      flex: 1;
+  }
+  .right
+  {
+      text-align: right;
+      flex: 1;
+  }
+  .display
+  {
+      display: flex;
+  }
+  .header
+  {
+      font-size: 20px;
+  }
+  .no-bill
+  {
+    font-style: italic;
+    color: #737373;
+    margin-bottom: 10px;
+  }
+  .expand-icon
+  {
     text-align: right;
-    flex: 1;
-}
-.display
-{
-    display: flex;
-}
-.header
-{
-    font-size: 20px;
+    font-size: 25px;
+  }
+  .store-list
+  {
+    margin-top: 20px;
+    font-size: 14px;
+    .grid,.col,[col-1],[col-2],[col-3],[col-4],[col-5],[col-6],[col-7],[col-8],[col-9],[col-10],[col-11],[col-12]
+    {
+      padding: 0;
+    }
+  }
+  .store
+  {
+    margin: 3px 0;
+  }
+  .expand
+  {
+    display: inline-flex;
+    ion-icon
+    {
+      display:inline-block;
+    }
+  }
+  .legend
+  {
+    margin: auto 8px;
+    display:inline-block;
+    vertical-align: middle;
+    font-size: 13px;
+    color: #424242;
+  }
+  .color
+  {
+    width: 35px;
+    height: 10px;
+    margin: 5px 0;
+  }
 }

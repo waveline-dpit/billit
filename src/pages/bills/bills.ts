@@ -58,7 +58,7 @@ export class BillsPage {
       this.bills = data;
       this.billsToShow = data;
       this.sortBills();
-      //console.log(this.bills);
+      //console.log(this.billsToShow);
     });
     document.addEventListener("touchstart", () => {this.closeFabIfActive()});
   }
@@ -118,7 +118,6 @@ export class BillsPage {
     else{
       firstDayOfWeek = moment().startOf('week').add(1, 'days').startOf('day');
     }*/
-    console.log("fdow", moment().startOf('week').day())
     let month = firstDayOfWeek.clone().subtract(15, 'days').startOf('day').toDate().getMonth();
     let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     let firstDayOfLastMonth = moment(firstDayOfWeek.clone().subtract(15, 'days').startOf('day').toDate()).startOf('month');
@@ -195,7 +194,8 @@ export class BillsPage {
       this.intervalToShow = [];
       let usedInterval = [];
       for(let i in this.billsToShow){
-        let billdate = moment(new Date(this.billsToShow[i].dateISO)).startOf('day');
+        let auxDate = new Date(this.billsToShow[i].dateISO);
+        let billdate = moment(auxDate.setHours(auxDate.getHours() - 3)).startOf('day');
         for(let intervalIndex in this.intervals){
           if(this.intervals[intervalIndex].range.contains(billdate) && usedInterval[intervalIndex] == null){
             this.intervalToShow[i] = this.intervals[intervalIndex].name;
@@ -207,7 +207,7 @@ export class BillsPage {
     }
     if(this.sortOption == "dateAsc"){
       this.billsToShow = this.bills;
-      this.billsToShow.sort(function(a, b){
+      this.billsToShow.x(function(a, b){
         a = new Date(a.dateISO);
         b = new Date(b.dateISO);
         return (a - b);
