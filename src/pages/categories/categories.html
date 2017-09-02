@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    
+
     <ion-title>CategoriesPage</ion-title>
     <ion-buttons right class="padd">
       <button ion-button icon-only (click)="addCategory()">
@@ -35,32 +35,32 @@
                   {{category.name}}
                   </ion-title>
                 </ion-item>
-                
-              
-                <ion-item-options side="left">
-                  <button (click)="showDeleteAlert(category.categoryID)" class="fav" ion-button color="danger">
+
+
+                <ion-item-options *ngIf="category.name != 'No Category'" side="left">
+                  <button (click)="showDeleteAlert(category)" class="fav" ion-button color="danger">
                     <ion-icon name="trash"></ion-icon>
                     Delete
                   </button>
-                </ion-item-options> 
+                </ion-item-options>
               </ion-item-sliding>
             </ion-list>
-            
-              
+
+
             <div *ngIf="expanded[i]">
               <div  *ngFor="let product of category.products; let j = index" class="product-list">
 
                   <ion-list>
                     <ion-item-sliding #slidingItem2>
                         <ion-item class="itemlist" (touchend)="closeSlideIfOpen2(slidingItem2)">
-                          
+
                           <div class="inline left">
                             {{product.name}}
                           </div>
                           <div class="inline right">
                             {{product.pricePerUnit}} RON
                           </div>
-                        
+
                         </ion-item>
                         <ion-item-options side="right">
                           <button ion-button color="light" (click)="showCategories(product, product.productID, product.billID)">
@@ -71,14 +71,14 @@
                             <ion-icon name="paper"></ion-icon>
                             Bill
                           </button>
-                        </ion-item-options> 
+                        </ion-item-options>
                     </ion-item-sliding>
                   </ion-list>
 
               </div> <!-- ngFor -->
             </div> <!-- ngIf -->
-            
-           
+
+
           </ion-card-content>
         </ion-card>
       </div>
