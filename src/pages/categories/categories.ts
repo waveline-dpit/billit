@@ -85,6 +85,7 @@ export class CategoriesPage {
 
       }
     }
+
     for(let i in this.categories){
       let obj = {
         name: this.categories[i].name,
