@@ -7,7 +7,13 @@
 <ion-header>
 
   <ion-navbar>
+    
     <ion-title>CategoriesPage</ion-title>
+    <ion-buttons right class="padd">
+      <button ion-button icon-only (click)="addCategory()">
+        <ion-icon  name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -15,18 +21,66 @@
 
 <ion-content padding class="backgroundIMG">
 
-    <div *ngFor="let category of categoriesToShow; let i = index">
-      <ion-card class="category-card animate-fade-in animate-fade-out" (click)="expandCategory(i)">
-        {{category.name}}
-        <div *ngIf="category.clicked">
+      <div *ngFor="let category of categoriesToShow; let i = index">
 
-          <div  *ngFor="let product of category.products; let i = index">
-            {{product.name}}
+        <ion-card  class="category-card animate-fade-in animate-fade-out">
+            <ion-card-content class="text">
+            <ion-list>
+              <ion-item-sliding #slidingItem>
 
-            {{product.pricePerUnit}}
-          </div> <!-- ngFor -->
-        </div> <!-- ngIf -->
-      </ion-card>
-    </div>
+                <ion-item class="itemlist" (touchend)="closeSlideIfOpen(slidingItem)" (click)="expandCategory(i)" >
+                  <ion-title>
+                  <ion-icon *ngIf="!expanded[i]" name="ios-arrow-down" class="inline right" ></ion-icon>
+                  <ion-icon *ngIf="expanded[i]" name="ios-arrow-up" class="inline right" ></ion-icon>
+                  {{category.name}}
+                  </ion-title>
+                </ion-item>
+                
+              
+                <ion-item-options side="left">
+                  <button (click)="showDeleteAlert(category.categoryID)" class="fav" ion-button color="danger">
+                    <ion-icon name="trash"></ion-icon>
+                    Delete
+                  </button>
+                </ion-item-options> 
+              </ion-item-sliding>
+            </ion-list>
+            
+              
+            <div *ngIf="expanded[i]">
+              <div  *ngFor="let product of category.products; let j = index" class="product-list">
+
+                  <ion-list>
+                    <ion-item-sliding #slidingItem2>
+                        <ion-item class="itemlist" (touchend)="closeSlideIfOpen2(slidingItem2)">
+                          
+                          <div class="inline left">
+                            {{product.name}}
+                          </div>
+                          <div class="inline right">
+                            {{product.pricePerUnit}} RON
+                          </div>
+                        
+                        </ion-item>
+                        <ion-item-options side="right">
+                          <button ion-button color="light" (click)="showCategories(product, product.productID, product.billID)">
+                            <ion-icon name="attach"></ion-icon>
+                            Categories
+                          </button>
+                          <button class="new-button" ion-button color="dark-grey" (click)="goToBillPage(product.billID)">
+                            <ion-icon name="paper"></ion-icon>
+                            Bill
+                          </button>
+                        </ion-item-options> 
+                    </ion-item-sliding>
+                  </ion-list>
+
+              </div> <!-- ngFor -->
+            </div> <!-- ngIf -->
+            
+           
+          </ion-card-content>
+        </ion-card>
+      </div>
 
 </ion-content>

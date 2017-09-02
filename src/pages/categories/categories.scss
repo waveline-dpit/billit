@@ -4,20 +4,54 @@ page-categories {
        -moz-transition: height .25s ease;
             transition: height .25s ease;
   }
-  .animate-fade-in
+  .text
   {
-    animation: fadein 1.2s;
-    @keyframes fadein {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    font-weight: normal;
+    font-size: 15px;
+  }
+  .product-list
+  {
+    font-weight: normal;
+    font-size: 12px;
+    padding:0 12px;
+    .label
+    {
+      color: #424242;
+      font-size: 15px;
+      margin-right: 0;
+    }
+    .list .item-block .item-inner    
+    {
+      padding-right: 0;
+      border-top: 1px solid #ccc
     }
   }
-  .animation-fade-out
+    .item.itemlist
   {
-    animation: fadein 1.2s;
-    @keyframes fadein {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    padding: 1px 7px 1px 7px;
+    background-color: white;
+  }
+  .fav
+  {
+    ion-icon
+    {
+      color: white;
     }
   }
+  .new-button
+  {
+    ion-icon
+    {
+      color: white;
+    }
+  }
+  .card-content
+  {
+    padding: 0;
+  }
+  
+}
+.alert-md .alert-message, .alert-md .alert-input-group {
+    color: #424242;
+    padding: 0 24px 24px;
 }
