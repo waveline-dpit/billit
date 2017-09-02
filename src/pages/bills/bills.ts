@@ -70,6 +70,7 @@ export class BillsPage {
   goToBillPage(bill)
   {
     this.billDatabase.bill = bill;
+    console.log(bill);
     this.navCtrl.push(BillPage);
   }
 
