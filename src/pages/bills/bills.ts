@@ -196,7 +196,7 @@ export class BillsPage {
       let usedInterval = [];
       for(let i in this.billsToShow){
         let auxDate = new Date(this.billsToShow[i].dateISO);
-        let billdate = moment(auxDate.setHours(auxDate.getHours() - 3)).startOf('day');
+        let billdate = moment(auxDate.setHours(auxDate.getHours() - Math.abs((new Date(this.billsToShow[i].dateISO)).getTimezoneOffset()))).startOf('day');
         for(let intervalIndex in this.intervals){
           if(this.intervals[intervalIndex].range.contains(billdate) && usedInterval[intervalIndex] == null){
             this.intervalToShow[i] = this.intervals[intervalIndex].name;
