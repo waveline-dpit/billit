@@ -38,6 +38,7 @@ export class CategoriesPage {
     public categoriesService: CategoriesService,
   ) {
     this.db.object("/user/" + this.userInfo.getUserToken()).subscribe((data) =>{
+      console.log(data.categories);
       this.user = data;
       this.bills = this.user.bills;
       this.categoriesDB = this.user.categories;
@@ -49,7 +50,7 @@ export class CategoriesPage {
     console.log('ionViewDidLoad CategoriesPage');
   }
   makeCategories(){
-
+    this.categories = [];
     for(let i in this.categoriesDB){
       let category = this.categoriesDB[i];
       let obj = {
@@ -174,7 +175,7 @@ export class CategoriesPage {
       }
       else
         isChecked = false;
-       
+
       this.productAlert.addInput({
         type: 'checkbox',
         label: category.name,
@@ -201,7 +202,7 @@ export class CategoriesPage {
     this.productAlert.present();
   }
 
-  showDeleteAlert(categoryID){
+  showDeleteAlert(category){
     let alert = this.alertCtrl.create({
       title: 'Warning',
       message: 'Are you sure you want to delete this category?',
@@ -214,7 +215,7 @@ export class CategoriesPage {
           text: 'Yes',
           handler: () => {
             /*delete category from database*/
-            console.log(categoryID)
+            this.categoriesService.deleteCategory(category);
           }
         }]
     });

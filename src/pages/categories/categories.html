@@ -37,8 +37,8 @@
                 </ion-item>
 
 
-                <ion-item-options side="left">
-                  <button (click)="showDeleteAlert(category.categoryID)" class="fav" ion-button color="danger">
+                <ion-item-options *ngIf="category.name != 'No Category'" side="left">
+                  <button (click)="showDeleteAlert(category)" class="fav" ion-button color="danger">
                     <ion-icon name="trash"></ion-icon>
                     Delete
                   </button>
