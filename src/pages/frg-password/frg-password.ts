@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from "../login/login";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmailValidator } from  '../../validators/email';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 /**
  * Generated class for the FrgPasswordPage page.
@@ -24,7 +25,8 @@ export class FrgPasswordPage {
   constructor(
     public navCtrl: NavController,
     public formBuilder: FormBuilder,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public afAuth: AngularFireAuth
   ) {
     this.frgPassForm = formBuilder.group({
         fcfrgpass: ['', Validators.compose([EmailValidator.isValid, Validators.required])],
@@ -35,6 +37,7 @@ export class FrgPasswordPage {
   goToLoginPage() {
 
     if(this.frgPassForm.controls.fcfrgpass.valid) {
+      this.afAuth.auth.sendPasswordResetEmail(this.email); 
       this.navCtrl.push(LoginPage);
     }
   }
