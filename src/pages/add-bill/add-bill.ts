@@ -161,7 +161,7 @@ export class AddBillPage {
   getDateTime()
   {
     this.ISOdate = new Date();
-    this.ISOdate.setHours(this.ISOdate.getHours() + 3)
+    this.ISOdate.setHours(this.ISOdate.getHours() + Math.abs(new Date().getTimezoneOffset()) / 60)
     this.ISOdate = this.ISOdate.toISOString();
     var hour =  ((new Date()).getHours()).toString();
     var min =  ((new Date()).getMinutes()).toString();

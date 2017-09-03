@@ -26,13 +26,13 @@
         <ion-card  class="category-card animate-fade-in animate-fade-out">
             <ion-card-content class="text">
             <ion-list>
-              <ion-item-sliding #slidingItem>
+              <ion-item-sliding #slidingItem class="category-title">
 
                 <ion-item class="itemlist" (touchend)="closeSlideIfOpen(slidingItem)" (click)="expandCategory(i)" >
                   <ion-title>
-                  <ion-icon *ngIf="!expanded[i]" name="ios-arrow-down" class="inline right" ></ion-icon>
-                  <ion-icon *ngIf="expanded[i]" name="ios-arrow-up" class="inline right" ></ion-icon>
-                  {{category.name}}
+                    <ion-icon *ngIf="!expanded[i]" name="ios-arrow-down" class="inline right" ></ion-icon>
+                    <ion-icon *ngIf="expanded[i]" name="ios-arrow-up" class="inline right" ></ion-icon>
+                    {{category.name}}
                   </ion-title>
                 </ion-item>
 

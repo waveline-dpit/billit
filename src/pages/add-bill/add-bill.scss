@@ -164,7 +164,7 @@ page-add-bill {
     ion-scroll
     {
       width: 100%;
-      height: 88%;
+      height: calc(100% - 64px);
       //margin: 16px;
     }
     .footer

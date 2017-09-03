@@ -50,18 +50,18 @@
               <div>
                 <div class="inline ">
                   <div class="inline left topp bott">
-                    <ion-icon name="calendar" isActive="false"></ion-icon>
+                    <ion-icon style="margin-right:2px;" name="calendar" isActive="false"></ion-icon>
                     {{bill.date}}
                   </div>
                   <div class="inline right topp bott">
-                    <ion-icon class="margin-left" name="time" isActive="false"></ion-icon>
+                    <ion-icon style="margin-right:2px;" class="margin-left" name="time" isActive="false"></ion-icon>
                     {{bill.time}}
                   </div>
                 </div>
               </div>
               <div class="clear">
                 <div class=" inline left topp bott">
-                  <ion-icon name="cart" isActive="false"></ion-icon>
+                  <ion-icon style="margin-right:2px;" name="cart" isActive="false"></ion-icon>
                   {{bill.storeName}}
                 </div>
                 <div class="inline right topp bott  ">
@@ -70,20 +70,20 @@
               </div>
             </ion-item>
 
-            <ion-item-options side="right">
+            <ion-item-options side="right" class="favourite">
 
-              <button *ngIf="!bill.favourite" class="fav" ion-button color="light" (click)="addToFavourite(bill, slidingItem)">
+              <button *ngIf="!bill.favourite"  ion-button color="light" (click)="addToFavourite(bill, slidingItem)">
                 <ion-icon name="star-outline"></ion-icon>
                 Favourite
               </button>
-              <button *ngIf="bill.favourite" class="fav" ion-button color="fav-yellow" (click)="removeFromFavourite(bill, slidingItem)">
+              <button *ngIf="bill.favourite" ion-button color="fav-yellow" (click)="removeFromFavourite(bill, slidingItem)">
                 <ion-icon name="star-outline"></ion-icon>
                 Favourite
               </button>
             </ion-item-options>
 
             <ion-item-options side="left">
-              <button class="fav" ion-button color="danger" (click)="showAlert(bill.$key)">
+              <button class="delete" ion-button color="danger" (click)="showAlert(bill.$key)">
                 <ion-icon name="trash"></ion-icon>
                 Delete
               </button>
