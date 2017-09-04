@@ -48,10 +48,17 @@ page-bill {
   }
   .total
   {
-    margin-top: -20px;
+    //margin-top: -10px;
     font-size: 18px;
     font-weight: bold;
     color: #424242;
+  }
+  .footer
+  {
+    bottom: calc(1.5% + 56px + 23px);
+    width: calc(100% - 62px);
+    position: fixed;
+    //padding: 16px 16px 0 16px;
   }
   .label-md,.label-ios
   {
@@ -74,7 +81,7 @@ page-bill {
   }
   .card
   {
-    height: 98%;
+    height: 97%;
   }
   .card-content
   {

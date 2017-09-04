@@ -9,6 +9,17 @@ page-categories {
     font-weight: normal;
     font-size: 15px;
   }
+  .category-title
+  {
+    .label
+    {
+      margin-right: 0;
+    }
+    .item-md.item-block .item-inner
+    {
+      padding-right: 0;
+    }
+  }
   .product-list
   {
     font-weight: normal;
@@ -20,7 +31,7 @@ page-categories {
       font-size: 15px;
       margin-right: 0;
     }
-    .list .item-block .item-inner    
+    .list .item-block .item-inner
     {
       padding-right: 0;
       border-top: 1px solid #ccc
@@ -49,7 +60,7 @@ page-categories {
   {
     padding: 0;
   }
-  
+
 }
 .alert-md .alert-message, .alert-md .alert-input-group {
     color: #424242;

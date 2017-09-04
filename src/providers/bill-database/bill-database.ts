@@ -62,8 +62,15 @@ export class BillDatabase {
   {
     let path = '/user/' + this.userInfo.getUserToken() + '/bills' + '/' + billId;
     let bill: FirebaseObjectObservable <any>;
-    bill = this.db.object(path);
-    bill.remove();
+    this.db.object(path).subscribe((data)=>{
+      for(let productID in data.products)
+      {
+        let product = data.products[productID];
+        if(product.categoryID)
+          for(let categoryID in product.categoryID)
+            this.db.object('/user/' + this.userInfo.getUserToken() + '/categories/' + categoryID + '/products/' + productID).remove();
+      }
+      this.db.object(path).remove();
+    });
   }
-
 }

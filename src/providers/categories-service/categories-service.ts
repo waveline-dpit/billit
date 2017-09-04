@@ -43,6 +43,8 @@ export class CategoriesService {
     this.db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billID).first().subscribe((data)=>
     {
       product["dateISO"] = data.dateISO;
+      product["productID"] = productID;
+      product["billID"] = billID;
       let path = "/user/" + this.userInfo.getUserToken() + "/categories/" + categoryID + "/products/" + productID;
       this.categories = this.db.object(path);
       this.categories.update(product);
@@ -62,12 +64,20 @@ export class CategoriesService {
     let bill;
     let authObserver = this.getSmth(pathBill).first().subscribe(billCat =>
     {
-      console.log("sugipula1");
       bill = billCat;
       for(let cat of bill)
         this.db.object(pathCategory + "/" + cat.$key + "/products/" + productID).remove();
     });
 
+  }
+  deleteCategory(category)
+  {
+    let path = "/user/" + this.userInfo.getUserToken() + "/bills/";
+    for(let product of category.products)
+    {
+      this.db.object(path + product.billID + "/products/" + product.productID + "/categoryID/" + category.categoryID).remove();
+    }
+    this.db.object("/user/" + this.userInfo.getUserToken() + "/categories/" + category.categoryID).remove();
   }
 
   private getSmth(path)

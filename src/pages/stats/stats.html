@@ -15,23 +15,141 @@
 
 
 <ion-content padding class="backgroundIMG">
-  <div padding>
-  <ion-segment [(ngModel)]="stats">
-    <ion-segment-button value="days">
-      Days
-    </ion-segment-button>
-    <ion-segment-button value="weeks">
-      Weeks
-    </ion-segment-button>
-    <ion-segment-button value="months">
-      Months
-    </ion-segment-button>
-  </ion-segment>
 
-</div>
+<ion-segment [(ngModel)]="stats">
+  <ion-segment-button value="days" (click)="changeStatsValue('days')">
+    Days
+  </ion-segment-button>
+  <ion-segment-button value="months" (click)="changeStatsValue('months')">
+    Months
+  </ion-segment-button>
+  <ion-segment-button value="intervals" (click)="changeStatsValue('intervals')">
+    Intervals
+  </ion-segment-button>
+</ion-segment>
 
 <div [ngSwitch]="stats">
   <div *ngSwitchCase="'days'">
+
+    <ion-card class="upper-card">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="date" col-5>
+            <ion-item>Select day:</ion-item>
+          </ion-col>
+          <ion-col class="date" col-1>
+            <ion-icon name="calendar" class="right"></ion-icon>
+          </ion-col>
+          <ion-col col-6>
+            <ion-item style="padding-left: 0;">
+              <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="selectedDay" (ionChange)="dateHasChanged('both')"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="date" col>
+            <ion-item>Total this day: {{total}} RON</ion-item>
+          </ion-col>  
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card>
+
+      <ion-card-header class="header">
+        By stores
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <div class="no-bill" *ngIf="storesArray.length == 0">
+          You don't have any bills in this day
+        </div>
+        <div *ngIf="storesArray.length">
+          <canvas #doughnutCanvas style="max-height: 230px; max-width:230px; margin:auto; display:block;"></canvas>
+          <div class="store-list" *ngIf="expanded">
+            <div class="store" *ngFor="let store of storesArray">
+              <ion-grid >
+                <ion-row>
+                  <ion-col col-2>
+                    <div [ngStyle]=" { 'background-color': store.color }" class="color"></div>
+                  </ion-col>
+                  <ion-col col-6>
+                    {{store.name}}
+                  </ion-col>
+                  <ion-col class="right" col-4>
+                    {{store.amount}} RON
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+          <div class="expand">
+            <ion-icon class="expand-icon" *ngIf="!expanded" (click)="showHideStoresList()" name="ios-arrow-down"></ion-icon>
+            <ion-icon class="expand-icon" *ngIf="expanded" (click)="showHideStoresList()" name="ios-arrow-up"></ion-icon>
+            <div class="legend">
+              Legend
+            </div>
+          </div>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+
+      <ion-card-header class="header">
+        By categories
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <div class="no-bill" *ngIf="categoriesArray.length == 0">
+          You haven't selected any category for your products in this day
+        </div>
+        <div *ngIf="categoriesArray.length">
+          <canvas #barCanvas style="height:270px; max-height:270px;"></canvas>
+          <div class="store-list" *ngIf="expandedBar">
+            <div class="store" *ngFor="let category of categoriesArray">
+              <ion-grid >
+                <ion-row>
+                  <ion-col col-2>
+                    <div [ngStyle]=" { 'background-color': category.color }" class="color"></div>
+                  </ion-col>
+                  <ion-col col-6>
+                    {{category.name}}
+                  </ion-col>
+                  <ion-col class="right" col-4>
+                    {{category.amount}} RON
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+          <div class="expand">
+            <ion-icon class="expand-icon" *ngIf="!expandedBar" (click)="showHideCategoriesList()" name="ios-arrow-down"></ion-icon>
+            <ion-icon class="expand-icon" *ngIf="expandedBar" (click)="showHideCategoriesList()" name="ios-arrow-up"></ion-icon>
+            <div class="legend">
+              Legend
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <div *ngSwitchCase="'months'">
 
     <ion-card>
       <ion-grid>
@@ -41,7 +159,7 @@
           </ion-col>
           <ion-col col-10>
             <ion-item>
-              <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="selectedDay" (ionChange)="dateHasChanged()"></ion-datetime>
+              <ion-datetime class="date" displayFormat="MMMM YYYY" [(ngModel)]="selectedMonth" (ionChange)="dateHasChanged('both')"></ion-datetime>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -52,96 +170,206 @@
     </ion-card>
 
     <ion-card>
+
       <ion-card-header class="header">
         By stores
       </ion-card-header>
+
       <ion-card-content>
-        <div *ngFor="let store of storesArray">
-          <p *ngIf="storesArrayEmpty">
-            You don't have any bills in this day
-          </p>
-          <div class="display">
-            <div class="left">{{store.name}} </div>
-          <div class="right">{{store.amount}} RON</div></div>
+
+        <div class="no-bill" *ngIf="storesArray.length == 0">
+          You don't have any bills in this month
+        </div>
+        <div *ngIf="storesArray.length">
+          <canvas #doughnutCanvas style="max-height: 230px; max-width:230px; margin:auto; display:block;"></canvas>
+          <div class="store-list" *ngIf="expanded">
+            <div class="store" *ngFor="let store of storesArray">
+              <ion-grid >
+                <ion-row>
+                  <ion-col col-2>
+                    <div [ngStyle]=" { 'background-color': store.color }" class="color"></div>
+                  </ion-col>
+                  <ion-col col-6>
+                    {{store.name}}
+                  </ion-col>
+                  <ion-col class="right" col-4>
+                    {{store.amount}} RON
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+          <div class="expand">
+            <ion-icon class="expand-icon" *ngIf="!expanded" (click)="showHideStoresList()" name="ios-arrow-down"></ion-icon>
+            <ion-icon class="expand-icon" *ngIf="expanded" (click)="showHideStoresList()" name="ios-arrow-up"></ion-icon>
+            <div class="legend">
+              Legend
+            </div>
+          </div>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+
+      <ion-card-header class="header">
+        By categories
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <div class="no-bill" *ngIf="categoriesArray.length == 0">
+          You haven't selected any category for your products in this month
+        </div>
+        <div *ngIf="categoriesArray.length">
+          <canvas #barCanvas style="height:270px; max-height:270px;"></canvas>
+          <div class="store-list" *ngIf="expandedBar">
+            <div class="store" *ngFor="let category of categoriesArray">
+              <ion-grid >
+                <ion-row>
+                  <ion-col col-2>
+                    <div [ngStyle]=" { 'background-color': category.color }" class="color"></div>
+                  </ion-col>
+                  <ion-col col-6>
+                    {{category.name}}
+                  </ion-col>
+                  <ion-col class="right" col-4>
+                    {{category.amount}} RON
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+          <div class="expand">
+            <ion-icon class="expand-icon" *ngIf="!expandedBar" (click)="showHideCategoriesList()" name="ios-arrow-down"></ion-icon>
+            <ion-icon class="expand-icon" *ngIf="expandedBar" (click)="showHideCategoriesList()" name="ios-arrow-up"></ion-icon>
+            <div class="legend">
+              Legend
+            </div>
+          </div>
         </div>
       </ion-card-content>
     </ion-card>
 
-         <ion-card>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <div *ngSwitchCase="'intervals'">
+
+    <ion-card>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="date" col-2>
+            <ion-icon name="calendar" class="right"></ion-icon>
+          </ion-col>
+          <ion-col col-10>
+            <ion-item>
+              <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="intervalStart" (ionChange)="dateHasChanged('both')"></ion-datetime>
+            </ion-item>
+            <ion-item>
+              <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="intervalEnd" (ionChange)="dateHasChanged('both')"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          25 RON
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card>
+
       <ion-card-header class="header">
-        By categories
+        By stores
       </ion-card-header>
+
       <ion-card-content>
-          <div class="display"><div class="left">Paine </div><div class="right">15 RON</div></div>
-        <div class="display"><div class="left">Alimente </div><div class="right">10 RON</div></div>
+
+        <div class="no-bill" *ngIf="storesArray.length == 0">
+          You don't have any bills in this interval
+        </div>
+        <div *ngIf="storesArray.length">
+          <canvas #doughnutCanvas style="max-height: 230px; max-width:230px; margin:auto; display:block;"></canvas>
+          <div class="store-list" *ngIf="expanded">
+            <div class="store" *ngFor="let store of storesArray">
+              <ion-grid >
+                <ion-row>
+                  <ion-col col-2>
+                    <div [ngStyle]=" { 'background-color': store.color }" class="color"></div>
+                  </ion-col>
+                  <ion-col col-6>
+                    {{store.name}}
+                  </ion-col>
+                  <ion-col class="right" col-4>
+                    {{store.amount}} RON
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+          <div class="expand">
+            <ion-icon class="expand-icon" *ngIf="!expanded" (click)="showHideStoresList()" name="ios-arrow-down"></ion-icon>
+            <ion-icon class="expand-icon" *ngIf="expanded" (click)="showHideStoresList()" name="ios-arrow-up"></ion-icon>
+            <div class="legend">
+              Legend
+            </div>
+          </div>
+        </div>
+
       </ion-card-content>
     </ion-card>
 
-  </div>
+    <ion-card>
 
-   <div *ngSwitchCase="'weeks'">
+      <ion-card-header class="header">
+        By categories
+      </ion-card-header>
 
-         <ion-card>
-  <ion-card-header>
-    Today
-  </ion-card-header>
-  <ion-card-content>
-    25 RON
-  </ion-card-content>
-</ion-card>
+      <ion-card-content>
 
-     <ion-card>
-  <ion-card-header>
-    By stores
-  </ion-card-header>
-  <ion-card-content>
-    <div>Profi 15 RON</div>
-    <div>Penny 10 RON</div>
-  </ion-card-content>
-</ion-card>
+        <div class="no-bill" *ngIf="categoriesArray.length == 0">
+          You haven't selected any category for your products in this interval
+        </div>
+        <div *ngIf="categoriesArray.length">
+          <canvas #barCanvas style="height:270px; max-height:270px;"></canvas>
+          <div class="store-list" *ngIf="expandedBar">
+            <div class="store" *ngFor="let category of categoriesArray">
+              <ion-grid >
+                <ion-row>
+                  <ion-col col-2>
+                    <div [ngStyle]=" { 'background-color': category.color }" class="color"></div>
+                  </ion-col>
+                  <ion-col col-6>
+                    {{category.name}}
+                  </ion-col>
+                  <ion-col class="right" col-4>
+                    {{category.amount}} RON
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+          <div class="expand">
+            <ion-icon class="expand-icon" *ngIf="!expandedBar" (click)="showHideCategoriesList()" name="ios-arrow-down"></ion-icon>
+            <ion-icon class="expand-icon" *ngIf="expandedBar" (click)="showHideCategoriesList()" name="ios-arrow-up"></ion-icon>
+            <div class="legend">
+              Legend
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-     <ion-card>
-  <ion-card-header>
-    By categories
-  </ion-card-header>
-  <ion-card-content>
-    <div>PAINE 5 RON</div>
-    <div>alimente 15 RON</div>
-  </ion-card-content>
-</ion-card>
-
-  </div>
-
-    <div *ngSwitchCase="'months'">
-
-        <ion-card>
-  <ion-card-header>
-    Today
-  </ion-card-header>
-  <ion-card-content>
-    25 RON
-  </ion-card-content>
-</ion-card>
-
-     <ion-card>
-  <ion-card-header>
-    By stores
-  </ion-card-header>
-  <ion-card-content>
-    <div>Profi 15 RON</div>
-    <div>Penny 10 RON</div>
-  </ion-card-content>
-</ion-card>
-
-     <ion-card>
-  <ion-card-header>
-    By categories
-  </ion-card-header>
-  <ion-card-content>
-    <div>PAINE 5 RON</div>
-    <div>alimente 15 RON</div>
-  </ion-card-content>
-</ion-card>
   </div>
 </div>
 </ion-content>

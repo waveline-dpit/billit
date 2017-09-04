@@ -102,6 +102,7 @@ export class AddBillPage {
   deleteProduct(index){
     (<FormArray>this.productForm.controls['productList']).removeAt(index);
     this.bill.totalAmount -= this.products[index].totalPrice;
+    this.bill.totalAmount =  Math.round(parseFloat(this.bill.totalAmount) * 100) / 100;
     this.products.splice(index,1);
   }
 
@@ -119,6 +120,7 @@ export class AddBillPage {
   addPrice(product)
   {
     this.bill.totalAmount = parseFloat(this.bill.totalAmount);
+    this.bill.totalAmount =  Math.round(parseFloat(this.bill.totalAmount) * 100) / 100;
     product.totalPrice = parseFloat(product.totalPrice);
     product.pricePerUnit = parseFloat(product.pricePerUnit);
     product.quantity = parseFloat(product.quantity);
@@ -135,10 +137,12 @@ export class AddBillPage {
       product.totalPrice = product.pricePerUnit * product.quantity;
       product.totalPrice = Math.round(parseFloat(product.totalPrice) * 100) / 100;
       this.bill.totalAmount += product.totalPrice;
+      this.bill.totalAmount =  Math.round(parseFloat(this.bill.totalAmount) * 100) / 100;
     }
     else
     {
       this.bill.totalAmount -= parseFloat(product.totalPrice);
+      this.bill.totalAmount =  Math.round(parseFloat(this.bill.totalAmount) * 100) / 100;
       product.totalPrice = 0;
     }
   }
@@ -161,7 +165,7 @@ export class AddBillPage {
   getDateTime()
   {
     this.ISOdate = new Date();
-    this.ISOdate.setHours(this.ISOdate.getHours() + 3)
+    this.ISOdate.setHours(this.ISOdate.getHours() + Math.abs(new Date().getTimezoneOffset()) / 60)
     this.ISOdate = this.ISOdate.toISOString();
     var hour =  ((new Date()).getHours()).toString();
     var min =  ((new Date()).getMinutes()).toString();

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { AngularFireAuth } from 'angularfire2/auth';
-import firebase from 'firebase/app'
+import * as firebase from 'firebase/app';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -26,6 +26,11 @@ export class AuthService {
           }, (error)=>{
       this.isValid = 0;
     });*/
+  }
+
+  loginWithGoogle()
+  {
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 
   signupUser(newEmail, newPass)

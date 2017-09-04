@@ -16,9 +16,20 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
         Sort bills by:
       </ion-item>
       <ion-item  *ngFor="let item of items">
-        <ion-label>
-          <ion-icon style="margin-right:5px;"name="{{item.icon}}"></ion-icon>
-          {{item.name}}
+        <ion-label  class="popover-grid">
+
+          <ion-grid>
+            <ion-row>
+              <ion-col col-2>
+                <ion-icon name="{{item.icon}}"></ion-icon>
+              </ion-col>
+              <ion-col col-8>
+                {{item.name}}
+                <ion-icon style="margin-left:5px;"name="{{item.arrow}}"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
         </ion-label>
         <ion-radio [checked]="sortOpt == item.opt" (click)="setSortOption(item.opt)"></ion-radio>
       </ion-item>
@@ -29,10 +40,10 @@ export class PopoverSortPage {
 
   sortOpt;
   items = [
-   {  name: "Date (desc)", icon:"calendar", opt:"dateDesc"},
-   {  name: "Date (asc)", icon:"calendar", opt:"dateAsc"},
-   {  name: "Price (desc)", icon:"logo-usd", opt:"priceDesc"},
-   {  name: "Price (desc)", icon:"logo-usd", opt:"priceAsc"},
+   {  name: "Date", arrow:"ios-arrow-round-down", icon:"calendar", opt:"dateDesc"},
+   {  name: "Date", arrow:"ios-arrow-round-up", icon:"calendar", opt:"dateAsc"},
+   {  name: "Price", arrow:"ios-arrow-round-down", icon:"logo-usd", opt:"priceDesc"},
+   {  name: "Price", arrow:"ios-arrow-round-up", icon:"logo-usd", opt:"priceAsc"},
    {  name: "Favourites", icon:"star-outline", opt:"favourites"}
   ]
   constructor(

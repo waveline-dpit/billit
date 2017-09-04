@@ -58,14 +58,22 @@ page-bills {
     font-weight: 300;
     display: inline;
   }
-  .fav
+  .delete
   {
     ion-icon
     {
       color: white;
     }
   }
+  .favourite
+  {
+    ion-icon
+    {
+      color: black;
+    }
+  }
 }
+
 .billit_image
 {
   height: 48px;
