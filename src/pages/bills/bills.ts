@@ -196,11 +196,14 @@ export class BillsPage {
       let usedInterval = [];
       for(let i in this.billsToShow){
         let auxDate = new Date(this.billsToShow[i].dateISO);
-        let billdate = moment(auxDate.setHours(auxDate.getHours() - Math.abs((new Date(this.billsToShow[i].dateISO)).getTimezoneOffset()))).startOf('day');
+        let billdate = moment(auxDate.setHours(auxDate.getHours() - Math.abs((new Date(this.billsToShow[i].dateISO)).getTimezoneOffset()) / 60)).startOf('day');
         for(let intervalIndex in this.intervals){
-          if(this.intervals[intervalIndex].range.contains(billdate) && usedInterval[intervalIndex] == null){
-            this.intervalToShow[i] = this.intervals[intervalIndex].name;
-            usedInterval[intervalIndex] = true;
+          if(this.intervals[intervalIndex].range.contains(billdate)){
+            if(usedInterval[intervalIndex] == null){
+              this.intervalToShow[i] = this.intervals[intervalIndex].name;
+              usedInterval[intervalIndex] = true;
+            }
+            break;
           }
         }
       }
@@ -208,21 +211,27 @@ export class BillsPage {
     }
     if(this.sortOption == "dateAsc"){
       this.billsToShow = this.bills;
-      this.billsToShow.x(function(a, b){
+      this.billsToShow.sort(function(a, b){
         a = new Date(a.dateISO);
         b = new Date(b.dateISO);
         return (a - b);
       });
       this.intervalToShow = [];
-      let copyIntervals = this.intervals;
-      copyIntervals.reverse();
+      let copyIntervals = [];
+      for(let i = this.intervals.length - 1; i >= 0; i--){
+        copyIntervals.push(this.intervals[i]);
+      }
       let usedInterval = [];
       for(let i in this.billsToShow){
-        let billdate = moment(new Date(this.billsToShow[i].dateISO)).startOf('day');
+        let auxDate = new Date(this.billsToShow[i].dateISO);
+        let billdate = moment(auxDate.setHours(auxDate.getHours() - Math.abs((new Date(this.billsToShow[i].dateISO)).getTimezoneOffset()) / 60)).startOf('day');
         for(let intervalIndex in copyIntervals){
-          if(copyIntervals[intervalIndex].range.contains(billdate) && usedInterval[intervalIndex] == null){
-            this.intervalToShow[i] = copyIntervals[intervalIndex].name;
-            usedInterval[intervalIndex] = true;
+          if(copyIntervals[intervalIndex].range.contains(billdate)){
+            if(usedInterval[intervalIndex] == null){
+              this.intervalToShow[i] = this.intervals[intervalIndex].name;
+              usedInterval[intervalIndex] = true;
+            }
+            break;
           }
         }
       }

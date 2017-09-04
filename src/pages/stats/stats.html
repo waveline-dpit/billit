@@ -31,20 +31,25 @@
 <div [ngSwitch]="stats">
   <div *ngSwitchCase="'days'">
 
-    <ion-card>
+    <ion-card class="upper-card">
       <ion-grid>
         <ion-row>
-          <ion-col class="date" col-2>
+          <ion-col class="date" col-5>
+            <ion-item>Select day:</ion-item>
+          </ion-col>
+          <ion-col class="date" col-1>
             <ion-icon name="calendar" class="right"></ion-icon>
           </ion-col>
-          <ion-col col-10>
-            <ion-item>
+          <ion-col col-6>
+            <ion-item style="padding-left: 0;">
               <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="selectedDay" (ionChange)="dateHasChanged('both')"></ion-datetime>
             </ion-item>
           </ion-col>
         </ion-row>
         <ion-row>
-          25 RON
+          <ion-col class="date" col>
+            <ion-item>Total this day: {{total}} RON</ion-item>
+          </ion-col>  
         </ion-row>
       </ion-grid>
     </ion-card>
