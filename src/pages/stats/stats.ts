@@ -31,11 +31,12 @@ export class StatsPage {
   barChartData;
   barChartLabels;
   categoriesArray;
+  total;
   viewInit = false;
   expanded = false;
   expandedBar = false;
   colors = [
-    'rgba(255, 99, 132, 1)',
+    'rgba(255, 76, 76, 1)',
     'rgba(54, 162, 235, 1)',
     'rgba(255, 206, 86, 1)',
     'rgba(75, 192, 192, 1)',
@@ -44,7 +45,7 @@ export class StatsPage {
     '#ccc'
   ];
   barColors = [
-    'rgba(255, 99, 132, 0.4)',
+    'rgba(255, 76, 76, 0.4)',
     'rgba(54, 162, 235, 0.4)',
     'rgba(255, 206, 86, 0.4)',
     'rgba(75, 192, 192, 0.4)',
@@ -142,6 +143,7 @@ export class StatsPage {
     /* ================== CASES  ================== */
 
     if(this.stats == "days" || this.stats == "months"){
+      this.total = 0;
       for(let bill of this.bills){
 
         let billDate = new Date(bill.dateISO);
@@ -156,11 +158,13 @@ export class StatsPage {
           else{
             storesObj[bill.storeName] = bill.totalAmount;
           }
+          this.total += bill.totalAmount;
         }
       }
     }
 
     if(this.stats == "intervals"){
+      this.total = 0;
       for(let bill of this.bills){
 
         let billDate = new Date(bill.dateISO);
@@ -176,6 +180,7 @@ export class StatsPage {
           else{
             storesObj[bill.storeName] = bill.totalAmount;
           }
+          this.total += bill.totalAmount;
         }
       }
     }
@@ -373,7 +378,7 @@ export class StatsPage {
             label: '#',
             data: data,//[105,104,20],
             backgroundColor: [
-              'rgba(255, 99, 132, 1)',
+              'rgba(255, 76, 76, 1)',
               'rgba(54, 162, 235, 1)',
               'rgba(255, 206, 86, 1)',
               'rgba(75, 192, 192, 1)',
@@ -382,7 +387,7 @@ export class StatsPage {
               '#ccc'
             ],
             hoverBackgroundColor: [
-              "#FF6384",
+              "#FF4C4C",
               "#36A2EB",
               "#FFCE56",
               "#FF6384",
@@ -407,7 +412,7 @@ export class StatsPage {
             label: 'price',
             data: data,
             backgroundColor: [
-              'rgba(255, 99, 132, 0.3)',
+              'rgba(255, 76, 76, 0.3)',
               'rgba(54, 162, 235, 0.3)',
               'rgba(255, 206, 86, 0.3)',
               'rgba(75, 192, 192, 0.3)',
