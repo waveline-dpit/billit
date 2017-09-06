@@ -9,9 +9,9 @@
 <ion-header (click)="closeFabIfActive()">
 
 
-  <ion-navbar>
+  <ion-navbar *ngIf="!searchBarOpened">
     <ion-buttons left class="padd">
-      <button ion-button icon-only (click)="openModal()" class="share_button" >
+      <button  ion-button icon-only (click)="openSearchBar()" class="share_button" >
         <ion-icon  name="search"></ion-icon>
       </button>
     </ion-buttons>
@@ -29,6 +29,8 @@
     </ion-buttons>
 
   </ion-navbar>
+  <ion-searchbar *ngIf="searchBarOpened" showCancelButton #searchBar (ionCancel)="canceledSearch()">></ion-searchbar>
+
 </ion-header>
 
 
@@ -36,12 +38,11 @@
 
   <div *ngFor="let bill of billsToShow; let i = index">
 
+    <div class="interval" *ngIf="intervalToShow[i] != null && !searchBarOpened">
+      {{intervalToShow[i]}}
+    </div>
 
-      <div class="interval"*ngIf="intervalToShow[i] != null">
-        {{intervalToShow[i]}}
-      </div>
-
-    <ion-card >
+    <ion-card *ngIf="!searchBarOpened">
       <ion-card-content>
         <ion-list>
           <ion-item-sliding #slidingItem>

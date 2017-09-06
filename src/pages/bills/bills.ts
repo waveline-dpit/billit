@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BillPage } from "../bill/bill";
 import { LoginPage } from "../login/login";
@@ -35,6 +35,9 @@ export class BillsPage {
   scannedCode;
   sortOption = "dateDesc";
   lastSortOption = this.sortOption;
+  @ViewChild('searchBar') searchBar;
+;
+  searchBarOpened = false;
 
   intervals = [];
   intervalToShow = [];
@@ -217,10 +220,9 @@ export class BillsPage {
         return (a - b);
       });
       this.intervalToShow = [];
-      let copyIntervals = [];
-      for(let i = this.intervals.length - 1; i >= 0; i--){
-        copyIntervals.push(this.intervals[i]);
-      }
+      let copyIntervals = this.intervals;
+      copyIntervals.reverse();
+      console.log(copyIntervals, this.intervals);
       let usedInterval = [];
       for(let i in this.billsToShow){
         let auxDate = new Date(this.billsToShow[i].dateISO);
@@ -290,13 +292,13 @@ export class BillsPage {
     alert.present()
   }
   closeFab(fab: FabContainer) {
-      console.log("fab closed")
-      fab.close();
-      this.clicked_fab = false;
+    console.log("fab closed")
+    fab.close();
+    this.clicked_fab = false;
   }
   clickedFab(fab){
-    console.log("fab opened")
-    this.clicked_fab = true;
+    console.log("fab clicked")
+    this.clicked_fab = !this.clicked_fab;
     this.fabb = fab;
   }
   closeFabIfActive(){
@@ -362,5 +364,12 @@ export class BillsPage {
           this.goToBillPage(wholeBill);
       })
     });
+  }
+  openSearchBar(){
+    this.searchBarOpened = true;
+    setTimeout(()=>{this.searchBar.setFocus()},1000);
+  }
+  canceledSearch(){
+    this.searchBarOpened = false;
   }
 }
