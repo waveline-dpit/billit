@@ -9,6 +9,8 @@ import { AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import firebase from 'firebase/app';
 import {UserRegister} from '../../providers/user-register/user-register';
+import {UserInfo} from '../../providers/user-info/user-info';
+import 'rxjs/add/operator/first';
 
 /**
  * Generated class for the LoginPage page.
@@ -34,7 +36,8 @@ export class LoginPage {
     public db: AngularFireDatabase,
     public alerCtrl: AlertController,
     public authService: AuthService,
-    public userRegister: UserRegister
+    public userRegister: UserRegister,
+    public userInfo: UserInfo
   )
   {}
 
@@ -88,5 +91,17 @@ export class LoginPage {
     });
     alert.present()
   }
-  
+
+  loginWithGoogle()
+  {
+    this.authService.loginWithGoogle().then(user =>
+    {
+      this.db.object('/user/' + this.userInfo.getUserToken() + '/info').first().subscribe((data)=>
+      {
+        if(!data.firstName)
+          this.userRegister.addUserData(user.additionalUserInfo.profile.family_name, user.additionalUserInfo.profile.given_name);
+      })
+    });
+  }
+
 }
