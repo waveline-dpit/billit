@@ -1,5 +1,21 @@
 page-bills {
-
+  div.appear-search
+  {
+    //visibility: hidden;
+    animation: expand 0.3s;
+    @keyframes expand {
+      from { width: 0px; }
+      to   { width: 100%; }
+    }
+  }
+  .searchbar-input
+  {
+    animation: addPadding 0.3s;
+    @keyframes addPadding {
+      from { padding: 6px 0; }
+      to   { padding: 6px 55px; }
+    }
+  }
   ion-navbar
   {
     height: 8vh;

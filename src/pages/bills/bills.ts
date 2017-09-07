@@ -36,7 +36,9 @@ export class BillsPage {
   sortOption = "dateDesc";
   lastSortOption = this.sortOption;
   @ViewChild('searchBar') searchBar;
-;
+  savedBills;
+  searchInput;
+  searchPlaceholder;
   searchBarOpened = false;
 
   intervals = [];
@@ -367,9 +369,51 @@ export class BillsPage {
   }
   openSearchBar(){
     this.searchBarOpened = true;
-    setTimeout(()=>{this.searchBar.setFocus()},1000);
+    setTimeout(()=>{
+      this.searchBar.setFocus();
+      this.searchPlaceholder = "Search";
+    },400);
+    this.savedBills = this.billsToShow;
+    this.billsToShow = [];
+    console.log("opened search bar")
+  }
+  startedSearch(e){
+    let searchText = this.searchInput.toLowerCase();
+    this.billsToShow = [];
+    if(searchText != ""){
+      for(let bill of this.bills){
+        let billNumber = bill.number;
+        if((typeof billNumber) == "number"){
+          billNumber = billNumber.toString();
+        }
+        if(billNumber .search(new RegExp(searchText, "i")) == 0){
+          this.billsToShow.push(bill);
+        }
+        else{
+          if(bill.storeName.search(new RegExp(searchText, "i")) == 0){
+            this.billsToShow.push(bill);
+          }
+          else{
+            for(let i in bill.products){
+              if(bill.products[i].name.search(new RegExp(searchText, "i")) == 0){
+                this.billsToShow.push(bill);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  clearedSearch(){
+    if(this.searchBarOpened){
+      this.billsToShow = [];
+    }
+    console.log("cleared search")
   }
   canceledSearch(){
     this.searchBarOpened = false;
+    this.searchPlaceholder = "";
+    console.log("canceled search")
+    this.billsToShow = this.savedBills;
   }
 }
