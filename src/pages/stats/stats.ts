@@ -22,7 +22,7 @@ export class StatsPage {
   intervalStart;
   intervalEnd;
   stats;
-  storesArray;
+  storesArray = [];
   storesArrayEmpty = true;
   categoriesArrayEmpty = true;
   categories;
@@ -30,7 +30,7 @@ export class StatsPage {
   chartLabels;
   barChartData;
   barChartLabels;
-  categoriesArray;
+  categoriesArray = [];
   total;
   viewInit = false;
   expanded = false;
@@ -229,7 +229,7 @@ export class StatsPage {
         if(this.storesArrayEmpty){
           this.storesArrayEmpty = false;
           setTimeout(()=>{
-            //this.createDoughnutChart(this.chartLabels, this.chartData);
+            this.createDoughnutChart(this.chartLabels, this.chartData);
             //console.log("chart 2")
           },20);
         }
@@ -335,7 +335,7 @@ export class StatsPage {
         if(this.categoriesArrayEmpty){
           this.categoriesArrayEmpty = false;
           setTimeout(()=>{
-            //this.createBarChart(this.barChartLabels, this.barChartData);
+            this.createBarChart(this.barChartLabels, this.barChartData);
           },100);
         }
         else{
@@ -357,7 +357,6 @@ export class StatsPage {
     chart.data.datasets.forEach((dataset) => {
       dataset.data = data;
     });
-    console.log()
     chart.update();
   }
   removeData(chart) {
@@ -403,10 +402,10 @@ export class StatsPage {
             }]
           }
         });
+        setTimeout(()=>{
+          this.addData(this.doughnutChart, labels, data);
+        },100);
       }
-      setTimeout(()=>{
-        this.addData(this.doughnutChart, labels, data);
-      },100);
   }
 
   createBarChart(labels, data){

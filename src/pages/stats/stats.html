@@ -280,30 +280,31 @@
 
   <div *ngSwitchCase="'intervals'">
 
-    <ion-card>
+    <ion-card class="upper-card">
       <ion-grid class="interval">
 
         <ion-row>
-          <ion-col col-6>
-            <ion-item>
+          <ion-col col-5>
+            <ion-item class="left">
               <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="intervalStart" (ionChange)="dateHasChanged('both')"></ion-datetime>
             </ion-item>
           </ion-col>
+          <ion-col col-2 class="dash">
+            <ion-item>-</ion-item>
+          </ion-col>
           <ion-col col-5>
-            <ion-item>
+            <ion-item class="right">
               <ion-datetime class="date" displayFormat="D MMM YYYY" [(ngModel)]="intervalEnd" (ionChange)="dateHasChanged('both')"></ion-datetime>
             </ion-item>
           </ion-col>
         </ion-row>
 
         <ion-row>
-          <ion-col class="date">
-            <ion-col class="date" col-7>
-              <ion-item>Total this month:</ion-item>
-            </ion-col>
-            <ion-col class="date" col-5>
-              <ion-item> {{total}} RON</ion-item>
-            </ion-col>
+          <ion-col class="date" col-7>
+            <ion-item>Total this interval:</ion-item>
+          </ion-col>
+          <ion-col class="date" col-5>
+            <ion-item> {{total}} RON</ion-item>
           </ion-col>
         </ion-row>
 

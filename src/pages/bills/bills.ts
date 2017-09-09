@@ -372,12 +372,13 @@ export class BillsPage {
     setTimeout(()=>{
       this.searchBar.setFocus();
       this.searchPlaceholder = "Search";
-    },400);
+    },100);
     this.savedBills = this.billsToShow;
     this.billsToShow = [];
     console.log("opened search bar")
   }
   startedSearch(e){
+
     let searchText = this.searchInput.toLowerCase();
     this.billsToShow = [];
     if(searchText != ""){
@@ -410,10 +411,24 @@ export class BillsPage {
     }
     console.log("cleared search")
   }
+  onBlurSearch(){
+    setTimeout(()=>{
+      if(this.searchBarOpened){
+        this.searchBar.setFocus();
+      }
+    },1500);
+  }
   canceledSearch(){
-    this.searchBarOpened = false;
+    let searchBar = document.getElementById("searchBarID");
+    searchBar.classList.remove("appear-search");
+    searchBar.classList.add("disappear-search");
     this.searchPlaceholder = "";
-    console.log("canceled search")
-    this.billsToShow = this.savedBills;
+    setTimeout(()=>{
+      searchBar.classList.remove("disappear-search");
+      searchBar.classList.add("appear-search");
+      this.searchBarOpened = false;
+      console.log("canceled search")
+      this.billsToShow = this.savedBills;
+    },290);
   }
 }

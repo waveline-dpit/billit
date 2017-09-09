@@ -91,4 +91,36 @@ page-stats {
       padding-right: 0;
     }
   }
+  .interval
+  {
+    .left
+    {
+      padding-left: 32px;
+      .item-inner
+      {
+        padding: 0;
+      }
+    }
+    .right
+    {
+      padding-left: 0;
+    }
+    .datetime,button
+    {
+      padding: 0;
+    }
+  }
+  .dash
+  {
+    .label
+    {
+      text-align: center;
+      margin: 0;
+      font-size: 20px;
+    }
+    .item,.item-inner
+    {
+      padding: 0;
+    }
+  }
 }
