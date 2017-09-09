@@ -79,22 +79,20 @@ export class BillsPage {
     this.navCtrl.push(BillPage);
   }
 
-  goToLoginPage()
-  {
-    console.log(this.authService.logOut());
-  }
   goToAddBillPage()
   {
     console.log("addbill")
     this.navCtrl.push(AddBillPage);
     this.closeFab(this.fabb);
   }
+
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(PopoverPage);
     popover.present({
       ev: myEvent
     });
   }
+
   presentPopoverSort(myEvent) {
     let popover = this.popoverCtrl.create(PopoverSortPage, { sortOption: this.sortOption});
     popover.present({
@@ -264,14 +262,17 @@ export class BillsPage {
     setTimeout(() => {slidingItem.close()}, 300);
     setTimeout(() => {this.billDatabase.addBillToFav(bill.$key);}, 1000);
   }
+
   removeFromFavourite(bill, slidingItem){
     bill.favourite = false;
     setTimeout(() => {slidingItem.close()}, 300);
     setTimeout(() => {this.billDatabase.removeBillFromFav(bill.$key);}, 1000);
   }
+
   closeSlideIfOpen(slidingItem){
     setTimeout(() => {slidingItem.close()}, 2000);
   }
+
   showAlert(billId){
     let alert = this.alerCtrl.create({
       title: 'Warning',
@@ -293,16 +294,21 @@ export class BillsPage {
     });
     alert.present()
   }
+
+  /* ============================================= FAB AND SCAN ============================================= */
+
   closeFab(fab: FabContainer) {
     console.log("fab closed")
     fab.close();
     this.clicked_fab = false;
   }
+
   clickedFab(fab){
     console.log("fab clicked")
     this.clicked_fab = !this.clicked_fab;
     this.fabb = fab;
   }
+
   closeFabIfActive(){
     if(this.clicked_fab)
     {
@@ -314,9 +320,11 @@ export class BillsPage {
       },300);
     }
   }
+
   createCode(){
     this.createdCode = this.qrData;
   }
+
   scanCode(){
     this.barcodeScanner.scan().then(barcodeData =>{
       this.scannedCode = barcodeData.text;
@@ -350,6 +358,7 @@ export class BillsPage {
     });
     setTimeout(()=>{this.closeFab(this.fabb);},500);
   }
+
   addBillFromScan(bill, products){
     let path = '/user/' + this.userInfo.getUserToken() + '/bills';
     let user : FirebaseListObservable <any>;
@@ -367,6 +376,9 @@ export class BillsPage {
       })
     });
   }
+
+  /* ============================================= SEARCH ============================================= */
+
   openSearchBar(){
     this.searchBarOpened = true;
     setTimeout(()=>{
@@ -377,6 +389,7 @@ export class BillsPage {
     this.billsToShow = [];
     console.log("opened search bar")
   }
+
   startedSearch(e){
 
     let searchText = this.searchInput.toLowerCase();
@@ -405,12 +418,14 @@ export class BillsPage {
       }
     }
   }
+
   clearedSearch(){
     if(this.searchBarOpened){
       this.billsToShow = [];
     }
     console.log("cleared search")
   }
+
   onBlurSearch(){
     setTimeout(()=>{
       if(this.searchBarOpened){
@@ -418,6 +433,7 @@ export class BillsPage {
       }
     },1500);
   }
+
   canceledSearch(){
     let searchBar = document.getElementById("searchBarID");
     searchBar.classList.remove("appear-search");

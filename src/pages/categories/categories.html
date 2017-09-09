@@ -20,13 +20,15 @@
 </ion-header>
 
 
-<ion-content padding class="backgroundIMG">
+<ion-content>
 
-      <div *ngFor="let category of categoriesToShow; let i = index">
+      <ion-list class="container">
+        <div *ngFor="let category of categoriesToShow; let i = index">
+          <ion-item>
 
-        <ion-card  class="category-card animate-fade-in animate-fade-out">
-            <ion-card-content class="text">
-            <ion-list>
+        <!--<ion-card  class="category-card animate-fade-in animate-fade-out">
+          <ion-card-content class="text">-->
+            <ion-list class="category-header">
               <ion-item-sliding #slidingItem class="category-title">
 
                 <ion-item class="itemlist" (touchend)="closeSlideIfOpen(slidingItem)" (click)="expandCategory(i)" >
@@ -44,44 +46,55 @@
                     Delete
                   </button>
                 </ion-item-options>
+                <ion-item-options side="right">
+                  <button (click)="sortPopover($event, i)" ion-button color="light">
+                    <ion-icon name="funnel"></ion-icon>
+                    Sort
+                  </button>
+                </ion-item-options>
               </ion-item-sliding>
             </ion-list>
 
 
             <div *ngIf="expanded[i]">
+              <div class="no-products" *ngIf="category.products.length == 0">
+                You don't have any products in this category.
+              </div>
               <div  *ngFor="let product of category.products; let j = index" class="product-list">
 
-                  <ion-list>
-                    <ion-item-sliding #slidingItem2>
-                        <ion-item class="itemlist" (touchend)="closeSlideIfOpen2(slidingItem2)">
+                <ion-list>
+                  <ion-item-sliding #slidingItem2>
+                      <ion-item class="itemlist" (touchend)="closeSlideIfOpen2(slidingItem2)">
 
-                          <div class="inline left">
-                            {{product.name}}
-                          </div>
-                          <div class="inline right">
-                            {{product.pricePerUnit}} RON
-                          </div>
+                        <div class="inline left">
+                          {{product.name}}
+                        </div>
+                        <div class="inline right">
+                          {{product.pricePerUnit}} RON
+                        </div>
 
-                        </ion-item>
-                        <ion-item-options side="right">
-                          <button ion-button color="light" (click)="showCategories(product, product.productID, product.billID)">
-                            <ion-icon name="attach"></ion-icon>
-                            Categories
-                          </button>
-                          <button class="new-button" ion-button color="dark-grey" (click)="goToBillPage(product.billID)">
-                            <ion-icon name="paper"></ion-icon>
-                            Bill
-                          </button>
-                        </ion-item-options>
-                    </ion-item-sliding>
-                  </ion-list>
+                      </ion-item>
+                      <ion-item-options side="right">
+                        <button ion-button color="light" (click)="showCategories(product, product.productID, product.billID)">
+                          <ion-icon name="attach"></ion-icon>
+                          Categories
+                        </button>
+                        <button class="new-button" ion-button color="dark-grey" (click)="goToBillPage(product.billID)">
+                          <ion-icon name="paper"></ion-icon>
+                          Bill
+                        </button>
+                      </ion-item-options>
+                  </ion-item-sliding>
+                </ion-list>
 
               </div> <!-- ngFor -->
             </div> <!-- ngIf -->
 
 
-          </ion-card-content>
-        </ion-card>
+        <!--  </ion-card-content>
+        </ion-card>-->
+        </ion-item>
       </div>
+    </ion-list>
 
 </ion-content>
