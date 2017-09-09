@@ -5,7 +5,6 @@ import { AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { NumberValidator } from  '../../validators/number';
 import { NotEmptyValidator } from  '../../validators/notEmpty';
-import {CategoriesService} from '../../providers/categories-service/categories-service';
 
 
 /**
@@ -27,7 +26,6 @@ export class AddBillPage {
   fcbillid; fcstorename;
   fcprodname; fcprice; fcqty;
   productAlert;
-  categories;
   submitAttempt: boolean = false;
   billIdForm: FormGroup;
   productForm: FormGroup;
@@ -37,8 +35,7 @@ export class AddBillPage {
     public navParams: NavParams,
     public alerCtrl: AlertController,
     public formBuilder: FormBuilder,
-    public billDatabase: BillDatabase,
-    public categoriesService: CategoriesService
+    public billDatabase: BillDatabase
   ) {
 
     this.billIdForm = formBuilder.group({
@@ -50,10 +47,7 @@ export class AddBillPage {
           this.initProduct(),
         ])
     });
-    categoriesService.getCategories().subscribe((data)=>
-    {
-      this.categories = data;
-    });
+
 
     this.getDateTime();
 
@@ -223,6 +217,7 @@ export class AddBillPage {
     });
     alert.present()
   }
+
   showDeleteAlert(index){
     if(this.products.length > 1){
       let alert = this.alerCtrl.create({
@@ -243,59 +238,6 @@ export class AddBillPage {
       });
       alert.present()
     }
-  }
-
-  showCategories(product, id) {
-    this.productAlert = this.alerCtrl.create();
-    this.productAlert.setTitle('Select categories');
-
-    for(let category of this.categories)
-    {
-
-      this.productAlert.addInput({
-        type: 'checkbox',
-        label: category.name,
-        value: category.$key,
-      });
-
-    }
-    this.productAlert.addButton('Cancel');
-    this.productAlert.addButton({
-      text: 'Okay',
-      handler: data => {
-        console.log('Checkbox data:', data);
-        for(let cat of data)
-        {
-          this.categoriesService.addProductToCategory(product, cat, id, id);
-        }
-      }
-    });
-    this.productAlert.present();
-  }
-
-  addCategory() {
-    let prompt = this.alerCtrl.create({
-      title: 'New category',
-      message: "Add a new category for your products",
-      inputs: [
-        {
-          name: 'title',
-          placeholder: 'ex: vegetables'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-        },
-        {
-          text: 'Save',
-          handler: data => {
-            this.categoriesService.addCategory(data.title);
-          }
-        }
-      ]
-    });
-    prompt.present();
   }
 
 }
