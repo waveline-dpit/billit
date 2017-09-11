@@ -10,25 +10,30 @@
 
 
   <ion-navbar>
-    <ion-buttons left class="padd">
-      <button ion-button icon-only (click)="openModal()" class="share_button" >
+    <ion-buttons left class="padd" *ngIf="!searchBarOpened">
+      <button  ion-button icon-only (click)="openSearchBar()" class="share_button" >
         <ion-icon  name="search"></ion-icon>
       </button>
     </ion-buttons>
-    <img src="assets/Images/logo.png" class="billit_image">
+    <img src="assets/Images/logo.png" class="billit_image" *ngIf="!searchBarOpened">
 
-    <ion-buttons right class="padd">
+    <ion-buttons right class="padd" *ngIf="!searchBarOpened">
       <button ion-button icon-only (click)="presentPopoverSort($event)">
         <ion-icon ios="ios-funnel-outline" name="funnel"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-buttons right class="padd" right *ngIf="platform.is('ios')">
+    <ion-buttons right class="padd" right *ngIf="platform.is('ios') && !searchBarOpened">
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
+    <div  *ngIf="searchBarOpened" class="appear-search" id="searchBarID">
+      <ion-searchbar placeholder="{{searchPlaceholder}}" showCancelButton #searchBar [(ngModel)]="searchInput" (ionInput)="startedSearch($event)" (ionBlur)="onBlurSearch()" (ionClear)="clearedSearch()" (ionCancel)="canceledSearch()">></ion-searchbar>
+    </div>
 
   </ion-navbar>
+
+
 </ion-header>
 
 
@@ -36,12 +41,11 @@
 
   <div *ngFor="let bill of billsToShow; let i = index">
 
+    <div class="interval" *ngIf="intervalToShow[i] != null && !searchBarOpened">
+      {{intervalToShow[i]}}
+    </div>
 
-      <div class="interval"*ngIf="intervalToShow[i] != null">
-        {{intervalToShow[i]}}
-      </div>
-
-    <ion-card >
+    <ion-card>
       <ion-card-content>
         <ion-list>
           <ion-item-sliding #slidingItem>

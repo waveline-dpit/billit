@@ -68,6 +68,13 @@ page-stats {
     height: 10px;
     margin: 5px 0;
   }
+  .month
+  {
+    .label
+    {
+      margin-right: 0;
+    }
+  }
   .date
   {
     display: flex;
@@ -79,5 +86,50 @@ page-stats {
     {
       padding: 0;
     }
+    .grid
+    {
+      padding-right: 0;
+    }
   }
+  .interval
+  {
+    .left
+    {
+      padding-left: 32px;
+      .item-inner
+      {
+        padding: 0;
+      }
+    }
+    .right
+    {
+      padding-left: 0;
+    }
+    .datetime,button
+    {
+      padding: 0;
+    }
+  }
+  .dash
+  {
+    .label
+    {
+      text-align: center;
+      margin: 0;
+      font-size: 20px;
+    }
+    .item,.item-inner
+    {
+      padding: 0;
+    }
+  }
+}
+.toolbar-ios
+{
+  min-height: 53px;
+  margin-bottom: 10px;
+}
+.segment-ios
+{
+  margin-top: 10px; 
 }

@@ -22,7 +22,7 @@ export class StatsPage {
   intervalStart;
   intervalEnd;
   stats;
-  storesArray;
+  storesArray = [];
   storesArrayEmpty = true;
   categoriesArrayEmpty = true;
   categories;
@@ -30,7 +30,7 @@ export class StatsPage {
   chartLabels;
   barChartData;
   barChartLabels;
-  categoriesArray;
+  categoriesArray = [];
   total;
   viewInit = false;
   expanded = false;
@@ -95,7 +95,7 @@ export class StatsPage {
   ngAfterViewInit() {
     //console.log("donu",this.doughnutCanvas)
     this.viewInit = true;
-    this.createDoughnutChart(this.chartLabels, this.chartData);
+    this.createDoughnutChart(this.chartLabels, this.chartData);console.log("chart 1");
     this.createBarChart(this.barChartLabels, this.barChartData);
   }
 
@@ -159,6 +159,7 @@ export class StatsPage {
             storesObj[bill.storeName] = bill.totalAmount;
           }
           this.total += bill.totalAmount;
+          this.total = Math.round(this.total * 100) / 100;
         }
       }
     }
@@ -181,6 +182,8 @@ export class StatsPage {
             storesObj[bill.storeName] = bill.totalAmount;
           }
           this.total += bill.totalAmount;
+          this.total = Math.round(this.total * 100) / 100;
+
         }
       }
     }
@@ -227,7 +230,8 @@ export class StatsPage {
           this.storesArrayEmpty = false;
           setTimeout(()=>{
             this.createDoughnutChart(this.chartLabels, this.chartData);
-          },100);
+            //console.log("chart 2")
+          },20);
         }
         else{
           this.removeData(this.doughnutChart);
@@ -353,7 +357,6 @@ export class StatsPage {
     chart.data.datasets.forEach((dataset) => {
       dataset.data = data;
     });
-    console.log()
     chart.update();
   }
   removeData(chart) {
@@ -365,40 +368,44 @@ export class StatsPage {
   }
 
   createDoughnutChart(labels, data){
+    console.log(labels, data);
     this.doughnutChart = null;
     console.log("chart created")
 
-    if(this.storesArray.length){
-      Chart.defaults.global.legend.display = false;
-      this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
-        type: 'doughnut',
-        data: {
-          labels: labels, //["Red", "Blue", "Yellow", "Green", "Purple", "Orange", "Grey"],
-          datasets: [{
-            label: '#',
-            data: data,//[105,104,20],
-            backgroundColor: [
-              'rgba(255, 76, 76, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-              '#ccc'
-            ],
-            hoverBackgroundColor: [
-              "#FF4C4C",
-              "#36A2EB",
-              "#FFCE56",
-              "#FF6384",
-              "#36A2EB",
-              "#FFCE56",
-              "#ccc"
-            ]
-          }]
-        }
-      });
-    }
+      if(this.storesArray.length){
+        Chart.defaults.global.legend.display = false;
+        this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
+          type: 'doughnut',
+          data: {
+            labels: [],
+            datasets: [{
+              label: '#',
+              data: [],
+              backgroundColor: [
+                'rgba(255, 76, 76, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                '#ccc'
+              ],
+              hoverBackgroundColor: [
+                "#FF4C4C",
+                "#36A2EB",
+                "#FFCE56",
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56",
+                "#ccc"
+              ]
+            }]
+          }
+        });
+        setTimeout(()=>{
+          this.addData(this.doughnutChart, labels, data);
+        },100);
+      }
   }
 
   createBarChart(labels, data){
@@ -455,6 +462,7 @@ export class StatsPage {
         }
       });
     }
+
   }
 
   showHideStoresList(){
@@ -467,10 +475,10 @@ export class StatsPage {
 
   changeStatsValue(_case){
     setTimeout(()=>{
-      this.createDoughnutChart(this.chartLabels, this.chartData);
+      this.createDoughnutChart(this.chartLabels, this.chartData);console.log("chart 3")
       this.createBarChart(this.barChartLabels, this.barChartData);
       //setTimeout(()=>{console.log("!!!!!!!!!!!!!", _case,this.doughnutChart, this.doughnutCanvas);},1000);
-    },200);
+    },20);
     this.dateHasChanged("both");
     console.log(this.stats);
   }

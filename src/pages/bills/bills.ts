@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BillPage } from "../bill/bill";
 import { LoginPage } from "../login/login";
@@ -35,6 +35,11 @@ export class BillsPage {
   scannedCode;
   sortOption = "dateDesc";
   lastSortOption = this.sortOption;
+  @ViewChild('searchBar') searchBar;
+  savedBills;
+  searchInput;
+  searchPlaceholder;
+  searchBarOpened = false;
 
   intervals = [];
   intervalToShow = [];
@@ -75,22 +80,20 @@ export class BillsPage {
     this.navCtrl.push(BillPage);
   }
 
-  goToLoginPage()
-  {
-    console.log(this.authService.logOut());
-  }
   goToAddBillPage()
   {
     console.log("addbill")
     this.navCtrl.push(AddBillPage);
     this.closeFab(this.fabb);
   }
+
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(PopoverPage);
     popover.present({
       ev: myEvent
     });
   }
+
   presentPopoverSort(myEvent) {
     let popover = this.popoverCtrl.create(PopoverSortPage, { sortOption: this.sortOption});
     popover.present({
@@ -218,10 +221,9 @@ export class BillsPage {
         return (a - b);
       });
       this.intervalToShow = [];
-      let copyIntervals = [];
-      for(let i = this.intervals.length - 1; i >= 0; i--){
-        copyIntervals.push(this.intervals[i]);
-      }
+      let copyIntervals = this.intervals;
+      copyIntervals.reverse();
+      console.log(copyIntervals, this.intervals);
       let usedInterval = [];
       for(let i in this.billsToShow){
         let auxDate = new Date(this.billsToShow[i].dateISO);
@@ -261,14 +263,17 @@ export class BillsPage {
     setTimeout(() => {slidingItem.close()}, 300);
     setTimeout(() => {this.billDatabase.addBillToFav(bill.$key);}, 1000);
   }
+
   removeFromFavourite(bill, slidingItem){
     bill.favourite = false;
     setTimeout(() => {slidingItem.close()}, 300);
     setTimeout(() => {this.billDatabase.removeBillFromFav(bill.$key);}, 1000);
   }
+
   closeSlideIfOpen(slidingItem){
     setTimeout(() => {slidingItem.close()}, 2000);
   }
+
   showAlert(billId){
     let alert = this.alerCtrl.create({
       title: 'Warning',
@@ -290,16 +295,21 @@ export class BillsPage {
     });
     alert.present()
   }
+
+  /* ============================================= FAB AND SCAN ============================================= */
+
   closeFab(fab: FabContainer) {
-      console.log("fab closed")
-      fab.close();
-      this.clicked_fab = false;
+    console.log("fab closed")
+    fab.close();
+    this.clicked_fab = false;
   }
+
   clickedFab(fab){
-    console.log("fab opened")
-    this.clicked_fab = true;
+    console.log("fab clicked")
+    this.clicked_fab = !this.clicked_fab;
     this.fabb = fab;
   }
+
   closeFabIfActive(){
     if(this.clicked_fab)
     {
@@ -311,9 +321,11 @@ export class BillsPage {
       },300);
     }
   }
+
   createCode(){
     this.createdCode = this.qrData;
   }
+
   scanCode(){
     this.barcodeScanner.scan().then(barcodeData =>{
       this.scannedCode = barcodeData.text;
@@ -347,6 +359,7 @@ export class BillsPage {
     });
     setTimeout(()=>{this.closeFab(this.fabb);},500);
   }
+
   addBillFromScan(bill, products){
     let path = '/user/' + this.userInfo.getUserToken() + '/bills';
     let user : FirebaseListObservable <any>;
@@ -365,8 +378,74 @@ export class BillsPage {
     });
   }
 
-  searchBills()
-  {
+  /* ============================================= SEARCH ============================================= */
 
+  openSearchBar(){
+    this.searchBarOpened = true;
+    setTimeout(()=>{
+      this.searchBar.setFocus();
+      this.searchPlaceholder = "Search";
+    },100);
+    this.savedBills = this.billsToShow;
+    this.billsToShow = [];
+    console.log("opened search bar")
+  }
+
+  startedSearch(e){
+
+    let searchText = this.searchInput.toLowerCase();
+    this.billsToShow = [];
+    if(searchText != ""){
+      for(let bill of this.bills){
+        let billNumber = bill.number;
+        if((typeof billNumber) == "number"){
+          billNumber = billNumber.toString();
+        }
+        if(billNumber .search(new RegExp(searchText, "i")) == 0){
+          this.billsToShow.push(bill);
+        }
+        else{
+          if(bill.storeName.search(new RegExp(searchText, "i")) == 0){
+            this.billsToShow.push(bill);
+          }
+          else{
+            for(let i in bill.products){
+              if(bill.products[i].name.search(new RegExp(searchText, "i")) == 0){
+                this.billsToShow.push(bill);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  clearedSearch(){
+    if(this.searchBarOpened){
+      this.billsToShow = [];
+    }
+    console.log("cleared search")
+  }
+
+  onBlurSearch(){
+    setTimeout(()=>{
+      if(this.searchBarOpened){
+        this.searchBar.setFocus();
+      }
+    },1500);
+  }
+
+  canceledSearch(){
+    let searchBar = document.getElementById("searchBarID");
+    searchBar.classList.remove("appear-search");
+    searchBar.classList.add("disappear-search");
+    this.searchPlaceholder = "";
+    setTimeout(()=>{
+      searchBar.classList.remove("disappear-search");
+      searchBar.classList.add("appear-search");
+      this.searchBarOpened = false;
+      console.log("canceled search")
+      this.billsToShow = this.savedBills;
+    },290);
   }
 }

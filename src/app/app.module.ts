@@ -31,6 +31,7 @@ import { AddBillPage } from "../pages/add-bill/add-bill";
 import { PopoverPage } from "../pages/popover/popover";
 import { PopoverBillPage } from "../pages/popover-bill/popover-bill";
 import { PopoverSortPage } from "../pages/popover-sort/popover-sort";
+import { PopoverCategoriesPage } from "../pages/popover-categories/popover-categories";
 import { AboutPage } from "../pages/about/about";
 import { UserInfo } from '../providers/user-info/user-info';
 import { UserRegister } from '../providers/user-register/user-register';
@@ -73,7 +74,8 @@ export const firebaseConfig = {
     AboutPage,
     EditBillPage,
     CategoriesPage,
-    ShareModalPage
+    ShareModalPage,
+    PopoverCategoriesPage
   ],
   imports: [
     BrowserModule,
@@ -106,7 +108,8 @@ export const firebaseConfig = {
     AboutPage,
     EditBillPage,
     CategoriesPage,
-    ShareModalPage
+    ShareModalPage,
+    PopoverCategoriesPage
   ],
   providers: [
     StatusBar,

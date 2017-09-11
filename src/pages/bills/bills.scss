@@ -1,5 +1,38 @@
 page-bills {
-
+  div.appear-search
+  {
+    //visibility: hidden;
+    animation: expand 0.3s;
+    @keyframes expand {
+      from { width: 0px; }
+      to   { width: 100%; }
+    }
+    .searchbar-input
+    {
+      animation: addPadding 0.3s;
+      @keyframes addPadding {
+        from { padding: 6px 0; }
+        to   { padding: 6px 55px; }
+      }
+    }
+  }
+  .disappear-search
+  {
+    //visibility: hidden;
+    animation: contract 0.3s;
+    @keyframes contract {
+      from { width: 100%; }
+      to   { width: 0px; }
+    }
+    .searchbar-input
+    {
+      animation: removePadding 0.3s;
+      @keyframes removePadding {
+        from { padding: 6px 55px; }
+        to   { padding: 6px 0; }
+      }
+    }
+  }
   ion-navbar
   {
     height: 8vh;

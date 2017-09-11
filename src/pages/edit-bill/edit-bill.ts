@@ -1,16 +1,18 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { BillDatabase} from '../../providers/bill-database/bill-database';
+import { BillDatabase } from '../../providers/bill-database/bill-database';
 import { AlertController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NumberValidator } from  '../../validators/number';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { NumberValidator } from '../../validators/number';
+import { NotEmptyValidator } from '../../validators/notEmpty';
+
 
 /**
- * Generated class for the EditBillpage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+* Generated class for the AddBillPage page.
+*
+* See http://ionicframework.com/docs/components/#navigation for more info
+* on Ionic pages and navigation.
+*/
 @IonicPage()
 @Component({
   selector: 'page-edit-bill',
@@ -18,147 +20,130 @@ import { NumberValidator } from  '../../validators/number';
 })
 export class EditBillPage {
   bill;
-  products;
-  currentDate;
+  products = [];
+  ISOdate;
   currentTime;
   fcbillid; fcstorename;
   fcprodname; fcprice; fcqty;
+  productAlert;
   submitAttempt: boolean = false;
   billIdForm: FormGroup;
   productForm: FormGroup;
+  receivedBill;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alerCtrl: AlertController,
     public formBuilder: FormBuilder,
-    public billDatabase: BillDatabase
+    public billDatabase: BillDatabase,
   ) {
-    this.bill = this.navParams.get('billParam');
-    console.log(this.bill)
-
-    // ======== Mai este de modificat. that about this.products ========
+    this.receivedBill = navParams.get('billParam');
+    console.log(this.receivedBill.$key, this.receivedBill);
 
     this.billIdForm = formBuilder.group({
-        fcstorename: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-        fcbillid: ['', Validators.compose([Validators.maxLength(14), Validators.required])],
+      fcstorename: ['', Validators.compose([Validators.maxLength(20), Validators.required, NotEmptyValidator.isValid])],
+      fcbillid: ['', Validators.compose([Validators.maxLength(14), Validators.required, NotEmptyValidator.isValid])],
     });
     this.productForm = formBuilder.group({
-        fcprodname: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-        fcqty: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
-        fcprice: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
-
+      productList: this.formBuilder.array([
+        this.initProduct(),
+      ])
     });
     this.getDateTime();
+
+    this.bill = {
+      date: this.receivedBill.dateISO,
+      dateISO: this.receivedBill.dateISO,
+      time: this.receivedBill.time,
+      favourite: this.receivedBill.favourite,
+      number: this.receivedBill.number,
+      totalAmount: this.receivedBill.totalAmount,
+      storeName: this.receivedBill.storeName
+    }
+    for (let prodID in this.receivedBill.products) {
+      let product = this.receivedBill.products[prodID];
+      console.log(product);
+      let obj = {
+        name: product.name,
+        quantity: product.quantity,
+        pricePerUnit: product.pricePerUnit,
+        totalPrice: product.totalPrice
+      }
+      this.products.push(obj);
+      const control = <FormArray>this.productForm.controls['productList'];
+      control.push(this.initProduct());
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditBillPage');
-    console.log(this.bill);
+  }
+
+
+  initProduct() {
+    return this.formBuilder.group({
+      fcprodname: ['', Validators.compose([Validators.maxLength(20), Validators.required, NotEmptyValidator.isValid])],
+      fcqty: ['', Validators.compose([NumberValidator.isValid, Validators.required, NotEmptyValidator.isValid])],
+      fcprice: ['', Validators.compose([NumberValidator.isValid, Validators.required, NotEmptyValidator.isValid])],
+    });
   }
 
   addProduct() {
     this.products.push({
-        name: "",
-        quantity: "",
-        pricePerUnit: "",
-        totalPrice: ""
+      name: "",
+      quantity: "",
+      pricePerUnit: "",
+      totalPrice: 0
     });
-    this.validate();
+    const control = <FormArray>this.productForm.controls['productList'];
+    control.push(this.initProduct());
   }
   deleteProduct(index) {
-    console.log(index);
-    this.products.splice(index,1);
+    (<FormArray>this.productForm.controls['productList']).removeAt(index);
+    this.bill.totalAmount -= this.products[index].totalPrice;
+    this.bill.totalAmount = Math.round(parseFloat(this.bill.totalAmount) * 100) / 100;
+    this.products.splice(index, 1);
   }
 
-  fieldsNotCompleted() {
-    let alert = this.alerCtrl.create({
-      title: 'Error',
-      message: 'You must complete all the fields properly in order to submit',
-      buttons: ['Ok']
-    });
-    alert.present()
+  closeSlideIfOpen(slidingItem) {
+    setTimeout(() => { slidingItem.close() }, 2000);
   }
 
-  validate(){
-    this.billIdForm = this.formBuilder.group({
-        fcstorename: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-        fcbillid: ['', Validators.compose([Validators.maxLength(14), Validators.required])],
-    });
-    this.productForm = this.formBuilder.group({
-        fcprodname: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-        fcqty: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
-        fcprice: ['', Validators.compose([NumberValidator.isValid, Validators.required])],
-
-    });
-  }
-
-  /*submit() {
-    this.submitAttempt = true;
-    var canSubmit = true;
-    for (var key in this.bill) {
-      if(this.bill[key] === null || this.bill[key] === ""){
-        canSubmit = false;
-        console.log("eh",key, this.bill[key])
-      }
-      //console.log(key,this.bill[key])
-    }
-    for (var idx in this.products) {
-      //console.log(this.products[idx]);
-      var product = this.products[idx];
-      for(var key in product){
-        if(product[key] === null || product[key] === ""){
-          canSubmit = false;
-          console.log(product[key])
-        }
-      }
-    }
-    //console.log(canSubmit, this.bill, this.products);
-    let ok = (
-      this.billIdForm.controls.fcstorename.valid &&
-      this.billIdForm.controls.fcbillid.valid &&
-      this.productForm.controls.fcstorename.valid &&
-      this.productForm.controls.fcqty.valid &&
-      this.productForm.controls.fcprice.valid
-    );
-    //console.log(ok);
-    if(canSubmit && ok)
-    {
-      this.bill.date = this.formatDate(this.bill.date);
-      this.navCtrl.pop();
-      this.billDatabase.addBill(this.bill, this.products);
-    }
-    else
-    {
-      this.fieldsNotCompleted();
-    }
-  }*/
-  isNumber(val)
-  {
-    if(val>-99999999999 && val<99999999999)
+  isNumber(val) {
+    if (val > -99999999999 && val < 99999999999)
       return true;
     return false;
   }
-  addPrice(product)
-  {
-    if(product.pricePerUnit && product.quantity )
-    {
-      if(this.isNumber(product.pricePerUnit), this.isNumber(product.quantity))
-      {
-        this.bill.totalAmount -= product.totalPrice;
-        product.totalPrice = product.pricePerUnit * product.quantity;
-        this.bill.totalAmount += product.totalPrice;
-      }
-    }
-    else
-    {
+
+  addPrice(product) {
+    this.bill.totalAmount = parseFloat(this.bill.totalAmount);
+    this.bill.totalAmount = Math.round(parseFloat(this.bill.totalAmount) * 100) / 100;
+    product.totalPrice = parseFloat(product.totalPrice);
+    product.pricePerUnit = parseFloat(product.pricePerUnit);
+    product.quantity = parseFloat(product.quantity);
+    /*console.log(
+      typeof this.bill.totalAmount ,
+      typeof product.totalPrice,
+      typeof product.pricePerUnit,
+      typeof product.quantity
+    );*/
+
+    if (product.pricePerUnit && product.quantity) {
       this.bill.totalAmount -= product.totalPrice;
+      product.totalPrice = product.pricePerUnit * product.quantity;
+      product.totalPrice = Math.round(parseFloat(product.totalPrice) * 100) / 100;
+      this.bill.totalAmount += product.totalPrice;
+      this.bill.totalAmount = Math.round(parseFloat(this.bill.totalAmount) * 100) / 100;
+    }
+    else {
+      this.bill.totalAmount -= parseFloat(product.totalPrice);
+      this.bill.totalAmount = Math.round(parseFloat(this.bill.totalAmount) * 100) / 100;
       product.totalPrice = 0;
     }
   }
 
-  formatDate(date)
-  {
+  formatDate(date) {
     var monthNames = [
       "Jan", "Feb", "Mar",
       "Apr", "May", "Jun", "Jul",
@@ -169,21 +154,96 @@ export class EditBillPage {
     var monthIndex = Number(date.substring(5, 7));
     var year = date.substring(0, 4);
 
-    return  day + ' ' + monthNames[monthIndex - 1] + ' ' + year;
+    return day + ' ' + monthNames[monthIndex - 1] + ' ' + year;
   }
-  getDateTime()
-  {
-    this.currentDate = (new Date()).toISOString();
-    var hour =  ((new Date()).getHours()).toString();
-    var min =  ((new Date()).getMinutes()).toString();
-    if(parseInt(min) < (10)){
+
+  getDateTime() {
+    this.ISOdate = new Date();
+    this.ISOdate.setHours(this.ISOdate.getHours() + Math.abs(new Date().getTimezoneOffset()) / 60)
+    this.ISOdate = this.ISOdate.toISOString();
+    var hour = ((new Date()).getHours()).toString();
+    var min = ((new Date()).getMinutes()).toString();
+    if (parseInt(min) < (10)) {
       min = '0' + min;
     }
-    if(parseInt(hour) < (10)){
+    if (parseInt(hour) < (10)) {
       hour = '0' + hour;
     }
     this.currentTime = hour + ":" + min;
-    console.log(this.currentTime);
+  }
+
+  save() {
+
+    /* pt tine Raule */
+
+  }
+
+  /*submit() {
+   this.submitAttempt = true;
+   var canSubmit = true;
+   //console.log(this.bill, this.products);
+   for (var key in this.bill) {
+     if(this.bill[key] === null || this.bill[key] === ""){
+       canSubmit = false;
+     }
+   }
+   for (var idx in this.products) {
+     var product = this.products[idx];
+     for(var key in product){
+       if(product[key] === null || product[key] === ""){
+         canSubmit = false;
+       }
+     }
+   }
+   let ok = (
+     this.billIdForm.controls.fcstorename.valid &&
+     this.billIdForm.controls.fcbillid.valid &&
+     this.productForm.controls.productList.valid
+   );
+   //console.log(ok);
+   if(canSubmit && ok)
+   {
+     this.bill.date = this.formatDate(this.bill.date);
+     this.billDatabase.addBill(this.bill, this.products);
+     this.navCtrl.pop();
+   }
+   else
+   {
+     this.fieldsNotCompleted();
+   }
+  }*/
+
+  // =================================================== ALERTS ===================================================
+
+  fieldsNotCompleted() {
+    let alert = this.alerCtrl.create({
+      title: 'Error',
+      message: 'You must complete all the fields properly in order to submit',
+      buttons: ['Ok']
+    });
+    alert.present()
+  }
+
+  showDeleteAlert(index) {
+    if (this.products.length > 1) {
+      let alert = this.alerCtrl.create({
+        title: 'Warning',
+        message: 'Are you sure you want to delete this product?',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel'
+          },
+          {
+            text: 'Yes',
+            handler: () => {
+              this.deleteProduct(index);
+            }
+          }
+        ]
+      });
+      alert.present()
+    }
   }
 
 }

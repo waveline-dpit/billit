@@ -1,5 +1,14 @@
 page-categories {
-  .category-card{
+  .container
+  {
+  padding: 16px 24px 8px 8px;
+  }
+  .item-inner, .toolbar-title
+  {
+    padding: 0;
+  }
+  .category-card
+  {
     -webkit-transition: height .25s ease;
        -moz-transition: height .25s ease;
             transition: height .25s ease;
@@ -8,6 +17,10 @@ page-categories {
   {
     font-weight: normal;
     font-size: 15px;
+  }
+  .toolbar-title
+  {
+    font-size: 18px;
   }
   .category-title
   {
@@ -37,11 +50,25 @@ page-categories {
       border-top: 1px solid #ccc
     }
   }
-    .item.itemlist
+  .item.itemlist
   {
-    padding: 1px 7px 1px 7px;
+    padding: 0 16px;
     background-color: white;
   }
+  .interval
+  {
+    .item
+    {
+      padding-left: 0;
+    }
+    .datetime
+    {
+      padding-left: 0;
+      padding-right: 0;
+
+    }
+  }
+
   .fav
   {
     ion-icon
@@ -60,7 +87,29 @@ page-categories {
   {
     padding: 0;
   }
-
+  .list
+  {
+    margin: 0;
+  }
+  .label
+  {
+    margin: 0;
+  }
+  .category-header
+  {
+    .item
+    {
+      height: 54px;
+    }
+  }
+  .no-products
+  {
+    font-style: italic;
+    font-size: 14px;
+    color: #737373;
+    margin-bottom: 10px;
+    margin-left: 16px;
+  }
 }
 .alert-md .alert-message, .alert-md .alert-input-group {
     color: #424242;
