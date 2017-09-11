@@ -94,14 +94,21 @@ export class LoginPage {
 
   loginWithGoogle()
   {
-    this.authService.loginWithGoogle().then(user =>
-    {
-      this.db.object('/user/' + this.userInfo.getUserToken() + '/info').first().subscribe((data)=>
-      {
-        if(!data.firstName)
-          this.userRegister.addUserData(user.additionalUserInfo.profile.family_name, user.additionalUserInfo.profile.given_name);
-      })
-    });
+    this.authService.loginWithGoogle()
+      .then(res =>
+        {
+          console.log(res);
+          this.authService.signInWithCredential(res.idToken)
+            .then(()=>{
+              this.db.object("/user/" + this.userInfo.getUserToken() + "/info").first()
+                .subscribe(info => {
+                  console.log(info);
+                  if(info.$value == null)
+                    this.userInfo.changeUserData(res.givenName, res.familyName);
+                });
+            });
+        })
+      .catch(err => console.error(err));
   }
 
 }

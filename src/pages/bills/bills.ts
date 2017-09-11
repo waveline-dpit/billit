@@ -58,7 +58,8 @@ export class BillsPage {
       this.bills = data;
       this.billsToShow = data;
       this.sortBills();
-      //console.log(this.billsToShow);
+      let str = "Ana are mere, Ana"
+      console.log(str.search("are"));
     });
     document.addEventListener("touchstart", () => {this.closeFabIfActive()});
   }
@@ -362,5 +363,10 @@ export class BillsPage {
           this.goToBillPage(wholeBill);
       })
     });
+  }
+
+  searchBills()
+  {
+
   }
 }

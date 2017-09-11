@@ -2,20 +2,17 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { GooglePlus } from '@ionic-native/google-plus';
 
-/*
-  Generated class for the AuthServiceProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class AuthService {
   public state={};
   public isValid={};
 
   constructor(
-    public afAuth: AngularFireAuth) {
+    public afAuth: AngularFireAuth,
+    public googlePlus: GooglePlus
+  ) {
     this.isValid = 0;
   }
 
@@ -30,12 +27,14 @@ export class AuthService {
 
   loginWithGoogle()
   {
-    return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    return this.googlePlus.login({
+      'webClientId': '983236088103-si5u12j4eomqjgfccr712dcb3ocej32m.apps.googleusercontent.com',
+      'offline': true});
   }
 
   signupUser(newEmail, newPass)
   {
-      return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPass);
+    return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPass);
   }
 
   isLogged()
@@ -45,7 +44,22 @@ export class AuthService {
       });
   }
 
-  logOut(): firebase.Promise<any> {
-    return this.afAuth.auth.signOut();
+  signInWithCredential(token)
+  {
+    return firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(token));
+  }
+
+  logOut()
+  {
+    this.googlePlus.logout().then(()=>
+    {
+      console.log(11);
+      this.afAuth.auth.signOut();
+    },
+    ()=>
+    {
+      console.log(22);
+      this.afAuth.auth.signOut();
+    })
   }
 }
