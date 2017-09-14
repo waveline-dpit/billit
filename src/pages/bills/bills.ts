@@ -61,10 +61,9 @@ export class BillsPage {
     this.buildIntervals();
     billDatabase.retreiveAllBills().subscribe((data) =>{
       this.bills = data;
+      console.log(this.bills)
       this.billsToShow = data;
       this.sortBills();
-      let str = "Ana are mere, Ana"
-      console.log(str.search("are"));
     });
     document.addEventListener("touchstart", () => {this.closeFabIfActive()});
   }
