@@ -61,9 +61,14 @@ export class BillsPage {
     this.buildIntervals();
     billDatabase.retreiveAllBills().subscribe((data) =>{
       this.bills = data;
-      console.log(this.bills)
-      this.billsToShow = data;
-      this.sortBills();
+      if(this.searchBarOpened){
+        this.startedSearch();
+      }
+      else{
+        console.log(this.bills)
+        this.billsToShow = data;
+        this.sortBills();
+      }
     });
     document.addEventListener("touchstart", () => {this.closeFabIfActive()});
   }
@@ -390,7 +395,7 @@ export class BillsPage {
     console.log("opened search bar")
   }
 
-  startedSearch(e){
+  startedSearch(){
 
     let searchText = this.searchInput.toLowerCase();
     this.billsToShow = [];

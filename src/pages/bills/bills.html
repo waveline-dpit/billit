@@ -28,7 +28,7 @@
       </button>
     </ion-buttons>
     <div  *ngIf="searchBarOpened" class="appear-search" id="searchBarID">
-      <ion-searchbar placeholder="{{searchPlaceholder}}" showCancelButton #searchBar [(ngModel)]="searchInput" (ionInput)="startedSearch($event)" (ionBlur)="onBlurSearch()" (ionClear)="clearedSearch()" (ionCancel)="canceledSearch()">></ion-searchbar>
+      <ion-searchbar placeholder="{{searchPlaceholder}}" showCancelButton #searchBar [(ngModel)]="searchInput" (ionInput)="startedSearch()" (ionBlur)="onBlurSearch()" (ionClear)="clearedSearch()" (ionCancel)="canceledSearch()">></ion-searchbar>
     </div>
 
   </ion-navbar>

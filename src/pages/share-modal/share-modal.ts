@@ -61,8 +61,6 @@ export class ShareModalPage {
   dismiss() {
     this.viewCtrl.dismiss();
   }
-  doo(){
-    console.log("ddddooo")
-  }
+
 
 }
