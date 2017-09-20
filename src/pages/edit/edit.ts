@@ -4,6 +4,7 @@ import { AlertController } from 'ionic-angular';
 import { MyAccountPage } from "../my-account/my-account";
 import { UserInfo} from "../../providers/user-info/user-info";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @IonicPage()
 @Component({
@@ -25,7 +26,8 @@ export class EditPage {
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public formBuilder: FormBuilder,
-    public userInfo: UserInfo
+    public userInfo: UserInfo,
+    public afAuth: AngularFireAuth
   )
   {
     userInfo.getUserInfo().subscribe((user)=>
@@ -44,39 +46,68 @@ export class EditPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditPage');
   }
-  showPrompt() {
+  changePassAlert() {
+    let isValid = false;
     let prompt = this.alertCtrl.create({
       title: 'Change Password',
-      inputs: [
+      //message: "Enter your email to receive instructions",
+      message: "You will receive an email with instructions on changing your password.",
+      /*inputs: [
         {
-          name: 'old password',
-          placeholder: 'Old Password',
-        },
-        {
-          name: 'new password',
-          placeholder: 'New Password',
-        },
-        {
-          name: 'confirm password',
-          placeholder: 'Confirm Password',
+          name: 'email',
+          placeholder: 'Email',
+          type: 'email'
         }
-      ],
+      ],*/
       buttons: [
         {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
+          text: 'Cancel'
         },
         {
-          text: 'Save',
+          text: 'Okay',
           handler: data => {
-            console.log('Saved clicked');
+            /*if(isValid){
+              this.afAuth.auth.sendPasswordResetEmail(data.email);
+              return true;
+            }
+            else{
+              return false;
+            }*/
+            this.afAuth.auth.sendPasswordResetEmail(this.email);
           }
         }
       ]
     });
     prompt.present();
+
+    /*setTimeout(()=>{
+      let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      let htmlCollection = document.getElementsByClassName("alert-wrapper");
+      let alert = htmlCollection[0];
+      let para = document.createElement("p");
+      let node = document.createTextNode("Please enter a valid email.");
+      para.appendChild(node);
+      let input = alert.children[2].children[0].children[0].children[0]; console.log(input, input.children[1], prompt)
+      input.addEventListener("keyup",() => {
+        let inputValue = prompt.data.inputs[0].value;
+        if(inputValue.match(mailformat)){
+          isValid = true;
+          input.classList.remove("invalid");
+          input.classList.add("valid");
+          if(alert.children[2].children.length == 2){
+            alert.children[2].removeChild(alert.children[2].children[1]);
+          }
+        }
+        else{
+          isValid = false;
+          input.classList.remove("valid");
+          input.classList.add("invalid");
+          if(alert.children[2].children.length == 1){
+            alert.children[2].appendChild(para);
+          }
+        }
+      });
+    },500)*/
   }
   saveData() {
     if(this.firstName && this.lastName)

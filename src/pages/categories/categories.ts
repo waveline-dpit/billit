@@ -6,7 +6,8 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} 
 import {UserInfo} from '../../providers/user-info/user-info';
 import {CategoriesService} from '../../providers/categories-service/categories-service';
 import { BillPage } from '../bill/bill';
-
+import { PopoverController } from 'ionic-angular';
+import { PopoverCategoriesPage } from "../popover-categories/popover-categories";
 
 /**
  * Generated class for the CategoriesPage page.
@@ -27,6 +28,9 @@ export class CategoriesPage {
   categoriesDB = [];
   user;
   expanded = [];
+  sortOption = [];
+  lastSortOption = [];
+  catNumberHasChanged = true;
 
   constructor(
     public navCtrl: NavController,
@@ -36,6 +40,7 @@ export class CategoriesPage {
     public userInfo: UserInfo,
     public db: AngularFireDatabase,
     public categoriesService: CategoriesService,
+    public popoverCtrl: PopoverController
   ) {
     this.db.object("/user/" + this.userInfo.getUserToken()).subscribe((data) =>{
       console.log(data.categories);
@@ -43,7 +48,12 @@ export class CategoriesPage {
       this.bills = this.user.bills;
       this.categoriesDB = this.user.categories;
       this.makeCategories();
+      if(this.catNumberHasChanged){
+        this.initializeSort(this.categoriesToShow.length);
+        this.catNumberHasChanged = false;
+      }
     });
+    console.log(this.sortOption, this.lastSortOption)
   }
 
   ionViewDidLoad() {
@@ -128,14 +138,13 @@ export class CategoriesPage {
         {
           text: 'Cancel',
           handler: data => {
-            console.log('Cancel clicked');
           }
         },
         {
           text: 'Save',
           handler: data => {
-            console.log('Saved clicked');
             this.categoriesService.addCategory(data.title);
+            this.catNumberHasChanged = true;
           }
         }
       ]
@@ -214,17 +223,62 @@ export class CategoriesPage {
         {
           text: 'Yes',
           handler: () => {
-            /*delete category from database*/
             this.categoriesService.deleteCategory(category);
+            this.catNumberHasChanged = true;
           }
         }]
     });
     alert.present()
   }
+
   goToBillPage(billID){
     this.navCtrl.push(BillPage, {'billID': billID, 'comingFromCategories': true});
   }
+
   expandCategory(i){
     this.expanded[i] = !this.expanded[i];
+  }
+
+  sortPopover(myEvent, i) {
+    let popover = this.popoverCtrl.create(PopoverCategoriesPage, { sortOption: this.sortOption[i]});
+    popover.present({
+      ev: myEvent
+    });
+    popover.onDidDismiss((popoverData) => {
+      this.sortOption[i] = popoverData;
+      console.log("didDismiss", this.sortOption, this.lastSortOption)
+      if(this.sortOption[i]  != null){
+        this.lastSortOption[i] = this.sortOption[i] ;
+      }
+      else{
+        this.sortOption[i]  = this.lastSortOption[i] ;
+      }
+      this.sortCategory(i);
+    })
+  }
+
+  initializeSort(howMany){
+    this.sortOption = [];
+    this.lastSortOption = [];
+    for(let i = 0; i < howMany; i++){
+      this.sortOption.push("name");
+      this.lastSortOption.push("name");
+      this.sortCategory(i);
+    }
+  }
+
+  sortCategory(i){
+    if(this.sortOption[i] == "name"){
+      this.categoriesToShow[i].products.sort(function(a, b){
+        if(a.name < b.name) return -1;
+        if(a.name > b.name) return 1;
+        return 0;
+      });
+    }
+    if(this.sortOption[i] == "price"){
+      this.categoriesToShow[i].products.sort(function(a, b){
+        return b.pricePerUnit - a.pricePerUnit;
+      });
+    }
   }
 }

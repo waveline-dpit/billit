@@ -2,18 +2,18 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 /**
- * Generated class for the PopoverSortPage page.
+ * Generated class for the PopoverCategoriesPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 @IonicPage()
-
 @Component({
+  selector: 'page-popover-categories',
   template: `
     <ion-list radio-group>
       <ion-item class="sort-header">
-        Sort bills by:
+        Sort products by:
       </ion-item>
       <ion-item  *ngFor="let item of items">
         <ion-label  class="popover-grid">
@@ -25,7 +25,6 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
               </ion-col>
               <ion-col col-8>
                 {{item.name}}
-                <ion-icon style="margin-left:5px;"name="{{item.arrow}}"></ion-icon>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -36,16 +35,15 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
     </ion-list>
   `
 })
-export class PopoverSortPage {
+export class PopoverCategoriesPage {
 
   sortOpt;
   items = [
-   {  name: "Date", arrow:"ios-arrow-round-down", icon:"calendar", opt:"dateDesc"},
-   {  name: "Date", arrow:"ios-arrow-round-up", icon:"calendar", opt:"dateAsc"},
-   {  name: "Price", arrow:"ios-arrow-round-down", icon:"logo-usd", opt:"priceDesc"},
-   {  name: "Price", arrow:"ios-arrow-round-up", icon:"logo-usd", opt:"priceAsc"},
-   {  name: "Favourites", icon:"star-outline", opt:"favourites"}
+    {  name: "Name", icon:"quote", opt:"name"},
+    //{  name: "Date",  icon:"calendar", opt:"date"},
+    {  name: "Price", icon:"logo-usd", opt:"price"},
   ]
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -57,11 +55,12 @@ export class PopoverSortPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PopoverSortPage');
+    console.log('ionViewDidLoad PopoverCategoriesPage');
   }
-  
+
   setSortOption(selectedItem) {
     this.sortOpt = selectedItem;
     this.viewCtrl.dismiss(this.sortOpt);
   }
+
 }
