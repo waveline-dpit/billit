@@ -16,7 +16,13 @@ import { BarcodeScanner} from '@ionic-native/barcode-scanner';
 import { PopoverSortPage } from "../popover-sort/popover-sort";
 import * as moment from 'moment';
 import Moment from 'moment';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { extendMoment } from 'moment-range';
+import { Http } from '@angular/http';
+import { Base64 } from '@ionic-native/base64';
+import Tesseract from 'tesseract.js';
+import defaultOptions from 'tesseract.js';
+
 
 @IonicPage()
 @Component({
@@ -43,6 +49,7 @@ export class BillsPage {
 
   intervals = [];
   intervalToShow = [];
+  tess;
 
   constructor(
     public platform: Platform,
@@ -55,7 +62,10 @@ export class BillsPage {
     public db: AngularFireDatabase,
     public categoriesService: CategoriesService,
     public alerCtrl: AlertController,
-    private barcodeScanner: BarcodeScanner
+    private barcodeScanner: BarcodeScanner,
+    private camera: Camera,
+    public http: Http,
+    public base64:Base64
   )
   {
     this.buildIntervals();
@@ -380,6 +390,52 @@ export class BillsPage {
           this.goToBillPage(wholeBill);
       })
     });
+  }
+
+  openCamera()
+  {
+
+    const options: CameraOptions = {
+      quality: 60,
+      destinationType:  this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      correctOrientation: true,
+      allowEdit: true
+      }
+    console.log("opened camera")
+    this.camera.getPicture(options).then((imageData) => {
+      //this.encodeImageFileAsURL(imageData);*/
+
+      Tesseract.create({langPath:"../../assets/langs"});
+
+      Tesseract.recognize(imageData, {lang: "billfont2"}).progress((beh)=>{console.log(beh)}) // Or whichever lang you have downloaded to langs/
+          .then((result) => console.log(result.text));
+
+
+      /*this.base64.encodeFile(imageData).then((base64IMG) =>
+      {
+        console.log(base64IMG);
+        base64IMG = "data:image/jpeg;"+ base64IMG.substring(27, base64IMG.length - 1);
+        base64IMG = base64IMG.replace(/(\r\n|\n|\r)/gm,"");
+        //base64IMG = base64IMG.substring(33, base64IMG.length - 1);
+        //base64IMG = ``
+        ;
+        let fd = new FormData();
+        fd.append('apikey', 'b50c5ce6a988957');
+        fd.append('base64Image', base64IMG);
+
+
+
+        this.http.post("https://api.ocr.space/parse/image", fd).subscribe((result) => {
+             console.log('ocr', result);
+         });
+      })*/
+
+    }, (err) => {
+      console.log(err);
+    });
+    this.closeFab(this.fabb);
+
   }
 
   /* ============================================= SEARCH ============================================= */

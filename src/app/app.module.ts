@@ -41,6 +41,8 @@ import { HttpModule } from '@angular/http';
 import { EditBillPage } from "../pages/edit-bill/edit-bill";
 import { NgxQRCodeModule} from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import {Camera} from '@ionic-native/camera';
+import { Base64 } from '@ionic-native/base64';
 
 
 // AF2 Settings
@@ -121,7 +123,9 @@ export const firebaseConfig = {
     UserRegister,
     BillDatabase,
     GooglePlus,
-    CategoriesService
+    CategoriesService,
+    Camera,
+    Base64
   ]
 })
 export class AppModule {}
