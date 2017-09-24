@@ -22,7 +22,7 @@
         <ion-icon ios="ios-funnel-outline" name="funnel"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-buttons right class="padd" right *ngIf="platform.is('ios') && !searchBarOpened">
+      <ion-buttons right class="padd" right *ngIf="platform.is('ios') && !searchBarOpened">
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="add"></ion-icon>
       </button>

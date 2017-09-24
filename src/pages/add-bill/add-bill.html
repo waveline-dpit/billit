@@ -160,7 +160,7 @@
   </ion-scroll>
 
 
-  <ion-grid  showWhen="android" class="footer">
+  <ion-grid  *ngIf="!platform.is('ios')" class="footer">
     <ion-row>
       <ion-col col-3 class="col-textt2">TOTAL: </ion-col>
       <ion-col col-4 class="col-textt2"> {{bill.totalAmount}} RON</ion-col>
@@ -170,7 +170,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid showWhen="ios" class="footer-ios">
+  <ion-grid *ngIf="platform.is('ios')" class="footer-ios">
     <ion-row>
       <ion-col col-3 class="col-textt2">TOTAL: </ion-col>
       <ion-col col-4 class="col-textt2"> {{bill.totalAmount}} RON</ion-col>

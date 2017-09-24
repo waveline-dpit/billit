@@ -1,5 +1,5 @@
  import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import {BillDatabase} from '../../providers/bill-database/bill-database';
 import { AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
@@ -31,6 +31,7 @@ export class AddBillPage {
   productForm: FormGroup;
 
   constructor(
+    public platform: Platform,
     public navCtrl: NavController,
     public navParams: NavParams,
     public alerCtrl: AlertController,
@@ -175,7 +176,7 @@ export class AddBillPage {
   submit() {
     this.submitAttempt = true;
     var canSubmit = true;
-    //console.log(this.bill, this.products);
+    console.log(this.bill, this.products);
     for (var key in this.bill) {
       if(this.bill[key] === null || this.bill[key] === ""){
         canSubmit = false;
