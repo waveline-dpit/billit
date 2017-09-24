@@ -595,4 +595,5 @@ export class BillsPage {
       this.billsToShow = this.savedBills;
     },290);
   }
+
 }

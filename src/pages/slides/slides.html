@@ -1,0 +1,166 @@
+<!--
+  Generated template for the SlidesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Introduction</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="tutorial">
+  <ion-slides pager (ionSlideDidChange)="slideChanged()">
+
+    <ion-slide >
+      <ion-toolbar>
+        <ion-buttons end>
+          <button ion-button color="primary"(click)="endTutorial()" >Skip</button>
+        </ion-buttons>
+      </ion-toolbar>
+      <img src="assets/Images/logo-rounded.png" class="slide-image"/>
+      <h2 class="slide-title">Welcome to Billit</h2>
+      <p >Keep your bills stored on your phone and you’ll be able to see records of spendings and better organize your own budget.</p>
+    </ion-slide>
+
+    <ion-slide >
+      <ion-toolbar>
+        <ion-buttons end>
+          <button ion-button color="primary"(click)="endTutorial()" >Skip</button>
+        </ion-buttons>
+      </ion-toolbar>
+
+      <ion-fab #fab center middle >
+        <button id="fabButton" (click)="clickedFab(fab)"ion-fab mini class="fab" color='primary'>
+          <ion-icon name="add" class="add"></ion-icon>
+        </button>
+        <ion-fab-list side="top">
+          <button ion-fab color="primary"><ion-icon name="qr-scanner"></ion-icon></button>
+          <button ion-fab color="primary"><ion-icon name="create" ></ion-icon></button>
+          <button ion-fab  color="primary"><ion-icon  name="camera"></ion-icon></button>
+        </ion-fab-list>
+      </ion-fab>
+
+      <h2 class="slide-title-add">Add your first bill</h2>
+      <p>Click on the button in the bottom right corner to add a bill. You can take a picture of it, add it manually or scan its QR.</p>
+    </ion-slide>
+
+    <ion-slide >
+      <ion-toolbar>
+        <ion-buttons end>
+          <button ion-button color="primary"(click)="endTutorial()" >Skip</button>
+        </ion-buttons>
+      </ion-toolbar>
+
+      <div class="card-margin">
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item-sliding #slidingItem1>
+
+                <ion-item class="itemlist">
+                  <div>
+                    <div class="inline ">
+                      <div class="inline left topp bott">
+                        <ion-icon style="margin-right:2px;" name="calendar" isActive="false"></ion-icon>
+                        22 Aug 2017
+                      </div>
+                      <div class="inline right topp bott">
+                        <ion-icon style="margin-right:2px;" class="margin-left" name="time" isActive="false"></ion-icon>
+                        11:53
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clear">
+                    <div class=" inline left topp bott">
+                      <ion-icon style="margin-right:2px;" name="cart" isActive="false"></ion-icon>
+                      WAVELINE S.R.L.
+                    </div>
+                    <div class="inline right topp bott  ">
+                      27.43 RON
+                    </div>
+                  </div>
+                </ion-item>
+
+                <ion-item-options side="right" class="favourite">
+
+                  <button id="fav1" *ngIf="!favourite"  ion-button color="light" (click)="addToFavourite(slidingItem1)">
+                    <ion-icon name="star-outline"></ion-icon>
+                    Favourite
+                  </button>
+                  <button id="fav2"  *ngIf="favourite" ion-button color="fav-yellow" (click)="removeFromFavourite(slidingItem1)">
+                    <ion-icon name="star-outline"></ion-icon>
+                    Favourite
+                  </button>
+                </ion-item-options>
+
+              </ion-item-sliding>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item-sliding #slidingItem2>
+
+                <ion-item class="itemlist" >
+                  <div>
+                    <div class="inline ">
+                      <div class="inline left topp bott">
+                        <ion-icon style="margin-right:2px;" name="calendar" isActive="false"></ion-icon>
+                        20 Aug 2017
+                      </div>
+                      <div class="inline right topp bott">
+                        <ion-icon style="margin-right:2px;" class="margin-left" name="time" isActive="false"></ion-icon>
+                        19:41
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clear">
+                    <div class=" inline left topp bott">
+                      <ion-icon style="margin-right:2px;" name="cart" isActive="false"></ion-icon>
+                      WAVELINE S.R.L.
+                    </div>
+                    <div class="inline right topp bott  ">
+                      42.97 RON
+                    </div>
+                  </div>
+                </ion-item>
+
+                <ion-item-options side="left">
+                  <button class="delete" ion-button color="danger">
+                    <ion-icon name="trash"></ion-icon>
+                    Delete
+                  </button>
+                </ion-item-options>
+
+              </ion-item-sliding>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+
+      </div>
+
+      <h2 class="slide-title">Swipe on items</h2>
+      <p >Either it's about bills, products or categories, swipe right to delete and left to see other options.</p>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-toolbar>
+      </ion-toolbar>
+      <img src="assets/Images/ica-slidebox-img-4.png" class="slide-image"/>
+      <h2 class="slide-title">Try it yourself</h2>
+      <button ion-button large clear icon-end color="primary" (click)="endTutorial()">
+        Continue
+        <ion-icon name="arrow-forward" color="primary"></ion-icon>
+      </button>
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>
