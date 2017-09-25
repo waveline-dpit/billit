@@ -68,8 +68,13 @@ export class CategoriesService {
       for(let cat of bill)
         this.db.object(pathCategory + "/" + cat.$key + "/products/" + productID).remove();
     });
+  }
+
+  uncheckOneProdFormCat()
+  {
 
   }
+
   deleteCategory(category)
   {
     let path = "/user/" + this.userInfo.getUserToken() + "/bills/";

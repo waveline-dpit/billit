@@ -73,4 +73,9 @@ export class BillDatabase {
       this.db.object(path).remove();
     });
   }
+
+  updateBill()
+  {
+    
+  }
 }
