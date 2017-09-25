@@ -1,5 +1,5 @@
 import { Component, ViewChild} from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, LoadingController } from 'ionic-angular';
 import { BillPage } from "../bill/bill";
 import { LoginPage } from "../login/login";
 import {AuthService} from '../../providers/auth-service/auth-service'
@@ -16,7 +16,11 @@ import { BarcodeScanner} from '@ionic-native/barcode-scanner';
 import { PopoverSortPage } from "../popover-sort/popover-sort";
 import * as moment from 'moment';
 import Moment from 'moment';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { extendMoment } from 'moment-range';
+import { Http } from '@angular/http';
+import { Base64 } from '@ionic-native/base64';
+import Tesseract from 'tesseract.js';
 
 @IonicPage()
 @Component({
@@ -43,9 +47,11 @@ export class BillsPage {
 
   intervals = [];
   intervalToShow = [];
+  loading;
 
   constructor(
     public platform: Platform,
+    public loadingCtrl: LoadingController,
     public navCtrl: NavController,
     public navParams: NavParams,
     public authService: AuthService,
@@ -55,16 +61,23 @@ export class BillsPage {
     public db: AngularFireDatabase,
     public categoriesService: CategoriesService,
     public alerCtrl: AlertController,
-    private barcodeScanner: BarcodeScanner
+    private barcodeScanner: BarcodeScanner,
+    private camera: Camera,
+    public http: Http,
+    public base64:Base64
   )
   {
     this.buildIntervals();
     billDatabase.retreiveAllBills().subscribe((data) =>{
       this.bills = data;
-      this.billsToShow = data;
-      this.sortBills();
-      let str = "Ana are mere, Ana"
-      console.log(str.search("are"));
+      if(this.searchBarOpened){
+        this.startedSearch();
+      }
+      else{
+        console.log(this.bills)
+        this.billsToShow = data;
+        this.sortBills();
+      }
     });
     document.addEventListener("touchstart", () => {this.closeFabIfActive()});
   }
@@ -378,6 +391,140 @@ export class BillsPage {
     });
   }
 
+  openCamera()
+  {
+
+    const options: CameraOptions = {
+      quality: 60,
+      destinationType:  this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      correctOrientation: true,
+      allowEdit: true
+      }
+    console.log("opened camera")
+    this.camera.getPicture(options).then((imageData) => {
+      console.log("taken picture");
+
+      /*
+      ca sa mearga trebuie adaugat
+      https://cdn.rawgit.com/waveline-dpit/billit/3e234118/src/assets/langs/
+      in fata la oriunde scrie langPath din node_modules/tesseract.js
+      */
+      this.presentLoadingCustom();
+      Tesseract.recognize(imageData, {lang: "billsfont2"})
+          .then((result) => {
+            console.log(result.text);
+            this.interpretText(result);
+          });
+    }, (err) => {
+      console.log(err);
+    });
+    this.closeFab(this.fabb);
+  }
+
+  interpretText(data){
+    //produse
+    var result;
+    var prod = /(.*)\r\n([a-zA-Z0-9]*,?\.?[a-zA-Z0-9]*) ?x ?([a-zA-Z0-9]*,?\.?[a-zA-Z0-9]*)/g;
+    var ora = /\bOra\b(?::).?([0-9]+)[/.:]+([0-9])+[/:.]+([0-9])+/g;
+    var date = /\bData\b(?::).?([0-9]+)[/.:]+([0-9])+[/:.]+([0-9])+/g;
+    //nume magazin:
+    var magazin = /(.+\S\.R\.L|SRL|S\.C\.|S\.C\.S|SCS|SC\b)/;
+    //nr bon fiscal:
+    var nrbon =/\w*\bBON|bon\b.*(\d\w)/;
+
+    var tprice = 0;
+    console.log("Nume magazin: ", magazin.exec(data.text));
+
+    while (result = prod.exec(data.text)) {
+      var product = result[1];
+      var price = this.sanitizeNumber(result[2]);
+      var price2 = Number(price);
+      var quantity = this.sanitizeNumber(result[3]);
+      var quantity2 = Number(quantity);
+      tprice += price2;
+      console.log("produs: ", product," pret: " , price, ", cantitate: ", quantity);
+      console.log(tprice);
+    }
+    console.log("Numar bon: ", nrbon.exec(data.text));
+    var sData = date.exec(data.text);
+  /*  console.log(sData[1], sData[2], sData[3]);
+    var sHour = ora.exec(data.text);
+    console.log(sHour[1], sHour[2], sHour[3]);*/
+
+    let billInfo = {
+      date: (new Date()).toISOString(),
+      dateISO: (new Date()).toISOString(),
+      time: "11:53",
+      favourite: false,
+      number: 0,
+      totalAmount: 0,
+      storeName: "From Camera"
+    }
+    let products = [];
+    //for(let i in bill.pr){
+      let productt = {
+        name: "dummy",
+        quantity: 1,
+        pricePerUnit:1,
+        totalPrice: 1
+      }
+      products.push(productt);
+    //}
+    this.addBillFromCamera(billInfo, products);
+  }
+
+  sanitizeNumber(number) {
+    //console.log(number);
+    return number
+        .replace('l', 1)
+        .replace(/[oae]/i, 0)
+        .replace(',', '.');
+  }
+
+  addBillFromCamera(bill, products){
+    let path = '/user/' + this.userInfo.getUserToken() + '/bills';
+    let user : FirebaseListObservable <any>;
+    user = this.db.list(path);
+    user.push(bill).then((response) => {
+      let billPath =  path + '/' + response.path.o[3] ;
+      path = path + '/' + response.path.o[3] + '/products';
+      user = this.db.list(path);
+      for (let eachProduct of products) {
+        user.push(eachProduct);
+      }
+      this.db.object(billPath).subscribe(wholeBill =>{
+          console.log(wholeBill)
+          if(this.loading){
+            this.loading.dismiss();
+            this.goToBillPage(wholeBill);
+          }
+          else{
+            this.loading.dismiss();
+          }
+      })
+    });
+  }
+
+  presentLoadingCustom() {
+    this.loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: `
+      <div class="cssload-thecube">
+        <div class="cssload-cube cssload-c1"></div>
+        <div class="cssload-cube cssload-c2"></div>
+        <div class="cssload-cube cssload-c4"></div>
+        <div class="cssload-cube cssload-c3"></div>
+      </div>
+      <div class="loader-text">The image is being processed by Tesseract OCR</div>
+      `,
+      duration: 10000
+    });
+
+    this.loading.present();
+  }
+
+
   /* ============================================= SEARCH ============================================= */
 
   openSearchBar(){
@@ -391,7 +538,7 @@ export class BillsPage {
     console.log("opened search bar")
   }
 
-  startedSearch(e){
+  startedSearch(){
 
     let searchText = this.searchInput.toLowerCase();
     this.billsToShow = [];

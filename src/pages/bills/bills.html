@@ -22,13 +22,13 @@
         <ion-icon ios="ios-funnel-outline" name="funnel"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-buttons right class="padd" right *ngIf="platform.is('ios') && !searchBarOpened">
+      <ion-buttons right class="padd" right *ngIf="platform.is('ios') && !searchBarOpened">
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
     <div  *ngIf="searchBarOpened" class="appear-search" id="searchBarID">
-      <ion-searchbar placeholder="{{searchPlaceholder}}" showCancelButton #searchBar [(ngModel)]="searchInput" (ionInput)="startedSearch($event)" (ionBlur)="onBlurSearch()" (ionClear)="clearedSearch()" (ionCancel)="canceledSearch()">></ion-searchbar>
+      <ion-searchbar placeholder="{{searchPlaceholder}}" showCancelButton #searchBar [(ngModel)]="searchInput" (ionInput)="startedSearch()" (ionBlur)="onBlurSearch()" (ionClear)="clearedSearch()" (ionCancel)="canceledSearch()">></ion-searchbar>
     </div>
 
   </ion-navbar>
@@ -108,7 +108,7 @@
     <ion-fab-list side="top">
       <button ion-fab color="primary"(click)="scanCode()"><ion-icon name="qr-scanner"></ion-icon></button>
       <button ion-fab color="primary"(click)="goToAddBillPage();"><ion-icon name="create" ></ion-icon></button>
-      <button ion-fab  color="primary"(click)="closeFab(fab)"><ion-icon  name="camera"></ion-icon></button>
+      <button ion-fab  color="primary"(click)="openCamera()"><ion-icon  name="camera"></ion-icon></button>
 
     </ion-fab-list>
   </ion-fab>

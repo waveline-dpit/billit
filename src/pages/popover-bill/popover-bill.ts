@@ -111,6 +111,7 @@ export class PopoverBillPage {
 
   }
   openShareModal(){
+    console.log(1);
     this.viewCtrl.dismiss("share");
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController, ViewController} from 'ionic-angular';
 
 /**
  * Generated class for the ShareModalPage page.
@@ -61,8 +61,6 @@ export class ShareModalPage {
   dismiss() {
     this.viewCtrl.dismiss();
   }
-  doo(){
-    console.log("ddddooo")
-  }
+
 
 }
