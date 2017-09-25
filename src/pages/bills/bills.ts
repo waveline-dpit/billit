@@ -27,6 +27,7 @@ import Tesseract from 'tesseract.js';
   selector: 'page-bills',
   templateUrl: 'bills.html',
 })
+
 export class BillsPage {
   logoutButton = {};
   bills;
@@ -48,6 +49,7 @@ export class BillsPage {
   intervals = [];
   intervalToShow = [];
   loading;
+  allowCamera;
 
   constructor(
     public platform: Platform,
@@ -68,6 +70,11 @@ export class BillsPage {
   )
   {
     this.buildIntervals();
+    /*/allowCamera*/
+    billDatabase.db.object("/allowCamera").subscribe((data)=>{
+      this.allowCamera = data.$value;
+      console.log("allow",this.allowCamera)
+    });
     billDatabase.retreiveAllBills().subscribe((data) =>{
       this.bills = data;
       if(this.searchBarOpened){
@@ -354,6 +361,11 @@ export class BillsPage {
           totalAmount: bill.b.tA,
           storeName: bill.b.sN
         }
+        console.log(bill);
+        if(bill.b.QR != null){
+          billInfo.QR = true;
+          console.log(billInfo);
+        }
         products = [];
         for(let i in bill.pr){
           let product = {
@@ -384,41 +396,58 @@ export class BillsPage {
       for (let eachProduct of products) {
         user.push(eachProduct);
       }
-      this.db.object(billPath).subscribe(wholeBill =>{
+      this.db.object(billPath).first().subscribe(wholeBill =>{
           console.log(wholeBill)
           this.goToBillPage(wholeBill);
       })
     });
   }
 
+  showAlertCamera(){
+    let alert = this.alerCtrl.create({
+      title: 'Notice',
+      message: 'This feature will be unlocked only after official release on 28 sept. 2017 15:00 GMT+3',
+      buttons: [
+        {
+          text: 'Ok',
+          role: 'cancel'
+        }]
+    });
+    alert.present()
+  }
+
   openCamera()
   {
+    if(this.allowCamera == false){
+      this.showAlertCamera();
+    }
+    else{
+      const options: CameraOptions = {
+        quality: 60,
+        destinationType:  this.camera.DestinationType.FILE_URI,
+        encodingType: this.camera.EncodingType.JPEG,
+        correctOrientation: true,
+        allowEdit: true
+        }
+      console.log("opened camera")
+      this.camera.getPicture(options).then((imageData) => {
+        console.log("taken picture");
 
-    const options: CameraOptions = {
-      quality: 60,
-      destinationType:  this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      correctOrientation: true,
-      allowEdit: true
-      }
-    console.log("opened camera")
-    this.camera.getPicture(options).then((imageData) => {
-      console.log("taken picture");
-
-      /*
-      ca sa mearga trebuie adaugat
-      https://cdn.rawgit.com/waveline-dpit/billit/3e234118/src/assets/langs/
-      in fata la oriunde scrie langPath din node_modules/tesseract.js
-      */
-      this.presentLoadingCustom();
-      Tesseract.recognize(imageData, {lang: "billsfont2"})
-          .then((result) => {
-            console.log(result.text);
-            this.interpretText(result);
-          });
-    }, (err) => {
-      console.log(err);
-    });
+        /*
+        ca sa mearga trebuie adaugat
+        https://cdn.rawgit.com/waveline-dpit/billit/3e234118/src/assets/langs/
+        in fata la oriunde scrie langPath din node_modules/tesseract.js
+        */
+        this.presentLoadingCustom();
+        Tesseract.recognize(imageData, {lang: "billsfont3"})
+            .then((result) => {
+              console.log(result.text);
+              this.interpretText(result);
+            });
+      }, (err) => {
+        console.log(err);
+      });
+    }
     this.closeFab(this.fabb);
   }
 
@@ -493,7 +522,7 @@ export class BillsPage {
       for (let eachProduct of products) {
         user.push(eachProduct);
       }
-      this.db.object(billPath).subscribe(wholeBill =>{
+      this.db.object(billPath).first().subscribe(wholeBill =>{
           console.log(wholeBill)
           if(this.loading){
             this.loading.dismiss();

@@ -1,6 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import {  FabContainer } from 'ionic-angular';
+import { NativeStorage } from '@ionic-native/native-storage';
+import { TabsPage } from '../tabs/tabs';
+
 
 /**
  * Generated class for the SlidesPage page.
@@ -25,10 +28,12 @@ export class SlidesPage {
   currentIndex = 0;
   favourite = false;
   clicked_fab = false;
+  enteredTutorial = null;
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    private nativeStorage: NativeStorage
   ) {
 
   }
@@ -121,6 +126,23 @@ export class SlidesPage {
     setTimeout(() => {slidingItem.close()}, 300);
   }
   endTutorial(){
-    this.navCtrl.pop();
+    this.nativeStorage.getItem('myitem')
+    .then(
+      data => {console.log(data); this.enteredTutorial = data;},
+      error => console.error(error)
+    );
+    if(this.enteredTutorial == null){
+      this.nativeStorage.setItem('myitem', {property: 'value'})
+      .then(
+        () => {
+          console.log('Stored item!');
+          this.navCtrl.setRoot(TabsPage);
+        },
+        error => {console.error('Error storing item', error); this.navCtrl.setRoot(TabsPage);}
+      );
+    }
+    else {
+      this.navCtrl.pop();
+    }
   }
 }

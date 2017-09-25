@@ -9,6 +9,7 @@ import {UserInfo} from '../../providers/user-info/user-info';
 import {CategoriesService} from '../../providers/categories-service/categories-service';
 import { ShareModalPage } from '../share-modal/share-modal';
 
+
 /**
  * Generated class for the BillPage page.
  *
@@ -53,7 +54,7 @@ export class BillPage {
         this.bill = data;
       });
     }
-   
+
     this.keys = Object.keys(this.bill.products);
     categoriesService.getCategories().subscribe((data)=>
     {
@@ -72,7 +73,7 @@ export class BillPage {
       message: product.name
     });
     this.productAlert.setTitle('Select categories');
-    
+
     for(let category of this.categories)
     {
       let isChecked;
