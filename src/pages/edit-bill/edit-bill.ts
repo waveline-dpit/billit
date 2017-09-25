@@ -174,7 +174,7 @@ export class EditBillPage {
 
   save() {
 
-    /* pt tine Raule */
+
 
   }
 
