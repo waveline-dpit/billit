@@ -20,6 +20,7 @@ import { EditPage } from "../pages/edit/edit";
 import { LidlPage } from "../pages/lidl/lidl";
 import { CategoriesPage } from '../pages/categories/categories';
 import { ShareModalPage } from '../pages/share-modal/share-modal';
+import { SlidesPage } from "../pages/slides/slides";
 
 import { AuthService } from '../providers/auth-service/auth-service';
 
@@ -43,6 +44,7 @@ import { NgxQRCodeModule} from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import {Camera} from '@ionic-native/camera';
 import { Base64 } from '@ionic-native/base64';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 
 // AF2 Settings
@@ -77,7 +79,8 @@ export const firebaseConfig = {
     EditBillPage,
     CategoriesPage,
     ShareModalPage,
-    PopoverCategoriesPage
+    PopoverCategoriesPage,
+    SlidesPage
   ],
   imports: [
     BrowserModule,
@@ -111,7 +114,8 @@ export const firebaseConfig = {
     EditBillPage,
     CategoriesPage,
     ShareModalPage,
-    PopoverCategoriesPage
+    PopoverCategoriesPage,
+    SlidesPage
   ],
   providers: [
     StatusBar,
@@ -125,7 +129,8 @@ export const firebaseConfig = {
     GooglePlus,
     CategoriesService,
     Camera,
-    Base64
+    Base64,
+    NativeStorage
   ]
 })
 export class AppModule {}

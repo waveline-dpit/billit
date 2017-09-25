@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
 import { MyAccountPage } from "../my-account/my-account";
 import { StatsPage } from "../stats/stats";
 import { AboutPage } from "../about/about";
 import { CategoriesPage } from "../categories/categories";
+import { SlidesPage } from "../slides/slides";
 
 /**
  * Generated class for the MorePage page.
@@ -24,6 +24,9 @@ export class MorePage {
     public navParams: NavParams
   ) { }
 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad MorePage');
+  }
 
   goToMyAccount() {
     this.navCtrl.push(MyAccountPage);
@@ -31,10 +34,11 @@ export class MorePage {
   goToCategories() {
     this.navCtrl.push(CategoriesPage);
   }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MorePage');
-  }
-goToAbout() {
+  goToAbout() {
     this.navCtrl.push(AboutPage);
   }
+  goToSlides() {
+    this.navCtrl.push(SlidesPage);
+  }
+
 }
