@@ -111,4 +111,8 @@ export class LoginPage {
       .catch(err => console.error(err));
   }
 
+  loginWithFacebook()
+  {
+    this.authService.signInWithFacebook().then(res => console.log(res), err => console.log("err", err));
+  }
 }

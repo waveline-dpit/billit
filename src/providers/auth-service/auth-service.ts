@@ -32,6 +32,10 @@ export class AuthService {
       'offline': true});
   }
 
+  signInWithFacebook() {
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
+  }
+
   signupUser(newEmail, newPass)
   {
     return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPass);

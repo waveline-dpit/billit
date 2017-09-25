@@ -8,6 +8,7 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} 
 import {UserInfo} from '../../providers/user-info/user-info';
 import {CategoriesService} from '../../providers/categories-service/categories-service';
 import { ShareModalPage } from '../share-modal/share-modal';
+import 'rxjs/add/operator/first';
 
 
 /**
@@ -40,16 +41,18 @@ export class BillPage {
     public modalCtrl: ModalController
   )
   {
+
     if(this.navParams.get('comingFromCategories')){
       let billID = this.navParams.get('billID');
-      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billID).subscribe((data) =>
+
+      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billID).first().subscribe((data) =>
       {
         this.bill = data;
       });
       console.log(this.navParams)
     }
     else{
-      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billDatabase.bill.$key).subscribe((data) =>
+      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billDatabase.bill.$key).first().subscribe((data) =>
       {
         this.bill = data;
       });
@@ -154,6 +157,9 @@ export class BillPage {
       if(popoverData == "share"){
         let modal = this.modalCtrl.create(ShareModalPage, {"bill":this.bill});
         modal.present();
+      }
+      if(popoverData == "delete"){
+        this.navCtrl.pop();
       }
     })
   }

@@ -5,6 +5,7 @@ import { EditBillPage } from "../edit-bill/edit-bill";
 import { BillDatabase } from "../../providers/bill-database/bill-database"
 import { TabsPage} from "../tabs/tabs"
 import {CategoriesService} from '../../providers/categories-service/categories-service';
+import {BillsPage} from '../bills/bills';
 
 @IonicPage()
 
@@ -17,7 +18,7 @@ import {CategoriesService} from '../../providers/categories-service/categories-s
        <button ion-item *ngIf="bill.QR == null" (click)="goToEditBillPage();close()"><ion-icon style="margin-right:5px;" name="create"></ion-icon>Edit</button>
        <button ion-item  (click)="openShareModal()"><ion-icon style="margin-right:6px;" name="share"></ion-icon>Share</button>
        <button ion-item (click)="billCheckbox();close()"><ion-icon style="margin-right:11px;" name="attach"></ion-icon>Category</button>
-       <button ion-item (click)="showAlert()"><ion-icon style="margin-right:9px;" name="trash"></ion-icon>Delete</button>
+       <button ion-item (click)="deleteBill()"><ion-icon style="margin-right:9px;" name="trash"></ion-icon>Delete</button>
       </ion-list>
   `
 })
@@ -87,7 +88,7 @@ export class PopoverBillPage {
     });
     this.billAlert.present();
   }
-  showAlert(){
+  deleteBill(){
     let alert = this.alertCtrl.create({
       message: 'Are you sure you want to delete this bill?',
       buttons: [
@@ -101,11 +102,14 @@ export class PopoverBillPage {
           handler: () => {
             setTimeout(()=>{
               this.billDatabase.removeBill(this.bill.$key);
+              this.viewCtrl.dismiss("delete");
+              console.log(this.navCtrl);
             }, 300);
           }
         }]
     });
     alert.present()
+
   }
   openShareModal(){
     console.log(1);

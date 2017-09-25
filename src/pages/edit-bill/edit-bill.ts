@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { NumberValidator } from '../../validators/number';
 import { NotEmptyValidator } from '../../validators/notEmpty';
 
-
 /**
 * Generated class for the AddBillPage page.
 *
@@ -68,7 +67,8 @@ export class EditBillPage {
         name: product.name,
         quantity: product.quantity,
         pricePerUnit: product.pricePerUnit,
-        totalPrice: product.totalPrice
+        totalPrice: product.totalPrice,
+        key: prodID
       }
       this.products.push(obj);
       const control = <FormArray>this.productForm.controls['productList'];
@@ -94,7 +94,8 @@ export class EditBillPage {
       name: "",
       quantity: "",
       pricePerUnit: "",
-      totalPrice: 0
+      totalPrice: 0,
+      key: "new"
     });
     const control = <FormArray>this.productForm.controls['productList'];
     control.push(this.initProduct());
@@ -173,9 +174,8 @@ export class EditBillPage {
   }
 
   save() {
-
-    /* pt tine Raule */
-
+    console.log(this.bill, this.products, this.receivedBill);
+    this.billDatabase.updateBill();
   }
 
   /*submit() {
