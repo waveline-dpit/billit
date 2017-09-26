@@ -40,18 +40,20 @@ export class MyApp {
         {
           if(this.enteredTutorial == null){
             this.rootPage = SlidesPage;
+            splashScreen.hide();
           }
           else{
             this.rootPage= TabsPage;
+            splashScreen.hide();
           }
         }
         else{
           this.rootPage = LoginPage;
+          splashScreen.hide();
         }
 
       });
       statusBar.styleDefault();
-      splashScreen.hide();
 
       if (platform.is('ios')) {
         console.log('ios');
