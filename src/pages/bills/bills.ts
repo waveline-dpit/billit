@@ -27,6 +27,7 @@ import Tesseract from 'tesseract.js';
   selector: 'page-bills',
   templateUrl: 'bills.html',
 })
+
 export class BillsPage {
   logoutButton = {};
   bills;
@@ -48,7 +49,8 @@ export class BillsPage {
   intervals = [];
   intervalToShow = [];
   loading;
-
+  allowCamera;
+  isClassVisible = true;
   constructor(
     public platform: Platform,
     public loadingCtrl: LoadingController,
@@ -68,6 +70,11 @@ export class BillsPage {
   )
   {
     this.buildIntervals();
+    /*/allowCamera*/
+    billDatabase.db.object("/allowCamera").subscribe((data)=>{
+      this.allowCamera = data.$value;
+      console.log("allow",this.allowCamera)
+    });
     billDatabase.retreiveAllBills().subscribe((data) =>{
       this.bills = data;
       if(this.searchBarOpened){
@@ -269,6 +276,15 @@ export class BillsPage {
       }
       this.billsToShow = favBills;
     }
+    if(this.sortOption == "trusted"){
+      let trustedBills = [];
+      for(let bill of this.bills){
+        if(bill.QR != null){
+          trustedBills.push(bill);
+        }
+      }
+      this.billsToShow = trustedBills;
+    }
   }
 
   addToFavourite(bill, slidingItem){
@@ -340,46 +356,55 @@ export class BillsPage {
   }
 
   scanCode(){
-    this.barcodeScanner.scan().then(barcodeData =>{
-      this.scannedCode = barcodeData.text;
-      let billInfo, products, bill;
-      bill = JSON.parse(this.scannedCode);
-      if(bill.b != null && bill.pr.length > 0){
-        billInfo = {
-          date: bill.b.dt,
-          dateISO: bill.b.dISO,
-          time: bill.b.t,
-          favourite: false,
-          number: bill.b.nr,
-          totalAmount: bill.b.tA,
-          storeName: bill.b.sN
-        }
-        products = [];
-        for(let i in bill.pr){
-          let product = {
-            name: bill.pr[i].n,
-            quantity: bill.pr[i].qty,
-            pricePerUnit: bill.pr[i].U,
-            totalPrice: bill.pr[i].tp
+      this.barcodeScanner.scan().then(barcodeData =>{
+        this.scannedCode = barcodeData.text;
+        let billInfo, products, bill;
+        bill = JSON.parse(this.scannedCode);
+        if(bill.b != null && bill.pr.length > 0){
+          billInfo = {
+            date: bill.b.dt,
+            dateISO: bill.b.dISO,
+            time: bill.b.t,
+            favourite: false,
+            number: bill.b.nr,
+            totalAmount: bill.b.tA,
+            storeName: bill.b.sN
           }
-          products.push(product);
+          if(bill.b.QR != null){
+            billInfo.QR = true;
+          }
+          products = [];
+          for(let i in bill.pr){
+            let product = {
+              name: bill.pr[i].n,
+              quantity: bill.pr[i].qty,
+              pricePerUnit: bill.pr[i].U,
+              totalPrice: bill.pr[i].tp
+            }
+            products.push(product);
+          }
+          this.addBillFromScan(billInfo, products);
         }
-        this.addBillFromScan(billInfo, products);
-      }
-      else{
-
-      }
-    });
-    setTimeout(()=>{this.closeFab(this.fabb);},500);
-  }
+      });
+      setTimeout(()=>{this.closeFab(this.fabb);},500);
+    }
 
   addBillFromScan(bill, products){
     let path = '/user/' + this.userInfo.getUserToken() + '/bills';
     let user : FirebaseListObservable <any>;
     user = this.db.list(path);
     user.push(bill).then((response) => {
-      let billPath =  path + '/' + response.path.o[3] ;
-      path = path + '/' + response.path.o[3] + '/products';
+      let billPath;
+      if(response.path.o[3] != null){
+        billPath =  path + '/' + response.path.o[3];
+        path = path + '/' + response.path.o[3] + '/products';
+      }
+      else{
+        if(response.path.pieces_[3] != null){
+          billPath =  path + '/' + response.path.pieces_[3];
+          path = path + '/' + response.path.pieces_[3] + '/products';
+        }
+      }
       user = this.db.list(path);
       for (let eachProduct of products) {
         user.push(eachProduct);
@@ -391,109 +416,198 @@ export class BillsPage {
     });
   }
 
+  showAlertCamera(){
+    let alert = this.alerCtrl.create({
+      title: 'Notice',
+      message: 'This feature will be unlocked only after official release on 28 sept. 2017 15:00 GMT+3',
+      buttons: [
+        {
+          text: 'Ok',
+          role: 'cancel'
+        }]
+    });
+    alert.present()
+  }
+
   openCamera()
   {
+    if(this.allowCamera == false){
+      this.showAlertCamera();
+    }
+    else{
+      const options: CameraOptions = {
+        quality: 60,
+        destinationType:  this.camera.DestinationType.FILE_URI,
+        encodingType: this.camera.EncodingType.JPEG,
+        correctOrientation: true,
+        allowEdit: true
+        }
+      console.log("opened camera")
+      this.camera.getPicture(options).then((imageData) => {
+        console.log("taken picture");
 
-    const options: CameraOptions = {
-      quality: 60,
-      destinationType:  this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      correctOrientation: true,
-      allowEdit: true
-      }
-    console.log("opened camera")
-    this.camera.getPicture(options).then((imageData) => {
-      console.log("taken picture");
-
-      /*
-      ca sa mearga trebuie adaugat
-      https://cdn.rawgit.com/waveline-dpit/billit/3e234118/src/assets/langs/
-      in fata la oriunde scrie langPath din node_modules/tesseract.js
-      */
-      this.presentLoadingCustom();
-      Tesseract.recognize(imageData, {lang: "billsfont2"})
-          .then((result) => {
-            console.log(result.text);
-            this.interpretText(result);
-          });
-    }, (err) => {
-      console.log(err);
-    });
+        /*
+        ca sa mearga trebuie adaugat
+        https://cdn.rawgit.com/waveline-dpit/billit/3e234118/src/assets/langs/
+        in fata la oriunde scrie langPath din node_modules/tesseract.js
+        */
+        this.presentLoadingCustom();
+        Tesseract.recognize(imageData, {lang: "billfont3"})
+            .then((result) => {
+              console.log(result.text);
+              this.interpretText(result);
+            });
+      }, (err) => {
+        console.log(err);
+      });
+    }
     this.closeFab(this.fabb);
   }
 
-  interpretText(data){
-    //produse
-    var result;
-    var prod = /(.*)\r\n([a-zA-Z0-9]*,?\.?[a-zA-Z0-9]*) ?x ?([a-zA-Z0-9]*,?\.?[a-zA-Z0-9]*)/g;
-    var ora = /\bOra\b(?::).?([0-9]+)[/.:]+([0-9])+[/:.]+([0-9])+/g;
-    var date = /\bData\b(?::).?([0-9]+)[/.:]+([0-9])+[/:.]+([0-9])+/g;
-    //nume magazin:
-    var magazin = /(.+\S\.R\.L|SRL|S\.C\.|S\.C\.S|SCS|SC\b)/;
-    //nr bon fiscal:
-    var nrbon =/\w*\bBON|bon\b.*(\d\w)/;
-
-    var tprice = 0;
-    console.log("Nume magazin: ", magazin.exec(data.text));
-
-    while (result = prod.exec(data.text)) {
-      var product = result[1];
-      var price = this.sanitizeNumber(result[2]);
-      var price2 = Number(price);
-      var quantity = this.sanitizeNumber(result[3]);
-      var quantity2 = Number(quantity);
-      tprice += price2;
-      console.log("produs: ", product," pret: " , price, ", cantitate: ", quantity);
-      console.log(tprice);
-    }
-    console.log("Numar bon: ", nrbon.exec(data.text));
-    var sData = date.exec(data.text);
-  /*  console.log(sData[1], sData[2], sData[3]);
-    var sHour = ora.exec(data.text);
-    console.log(sHour[1], sHour[2], sHour[3]);*/
-
-    let billInfo = {
-      date: (new Date()).toISOString(),
-      dateISO: (new Date()).toISOString(),
-      time: "11:53",
-      favourite: false,
-      number: 0,
-      totalAmount: 0,
-      storeName: "From Camera"
-    }
+  interpretText(tesseractResult){
+    console.log(tesseractResult);
+    var _dateISO = this.setDate();
+    var _Time = this.setTime();
+    var _Date = this.formatDate((new Date()).toISOString());
+    var text;
     let products = [];
-    //for(let i in bill.pr){
+    let recognizedText = tesseractResult;
+    var result;
+    var pretTotal;
+
+    var prod = /([a-zA-Z0-9]*,?\.?[a-zA-Z0-9]*) X ?([a-zA-Z0-9]*,?\.?[a-zA-Z0-9]*)\n*([a-zA-Z ',.-]*)/g;
+    var numeMagazin = /(.+\bS\.R\.L|SRL|S\.C\.|S\.C\.S|SCS|S-C- |S-C \b.*)/g;
+    var shopName = numeMagazin.exec(recognizedText);
+
+    if(shopName != null){
+      var shopName2 = this.sanitizeName(shopName[1]);
+    }
+    while (result = prod.exec(recognizedText)) {
+      if(result != null){
+        var product = this.sanitizeProduct(result[3]);
+      }
+      if(result != null){
+        var price = this.sanitizePrice(result[1]);
+      }
+      if(result != null){
+        var qtity = this.sanitizePrice(result[2]);
+      }
+      console.log("produs: ", product, "pret: ", qtity, "cantitate: ", price);
+
+      var pretProdus = Number(price)*Number(qtity);
+      pretTotal = pretTotal + pretProdus;
+      pretTotal = Math.round(parseFloat(pretTotal) * 100) / 100;
       let productt = {
-        name: "dummy",
-        quantity: 1,
-        pricePerUnit:1,
-        totalPrice: 1
+        name: product,
+        quantity: Number(price),
+        pricePerUnit:Number(qtity),
+        totalPrice: pretProdus
       }
       products.push(productt);
-    //}
-    this.addBillFromCamera(billInfo, products);
+    }
+    let billInfo = {
+      date: _Date,
+      dateISO: _dateISO,
+      time: _Time,
+      favourite: false,
+      number: Number((Math.floor((Math.random() * 10) + 1)).toString() + (Math.floor((Math.random() * 10) + 1)).toString() + (Math.floor((Math.random() * 10) + 1)).toString() + (Math.floor((Math.random() * 10) + 1)).toString()),
+      totalAmount: pretTotal,
+      storeName: shopName2
+    }
+    console.log("products", products)
+    console.log("billInfo", billInfo);
+
+    //this.addBillFromCamera(billInfo, products);
   }
 
-  sanitizeNumber(number) {
-    //console.log(number);
-    return number
-        .replace('l', 1)
-        .replace(/[oae]/i, 0)
-        .replace(',', '.');
+  /******************************************************* Chira ********************************************************/
+  sanitizeProduct(proDuct){
+    return proDuct
+            .replace(/[.,]/i, 'I')
+            .replace(1, 'T')
+            .replace(8, 'B')
+            .replace(2, 'Z')
+            .replace(5, 'S');
   }
+  sanitizePrice(pRice)
+  {
+    return pRice
+            .replace(',', '.')
+            .replace('S', 5)
+            .replace('Z', 2)
+            .replace('E', 0)
+            .replace('O', 0)
+            .replace('B', 0)
+            .replace('E', 0)
+            .replace(/[TI]/i, 1);
+  }
+  sanitizeName(Name)
+  {
+    return Name
+            .replace('-', '.')
+            .replace("PROFL", "PROFI")
+            .replace("PROFU", "PROFI")
+            .replace("PROH", "PROFI")
+            .replace("PROFL", "PROFI")
+            .replace("GARREFOUR", "CARREFOUR")
+            .replace(8, 'B')
+            .replace(5, 'S')
+            .replace(2, 'Z')
+            .replace(9, 'G');
+
+  }
+  setTime(){
+    let hour = (new Date().getHours()).toString();
+    let min = (new Date().getMinutes()).toString();
+    if(Number(hour) < 10) { hour = "0" + hour;}
+    if(Number(min) < 10) { min = "0" + min;}
+    return hour + ":" + min;
+  }
+  setDate(){
+    let date = new Date();
+    date.setHours(date.getHours() + 3);
+    let date2 = date.toISOString();
+    return date2;
+  }
+  formatDate(date)
+  {
+    var monthNames = [
+      "Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul",
+      "Aug", "Sep", "Oct",
+      "Nov", "Dec"
+    ];
+    var day = date.substring(8, 10);
+    var monthIndex = Number(date.substring(5, 7));
+    var year = date.substring(0, 4);
+
+    return  day + ' ' + monthNames[monthIndex - 1] + ' ' + year;
+  }
+
+
+    /*******************************************************end Chira ********************************************************/
 
   addBillFromCamera(bill, products){
     let path = '/user/' + this.userInfo.getUserToken() + '/bills';
     let user : FirebaseListObservable <any>;
     user = this.db.list(path);
     user.push(bill).then((response) => {
-      let billPath =  path + '/' + response.path.o[3] ;
-      path = path + '/' + response.path.o[3] + '/products';
+      let billPath;
+      if(response.path.o[3] != null){
+        billPath =  path + '/' + response.path.o[3];
+        path = path + '/' + response.path.o[3] + '/products';
+      }
+      else{
+        if(response.path.pieces_[3] != null){
+          billPath =  path + '/' + response.path.pieces_[3];
+          path = path + '/' + response.path.pieces_[3] + '/products';
+        }
+      }
       user = this.db.list(path);
       for (let eachProduct of products) {
         user.push(eachProduct);
       }
-      this.db.object(billPath).subscribe(wholeBill =>{
+      this.db.object(billPath).first().subscribe(wholeBill =>{
           console.log(wholeBill)
           if(this.loading){
             this.loading.dismiss();
@@ -506,23 +620,23 @@ export class BillsPage {
     });
   }
 
-  presentLoadingCustom() {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'hide',
-      content: `
-      <div class="cssload-thecube">
-        <div class="cssload-cube cssload-c1"></div>
-        <div class="cssload-cube cssload-c2"></div>
-        <div class="cssload-cube cssload-c4"></div>
-        <div class="cssload-cube cssload-c3"></div>
-      </div>
-      <div class="loader-text">The image is being processed by Tesseract OCR</div>
-      `,
-      duration: 10000
-    });
+presentLoadingCustom() {
+  this.loading = this.loadingCtrl.create({
+    spinner: 'hide',
+    content: `
+    <div class="cssload-thecube">
+      <div class="cssload-cube cssload-c1"></div>
+      <div class="cssload-cube cssload-c2"></div>
+      <div class="cssload-cube cssload-c4"></div>
+      <div class="cssload-cube cssload-c3"></div>
+    </div>
+    <div class="loader-text">The image is being processed by Tesseract OCR</div>
+    `,
+    duration: 10000
+  });
 
-    this.loading.present();
-  }
+  this.loading.present();
+}
 
 
   /* ============================================= SEARCH ============================================= */
@@ -539,10 +653,12 @@ export class BillsPage {
   }
 
   startedSearch(){
-
-    let searchText = this.searchInput.toLowerCase();
-    this.billsToShow = [];
-    if(searchText != ""){
+    let searchText;
+    if(this.searchInput != null){
+       searchText = this.searchInput.toLowerCase();
+       this.billsToShow = [];
+    }
+    if(searchText != "" && searchText != null){
       for(let bill of this.bills){
         let billNumber = bill.number;
         if((typeof billNumber) == "number"){

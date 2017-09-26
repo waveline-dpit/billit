@@ -20,7 +20,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 
           <ion-grid>
             <ion-row>
-              <ion-col col-2>
+              <ion-col col-2 [ngClass]="{'trusted': item.opt == 'trusted'}">
                 <ion-icon name="{{item.icon}}"></ion-icon>
               </ion-col>
               <ion-col col-8>
@@ -44,7 +44,8 @@ export class PopoverSortPage {
    {  name: "Date", arrow:"ios-arrow-round-up", icon:"calendar", opt:"dateAsc"},
    {  name: "Price", arrow:"ios-arrow-round-down", icon:"logo-usd", opt:"priceDesc"},
    {  name: "Price", arrow:"ios-arrow-round-up", icon:"logo-usd", opt:"priceAsc"},
-   {  name: "Favourites", icon:"star-outline", opt:"favourites"}
+   {  name: "Favourites", icon:"star-outline", opt:"favourites"},
+   {  name: "Trusted", icon:"checkmark-circle", opt:"trusted"}
   ]
   constructor(
     public navCtrl: NavController,
@@ -59,7 +60,7 @@ export class PopoverSortPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad PopoverSortPage');
   }
-  
+
   setSortOption(selectedItem) {
     this.sortOpt = selectedItem;
     this.viewCtrl.dismiss(this.sortOpt);

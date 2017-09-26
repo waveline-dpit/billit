@@ -14,7 +14,8 @@ import {BillsPage} from '../bills/bills';
       <ion-list>
        <button *ngIf="bill.favourite" ion-item (click)="removeFromFavourite(bill)"><ion-icon style="margin-right:5px;" name="star-outline"></ion-icon>Remove from favs</button>
        <button *ngIf="!bill.favourite" ion-item (click)="addToFavourite(bill)"><ion-icon style="margin-right:5px;" name="star-outline"></ion-icon>Add to favourites</button>
-       <button ion-item (click)="goToEditBillPage();close()"><ion-icon style="margin-right:5px;" name="create"></ion-icon>Edit</button>
+       <button ion-item *ngIf="bill.QR" class="uneditable"><ion-icon style="margin-right:5px;" name="create"></ion-icon>Edit</button>
+       <button ion-item *ngIf="bill.QR == null" (click)="goToEditBillPage();close()"><ion-icon style="margin-right:5px;" name="create"></ion-icon>Edit</button>
        <button ion-item  (click)="openShareModal()"><ion-icon style="margin-right:6px;" name="share"></ion-icon>Share</button>
        <button ion-item (click)="billCheckbox();close()"><ion-icon style="margin-right:11px;" name="attach"></ion-icon>Category</button>
        <button ion-item (click)="deleteBill()"><ion-icon style="margin-right:9px;" name="trash"></ion-icon>Delete</button>
@@ -100,8 +101,8 @@ export class PopoverBillPage {
           text: 'Yes',
           handler: () => {
             setTimeout(()=>{
-              this.billDatabase.removeBill(this.bill.$key);
               this.viewCtrl.dismiss("delete");
+              this.billDatabase.removeBill(this.bill.$key);
               console.log(this.navCtrl);
             }, 300);
           }

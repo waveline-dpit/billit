@@ -5,6 +5,8 @@ import { StatsPage } from "../stats/stats";
 import { AboutPage } from "../about/about";
 import { CategoriesPage } from "../categories/categories";
 import { SlidesPage } from "../slides/slides";
+import { FaqPage } from "../faq/faq";
+
 
 /**
  * Generated class for the MorePage page.
@@ -39,6 +41,9 @@ export class MorePage {
   }
   goToSlides() {
     this.navCtrl.push(SlidesPage);
+  }
+  goToFaq(){
+    this.navCtrl.push(FaqPage);
   }
 
 }

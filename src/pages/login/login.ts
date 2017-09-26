@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController} from 'ionic-angular';
 import { RegisterPage } from "../register/register";
 import { FrgPasswordPage } from "../frg-password/frg-password";
 import { AuthService } from '../../providers/auth-service/auth-service';
@@ -32,6 +32,7 @@ export class LoginPage {
   data = {};
 
   constructor(
+    public loadingCtrl: LoadingController,
     public navCtrl: NavController,
     public db: AngularFireDatabase,
     public alerCtrl: AlertController,
@@ -113,6 +114,30 @@ export class LoginPage {
 
   loginWithFacebook()
   {
-    this.authService.signInWithFacebook().then(res => console.log(res), err => console.log("err", err));
+    this.authService.signInWithFacebook().then(
+      res => console.log(res),
+      err => {
+        console.log("error connecting with Facebook", err);
+        this.presentLoading();
+      });
+  }
+
+  presentLoading() {
+   let loader = this.loadingCtrl.create({
+     content: "Connecting to server...",
+     duration: 5000
+   });
+   setTimeout(()=>{
+     this.presentFacebookAlert();
+   },5100)
+   loader.present();
+  }
+  presentFacebookAlert(){
+    let alert = this.alerCtrl.create({
+      title: 'Error',
+      message: `Couldn't connect to Facebook servers. Please try again later.`,
+      buttons: ['Ok']
+    });
+    alert.present()
   }
 }

@@ -39,7 +39,7 @@
 
 <ion-content padding class="backgroundIMG">
 
-  <div *ngFor="let bill of billsToShow; let i = index">
+  <div *ngFor="let bill of billsToShow; let i = index"  [ngClass]="{'greenBorder': (bill.QR != null)}">
 
     <div class="interval" *ngIf="intervalToShow[i] != null && !searchBarOpened">
       {{intervalToShow[i]}}
@@ -64,8 +64,8 @@
                 </div>
               </div>
               <div class="clear">
-                <div class=" inline left topp bott">
-                  <ion-icon style="margin-right:2px;" name="cart" isActive="false"></ion-icon>
+                <div class=" inline left topp bott" [ngClass]="{'greenIcon': (bill.QR != null)}">
+                  <ion-icon  style="margin-right:2px;" name="cart" isActive="false"></ion-icon>
                   {{bill.storeName}}
                 </div>
                 <div class="inline right topp bott  ">

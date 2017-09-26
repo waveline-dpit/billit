@@ -10,6 +10,7 @@ import {CategoriesService} from '../../providers/categories-service/categories-s
 import { ShareModalPage } from '../share-modal/share-modal';
 import 'rxjs/add/operator/first';
 
+
 /**
  * Generated class for the BillPage page.
  *
@@ -46,18 +47,26 @@ export class BillPage {
 
       db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billID).subscribe((data) =>
       {
-        this.bill = data;
+        if(data.storeName){
+          console.log("am inrtat")
+          this.bill = data;
+          this.keys = Object.keys(this.bill.products);
+        }
       });
       console.log(this.navParams)
     }
     else{
       db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billDatabase.bill.$key).subscribe((data) =>
       {
-        this.bill = data;
+        if(data.storeName){
+          console.log("am inrtat2", data, data.$value)
+          this.bill = data;
+          this.keys = Object.keys(this.bill.products);
+        }
       });
     }
 
-    this.keys = Object.keys(this.bill.products);
+
     categoriesService.getCategories().subscribe((data)=>
     {
       this.categories = data;
