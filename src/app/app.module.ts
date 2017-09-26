@@ -21,6 +21,8 @@ import { LidlPage } from "../pages/lidl/lidl";
 import { CategoriesPage } from '../pages/categories/categories';
 import { ShareModalPage } from '../pages/share-modal/share-modal';
 import { SlidesPage } from "../pages/slides/slides";
+import { FaqPage } from "../pages/faq/faq";
+
 
 import { AuthService } from '../providers/auth-service/auth-service';
 
@@ -80,7 +82,8 @@ export const firebaseConfig = {
     CategoriesPage,
     ShareModalPage,
     PopoverCategoriesPage,
-    SlidesPage
+    SlidesPage,
+    FaqPage
   ],
   imports: [
     BrowserModule,
@@ -115,7 +118,8 @@ export const firebaseConfig = {
     CategoriesPage,
     ShareModalPage,
     PopoverCategoriesPage,
-    SlidesPage
+    SlidesPage,
+    FaqPage
   ],
   providers: [
     StatusBar,

@@ -21,7 +21,14 @@ export class BillDatabase {
     let user : FirebaseListObservable <any>;
     user = this.db.list(path);
     user.push(bill).then((response) => {
-      path = path + '/' + response.path.o[3] + '/products';
+      if(response.path.o[3] != null){
+        path = path + '/' + response.path.o[3] + '/products';
+      }
+      else{
+        if(response.path.pieces_[3] != null){
+          path = path + '/' + response.path.pieces_[3] + '/products';
+        }
+      }
       user = this.db.list(path);
       for (let eachProduct of products) {
         user.push(eachProduct);
@@ -76,6 +83,6 @@ export class BillDatabase {
 
   updateBill()
   {
-    
+
   }
 }

@@ -45,20 +45,28 @@ export class BillPage {
     if(this.navParams.get('comingFromCategories')){
       let billID = this.navParams.get('billID');
 
-      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billID).first().subscribe((data) =>
+      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billID).subscribe((data) =>
       {
-        this.bill = data;
+        if(data.storeName){
+          console.log("am inrtat")
+          this.bill = data;
+          this.keys = Object.keys(this.bill.products);
+        }
       });
       console.log(this.navParams)
     }
     else{
-      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billDatabase.bill.$key).first().subscribe((data) =>
+      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billDatabase.bill.$key).subscribe((data) =>
       {
-        this.bill = data;
+        if(data.storeName){
+          console.log("am inrtat2", data, data.$value)
+          this.bill = data;
+          this.keys = Object.keys(this.bill.products);
+        }
       });
     }
 
-    this.keys = Object.keys(this.bill.products);
+
     categoriesService.getCategories().subscribe((data)=>
     {
       this.categories = data;

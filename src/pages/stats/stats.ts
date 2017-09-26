@@ -410,6 +410,7 @@ export class StatsPage {
 
   createBarChart(labels, data){
     //Chart.defaults.global.barThickness = 2;
+    console.log("barchart", labels, data)
     if(this.categoriesArray.length){
       this.barChart = new Chart(this.barCanvas.nativeElement, {
         type: 'horizontalBar',

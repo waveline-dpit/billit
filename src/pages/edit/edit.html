@@ -28,7 +28,7 @@
           <ion-input type="text" formControlName="fclname" [(ngModel)]="lastName" placeholder= {{oldLastName}} [class.invalid]="!editAccForm.controls.fclname.valid && editAccForm.controls.fclname.dirty"></ion-input>
         </ion-item>
         <p *ngIf="!editAccForm.controls.fclname.valid && editAccForm.controls.fclname.dirty">Please enter a real name.</p>
-        <ion-item>
+        <ion-item class="email">
           <ion-label  stacked>Email</ion-label>
           <ion-label class="stacked_title nomargin">{{email}}</ion-label>
         </ion-item>

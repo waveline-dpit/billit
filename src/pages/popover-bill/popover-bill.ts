@@ -101,8 +101,8 @@ export class PopoverBillPage {
           text: 'Yes',
           handler: () => {
             setTimeout(()=>{
-              this.billDatabase.removeBill(this.bill.$key);
               this.viewCtrl.dismiss("delete");
+              this.billDatabase.removeBill(this.bill.$key);
               console.log(this.navCtrl);
             }, 300);
           }
