@@ -5,13 +5,8 @@ import { AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { NumberValidator } from '../../validators/number';
 import { NotEmptyValidator } from '../../validators/notEmpty';
+import { CategoriesService } from '../../providers/categories-service/categories-service'
 
-/**
-* Generated class for the AddBillPage page.
-*
-* See http://ionicframework.com/docs/components/#navigation for more info
-* on Ionic pages and navigation.
-*/
 @IonicPage()
 @Component({
   selector: 'page-edit-bill',
@@ -20,6 +15,7 @@ import { NotEmptyValidator } from '../../validators/notEmpty';
 export class EditBillPage {
   bill;
   products = [];
+  deletedProducts = [];
   ISOdate;
   currentTime;
   fcbillid; fcstorename;
@@ -63,14 +59,29 @@ export class EditBillPage {
     for (let prodID in this.receivedBill.products) {
       let product = this.receivedBill.products[prodID];
       console.log(product);
-      let obj = {
-        name: product.name,
-        quantity: product.quantity,
-        pricePerUnit: product.pricePerUnit,
-        totalPrice: product.totalPrice,
-        key: prodID
+      if(product.categoryID)
+      {
+        let obj = {
+          name: product.name,
+          quantity: product.quantity,
+          pricePerUnit: product.pricePerUnit,
+          totalPrice: product.totalPrice,
+          categoryID: product.categoryID,
+          key: prodID
+        }
+        this.products.push(obj);
       }
-      this.products.push(obj);
+      else
+      {
+        let obj = {
+          name: product.name,
+          quantity: product.quantity,
+          pricePerUnit: product.pricePerUnit,
+          totalPrice: product.totalPrice,
+          key: prodID
+        }
+        this.products.push(obj);
+      }
       const control = <FormArray>this.productForm.controls['productList'];
       control.push(this.initProduct());
     }
@@ -102,6 +113,13 @@ export class EditBillPage {
   }
   deleteProduct(index) {
     (<FormArray>this.productForm.controls['productList']).removeAt(index);
+    if(this.products[index].key != "new")
+    {
+      let productID = {
+        productID: this.products[index].key
+      };
+      this.deletedProducts.push(productID);
+    }
     this.bill.totalAmount -= this.products[index].totalPrice;
     this.bill.totalAmount = Math.round(parseFloat(this.bill.totalAmount) * 100) / 100;
     this.products.splice(index, 1);
@@ -174,44 +192,11 @@ export class EditBillPage {
   }
 
   save() {
-    console.log(this.bill, this.products, this.receivedBill);
-    this.billDatabase.updateBill();
+    console.log(this.bill, this.products);
+    this.bill.date = this.formatDate(this.bill.date);
+    this.billDatabase.updateBill(this.bill, this.products, this.deletedProducts, this.receivedBill.$key);
+    this.navCtrl.pop();
   }
-
-  /*submit() {
-   this.submitAttempt = true;
-   var canSubmit = true;
-   //console.log(this.bill, this.products);
-   for (var key in this.bill) {
-     if(this.bill[key] === null || this.bill[key] === ""){
-       canSubmit = false;
-     }
-   }
-   for (var idx in this.products) {
-     var product = this.products[idx];
-     for(var key in product){
-       if(product[key] === null || product[key] === ""){
-         canSubmit = false;
-       }
-     }
-   }
-   let ok = (
-     this.billIdForm.controls.fcstorename.valid &&
-     this.billIdForm.controls.fcbillid.valid &&
-     this.productForm.controls.productList.valid
-   );
-   //console.log(ok);
-   if(canSubmit && ok)
-   {
-     this.bill.date = this.formatDate(this.bill.date);
-     this.billDatabase.addBill(this.bill, this.products);
-     this.navCtrl.pop();
-   }
-   else
-   {
-     this.fieldsNotCompleted();
-   }
-  }*/
 
   // =================================================== ALERTS ===================================================
 

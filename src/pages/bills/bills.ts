@@ -384,7 +384,7 @@ export class BillsPage {
       for (let eachProduct of products) {
         user.push(eachProduct);
       }
-      this.db.object(billPath).subscribe(wholeBill =>{
+      this.db.object(billPath).first().subscribe(wholeBill =>{
           console.log(wholeBill)
           this.goToBillPage(wholeBill);
       })

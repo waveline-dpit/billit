@@ -44,14 +44,14 @@ export class BillPage {
     if(this.navParams.get('comingFromCategories')){
       let billID = this.navParams.get('billID');
 
-      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billID).first().subscribe((data) =>
+      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billID).subscribe((data) =>
       {
         this.bill = data;
       });
       console.log(this.navParams)
     }
     else{
-      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billDatabase.bill.$key).first().subscribe((data) =>
+      db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billDatabase.bill.$key).subscribe((data) =>
       {
         this.bill = data;
       });

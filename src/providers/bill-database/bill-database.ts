@@ -4,8 +4,9 @@ import 'rxjs/add/operator/map';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import firebase from 'firebase/app'
 import { AngularFireAuth } from 'angularfire2/auth';
-import {Observable} from 'rxjs/Observable';
-import {UserInfo} from '../user-info/user-info';
+import { Observable } from 'rxjs/Observable';
+import { UserInfo } from '../user-info/user-info';
+import { CategoriesService } from '../categories-service/categories-service'
 
 @Injectable()
 export class BillDatabase {
@@ -13,6 +14,7 @@ export class BillDatabase {
   constructor(
     public db: AngularFireDatabase,
     public userInfo: UserInfo,
+    public categoriesService: CategoriesService
   ) {}
 
   addBill(bill, products)
@@ -21,7 +23,8 @@ export class BillDatabase {
     let user : FirebaseListObservable <any>;
     user = this.db.list(path);
     user.push(bill).then((response) => {
-      path = path + '/' + response.path.o[3] + '/products';
+      console.log(response);
+      path = path + '/' + response.path.pieces_[3] + '/products';
       user = this.db.list(path);
       for (let eachProduct of products) {
         user.push(eachProduct);
@@ -74,8 +77,46 @@ export class BillDatabase {
     });
   }
 
-  updateBill()
+  updateBill(billInfo, products, deletedProducts, billID)
   {
-    
+    for(let deletedProduct of deletedProducts)
+    {
+      this.categoriesService.unCheckAllProdctFromCat(deletedProduct.productID, billID)
+    }
+    let objProd = [];
+    let newProds = []
+    for(let product of products)
+    {
+
+      let key = product.key;
+      delete product.key;
+      if(key != "new")
+      {
+        if(product.categoryID)
+        {
+          for(let catID in product.categoryID)
+          {
+            this.categoriesService.addProductToCategory(product, catID, key, billID);
+          }
+        }
+          objProd[key] = product;
+      }
+      else
+      {
+        newProds.push(product);
+      }
+    }
+    let bill = billInfo;
+    bill.products = objProd;
+    let path = '/user/' + this.userInfo.getUserToken() + '/bills' + '/' + billID;
+    this.db.object(path).set(bill)
+    .then(
+      () => {
+        path = path + "/products";
+        for(let newProd of newProds)
+          this.db.list(path).push(newProd);
+      }
+    )
+
   }
 }
