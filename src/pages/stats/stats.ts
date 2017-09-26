@@ -339,10 +339,14 @@ export class StatsPage {
           },100);
         }
         else{
-          this.removeData(this.barChart);
+          /*this.removeData(this.barChart);
           let auxArr = [];
           auxArr.push(this.barChartData);
-          this.addData(this.barChart, this.barChartLabels, this.barChartData);
+          console.log("baaaam", this.barChartLabels, this.barChartData);
+          this.addData(this.barChart, this.barChartLabels, this.barChartData);*/
+          setTimeout(()=>{
+            this.createBarChart(this.barChartLabels, this.barChartData);
+          },100);
         }
       }
     }
@@ -447,6 +451,9 @@ export class StatsPage {
           maintainAspectRatio: false,
           scales: {
             xAxes: [{
+              ticks: {
+                beginAtZero:true
+              },
               display: false,
               gridLines: {
                 display:false

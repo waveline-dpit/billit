@@ -50,7 +50,10 @@ export class BillsPage {
   intervalToShow = [];
   loading;
   allowCamera;
+  notice;
   isClassVisible = true;
+  presentationBill = "noBill";
+
   constructor(
     public platform: Platform,
     public loadingCtrl: LoadingController,
@@ -74,6 +77,12 @@ export class BillsPage {
     billDatabase.db.object("/allowCamera").subscribe((data)=>{
       this.allowCamera = data.$value;
       console.log("allow",this.allowCamera)
+    });
+    billDatabase.db.object("/notice").subscribe((data)=>{
+      this.notice = data.$value;
+    });
+    billDatabase.db.object("/presentationBill").subscribe((data)=>{
+      this.presentationBill = data;
     });
     billDatabase.retreiveAllBills().subscribe((data) =>{
       this.bills = data;
@@ -419,7 +428,7 @@ export class BillsPage {
   showAlertCamera(){
     let alert = this.alerCtrl.create({
       title: 'Notice',
-      message: 'This feature will be unlocked only after official release on 28 sept. 2017 15:00 GMT+3',
+      message: this.notice,
       buttons: [
         {
           text: 'Ok',
@@ -445,7 +454,6 @@ export class BillsPage {
       console.log("opened camera")
       this.camera.getPicture(options).then((imageData) => {
         console.log("taken picture");
-
         /*
         ca sa mearga trebuie adaugat
         https://cdn.rawgit.com/waveline-dpit/billit/3e234118/src/assets/langs/
@@ -465,6 +473,15 @@ export class BillsPage {
   }
 
   interpretText(tesseractResult){
+    let billInfo = {
+      date: "",
+      dateISO: "",
+      time: "",
+      favourite: false,
+      number: Number((Math.floor((Math.random() * 10) + 1)).toString() + (Math.floor((Math.random() * 10) + 1)).toString() + (Math.floor((Math.random() * 10) + 1)).toString() + (Math.floor((Math.random() * 10) + 1)).toString()),
+      totalAmount: 0,
+      storeName: ""
+    }
     console.log(tesseractResult);
     var _dateISO = this.setDate();
     var _Time = this.setTime();
@@ -478,9 +495,10 @@ export class BillsPage {
     var prod = /([a-zA-Z0-9]*,?\.?[a-zA-Z0-9]*) X ?([a-zA-Z0-9]*,?\.?[a-zA-Z0-9]*)\n*([a-zA-Z ',.-]*)/g;
     var numeMagazin = /(.+\bS\.R\.L|SRL|S\.C\.|S\.C\.S|SCS|S-C- |S-C \b.*)/g;
     var shopName = numeMagazin.exec(recognizedText);
+    var shopName2;
 
     if(shopName != null){
-      var shopName2 = this.sanitizeName(shopName[1]);
+      shopName2 = this.sanitizeName(shopName[1]);
     }
     while (result = prod.exec(recognizedText)) {
       if(result != null){
@@ -493,34 +511,54 @@ export class BillsPage {
         var qtity = this.sanitizePrice(result[2]);
       }
       console.log("produs: ", product, "pret: ", qtity, "cantitate: ", price);
-
       var pretProdus = Number(price)*Number(qtity);
       pretTotal = pretTotal + pretProdus;
       pretTotal = Math.round(parseFloat(pretTotal) * 100) / 100;
       let productt = {
-        name: product,
-        quantity: Number(price),
-        pricePerUnit:Number(qtity),
-        totalPrice: pretProdus
+        name: "",
+        quantity: 0,
+        pricePerUnit: 0,
+        totalPrice: 0
       }
+      if(product != null) {productt.name = product;}
+      if(price != null) {productt.quantity = Number(price);}
+      if(qtity != null) {productt.pricePerUnit = Number(qtity);}
+      if(pretProdus != null) {productt.totalPrice = pretProdus;}
+
       products.push(productt);
     }
-    let billInfo = {
-      date: _Date,
-      dateISO: _dateISO,
-      time: _Time,
-      favourite: false,
-      number: Number((Math.floor((Math.random() * 10) + 1)).toString() + (Math.floor((Math.random() * 10) + 1)).toString() + (Math.floor((Math.random() * 10) + 1)).toString() + (Math.floor((Math.random() * 10) + 1)).toString()),
-      totalAmount: pretTotal,
-      storeName: shopName2
-    }
+    if(_Date != null) {billInfo.date = _Date;}
+    if(_dateISO != null) {billInfo.dateISO =_dateISO;}
+    if(_Time != null) {billInfo.time = _Time;}
+    if(pretTotal != null) {billInfo.totalAmount = pretTotal;}
+    if(shopName2 != null) {billInfo.storeName = shopName2;}
     console.log("products", products)
     console.log("billInfo", billInfo);
-
-    //this.addBillFromCamera(billInfo, products);
+    if(this.loading){
+      this.loading.dismiss();
+    }
+    if(products.length > 0){
+      this.addBillFromCamera(billInfo, products);
+    }
+    else{
+      this.presentCouldNotAddFromCameraAlert();
+    }
   }
 
   /******************************************************* Chira ********************************************************/
+
+  presentCouldNotAddFromCameraAlert(){
+    let alert = this.alerCtrl.create({
+      title: 'Error',
+      message: `Tesseract OCR couldn't read this bill. Please try again.`,
+      buttons: [
+        {
+          text: 'Ok',
+          role: 'cancel'
+        }]
+    });
+    alert.present()
+  }
   sanitizeProduct(proDuct){
     return proDuct
             .replace(/[.,]/i, 'I')
@@ -609,13 +647,7 @@ export class BillsPage {
       }
       this.db.object(billPath).first().subscribe(wholeBill =>{
           console.log(wholeBill)
-          if(this.loading){
-            this.loading.dismiss();
-            this.goToBillPage(wholeBill);
-          }
-          else{
-            this.loading.dismiss();
-          }
+          this.goToBillPage(wholeBill);
       })
     });
   }
@@ -632,7 +664,6 @@ presentLoadingCustom() {
     </div>
     <div class="loader-text">The image is being processed by Tesseract OCR</div>
     `,
-    duration: 10000
   });
 
   this.loading.present();
