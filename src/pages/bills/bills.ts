@@ -404,12 +404,12 @@ export class BillsPage {
     user = this.db.list(path);
     user.push(bill).then((response) => {
       let billPath;
-      if(response.path.o[3] != null){
+      if(response.path.o != null){
         billPath =  path + '/' + response.path.o[3];
         path = path + '/' + response.path.o[3] + '/products';
       }
       else{
-        if(response.path.pieces_[3] != null){
+        if(response.path.pieces_ != null){
           billPath =  path + '/' + response.path.pieces_[3];
           path = path + '/' + response.path.pieces_[3] + '/products';
         }
@@ -631,7 +631,7 @@ export class BillsPage {
     user = this.db.list(path);
     user.push(bill).then((response) => {
       let billPath;
-      if(response.path.o[3] != null){
+      if(response.path.o != null){
         billPath =  path + '/' + response.path.o[3];
         path = path + '/' + response.path.o[3] + '/products';
       }

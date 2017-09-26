@@ -5,12 +5,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {UserInfo} from '../user-info/user-info';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import 'rxjs/add/operator/first'
-/*
-  Generated class for the CategorisServiceProvider provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class CategoriesService {
   public categories : FirebaseObjectObservable <any>;
@@ -68,11 +63,6 @@ export class CategoriesService {
       for(let cat of bill)
         this.db.object(pathCategory + "/" + cat.$key + "/products/" + productID).remove();
     });
-  }
-
-  uncheckOneProdFormCat()
-  {
-
   }
 
   deleteCategory(category)
