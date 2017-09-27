@@ -1,3 +1,46 @@
 page-faq {
-
+  .info
+  {
+    margin-left: 16px;
+    border-bottom: 1px solid #dedede;
+    .item.item-block .item-inner
+    {
+      padding-right: 8px;
+      border-bottom: none;
+    }
+    .item
+    {
+      padding: 0;
+    }
+    .label
+    {
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+    [text-wrap].label
+    {
+    }
+  }
+  .question
+  {
+    ion-icon
+    {
+      margin-right: 12px;
+    }
+  }
+  .answer
+  {
+    font-size: 14px;
+    line-height: 120%;
+    color: gray;
+    margin-bottom: 8px;
+  }
+  .other
+  {
+    .item.item-block .item-inner
+    {
+      padding-right: 8px;
+      border-bottom: none;
+    }
+  }
 }

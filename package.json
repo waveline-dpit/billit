@@ -36,7 +36,6 @@
         "cordova-android": "^6.2.3",
         "cordova-plugin-camera": "^2.4.1",
         "cordova-plugin-compat": "^1.1.0",
-        "cordova-plugin-console": "^1.0.5",
         "cordova-plugin-device": "^1.1.4",
         "cordova-plugin-googleplus": "^5.1.1",
         "cordova-plugin-inappbrowser": "^1.7.1",
@@ -71,7 +70,6 @@
     "description": "An Ionic project",
     "cordova": {
         "plugins": {
-            "cordova-plugin-console": {},
             "cordova-plugin-device": {},
             "cordova-plugin-splashscreen": {},
             "cordova-plugin-statusbar": {},

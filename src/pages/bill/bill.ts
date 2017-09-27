@@ -47,7 +47,7 @@ export class BillPage {
 
       db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billID).subscribe((data) =>
       {
-        if(data.storeName){
+        if(data.storeName || data.date || data.totalAmount){
           console.log("am inrtat")
           this.bill = data;
           this.keys = Object.keys(this.bill.products);
@@ -58,7 +58,7 @@ export class BillPage {
     else{
       db.object("/user/" + this.userInfo.getUserToken() + "/bills/" + billDatabase.bill.$key).subscribe((data) =>
       {
-        if(data.storeName){
+        if(data.storeName || data.date || data.totalAmount){
           console.log("am inrtat2", data, data.$value)
           this.bill = data;
           this.keys = Object.keys(this.bill.products);

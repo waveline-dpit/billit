@@ -39,7 +39,7 @@
 
 <ion-content padding class="backgroundIMG">
 
-  <div *ngFor="let bill of billsToShow; let i = index"  [ngClass]="{'greenBorder': (bill.QR != null)}">
+  <div *ngFor="let bill of billsToShow; let i = index"  [ngClass]="{'greenBorder': (bill.QR != null), 'yellow-border': (bill.favourite == true)}">
 
     <div class="interval" *ngIf="intervalToShow[i] != null && !searchBarOpened">
       {{intervalToShow[i]}}

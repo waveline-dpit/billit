@@ -16,14 +16,19 @@
 <ion-content padding>
   <div *ngFor="let actual of questions; let i = index">
     <div class="info">
-      <div class="question">
-        <ion-icon *ngIf="!expanded[i]" name="ios-arrow-down" class="inline right" ></ion-icon>
-        <ion-icon *ngIf="expanded[i]" name="ios-arrow-up" class="inline right" ></ion-icon>
+      <ion-item class="question" text-wrap (click)="expand(i)">
+        <ion-icon *ngIf="!expanded[i]" name="ios-arrow-down" class="inline left"></ion-icon>
+        <ion-icon *ngIf="expanded[i]" name="ios-arrow-up" class="inline left"></ion-icon>
         {{actual.question}}
-      </div>
-      <div class="answer">
+      </ion-item>
+      <div *ngIf="expanded[i]" class="answer">
         {{actual.answer}}
       </div>
     </div>
+  </div>
+  <div class="other">
+    <ion-item text-wrap>
+      If you have any other questions, contact us at billit.waveline@gmail.com
+    </ion-item>
   </div>
 </ion-content>

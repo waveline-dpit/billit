@@ -40,6 +40,13 @@ page-bills {
       color: #109d58;
     }
   }
+  .yellow-border
+  {
+    .card
+    {
+      border-right: 2px solid #f8ea48;
+    }
+  }
   ion-navbar
   {
     height: 8vh;

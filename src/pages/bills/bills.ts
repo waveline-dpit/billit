@@ -488,9 +488,9 @@ export class BillsPage {
     var _Date = this.formatDate((new Date()).toISOString());
     var text;
     let products = [];
-    let recognizedText = tesseractResult;
+    let recognizedText = tesseractResult.text;
     var result;
-    var pretTotal;
+    var pretTotal = 0;
 
     var prod = /([a-zA-Z0-9]*,?\.?[a-zA-Z0-9]*) X ?([a-zA-Z0-9]*,?\.?[a-zA-Z0-9]*)\n*([a-zA-Z ',.-]*)/g;
     var numeMagazin = /(.+\bS\.R\.L|SRL|S\.C\.|S\.C\.S|SCS|S-C- |S-C \b.*)/g;
@@ -500,20 +500,25 @@ export class BillsPage {
     if(shopName != null){
       shopName2 = this.sanitizeName(shopName[1]);
     }
+    console.log(recognizedText)
     while (result = prod.exec(recognizedText)) {
+      console.log("intra in while")
       if(result != null){
         var product = this.sanitizeProduct(result[3]);
       }
       if(result != null){
-        var price = this.sanitizePrice(result[1]);
+        var price = this.sanitizePrice(result[2]);
+        if(isNaN(price)){
+          price = 0;
+        }
       }
       if(result != null){
-        var qtity = this.sanitizePrice(result[2]);
+        var qtity = this.sanitizePrice(result[1]);
+        if(isNaN(qtity)){
+          qtity = 0;
+        }
       }
-      console.log("produs: ", product, "pret: ", qtity, "cantitate: ", price);
-      var pretProdus = Number(price)*Number(qtity);
-      pretTotal = pretTotal + pretProdus;
-      pretTotal = Math.round(parseFloat(pretTotal) * 100) / 100;
+
       let productt = {
         name: "",
         quantity: 0,
@@ -521,16 +526,20 @@ export class BillsPage {
         totalPrice: 0
       }
       if(product != null) {productt.name = product;}
-      if(price != null) {productt.quantity = Number(price);}
-      if(qtity != null) {productt.pricePerUnit = Number(qtity);}
-      if(pretProdus != null) {productt.totalPrice = pretProdus;}
+      if(price != null && !isNaN(price)) {productt.pricePerUnit =  Math.round(Number(price) * 100) / 100;}
+      if(qtity != null && !isNaN(qtity)) {productt.quantity = Math.trunc(Number(qtity));}
+      var pretProdus = Math.round(parseFloat(((Math.round(Number(price) * 100) / 100) * Math.trunc(Number(qtity))).toString()) * 100) / 100;
+      console.log("produs: ", product, "pret: ", price, "cantitate: ", qtity);
+      if(pretProdus != null && !isNaN(pretProdus)) {productt.totalPrice = pretProdus;}
+      pretTotal = pretTotal + pretProdus;
+      pretTotal = Math.round(parseFloat(pretTotal.toString()) * 100) / 100
 
       products.push(productt);
     }
     if(_Date != null) {billInfo.date = _Date;}
     if(_dateISO != null) {billInfo.dateISO =_dateISO;}
     if(_Time != null) {billInfo.time = _Time;}
-    if(pretTotal != null) {billInfo.totalAmount = pretTotal;}
+    if(pretTotal != null && !isNaN(pretTotal)) {billInfo.totalAmount = pretTotal;}
     if(shopName2 != null) {billInfo.storeName = shopName2;}
     console.log("products", products)
     console.log("billInfo", billInfo);
@@ -585,6 +594,9 @@ export class BillsPage {
             .replace('-', '.')
             .replace("PROFL", "PROFI")
             .replace("PROFU", "PROFI")
+            .replace("FOOO", "FOOD")
+            .replace("PROF.", "PROFI")
+            .replace("PROFO", "PROFI")
             .replace("PROH", "PROFI")
             .replace("PROFL", "PROFI")
             .replace("GARREFOUR", "CARREFOUR")
